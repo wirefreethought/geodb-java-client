@@ -1,4 +1,4 @@
-package com.wft.geodb.client;
+package com.wirefreethought.geodb.client;
 
 public class TestProperties
 {

@@ -1,4 +1,4 @@
-package com.wft.geodb.client;
+package com.wirefreethought.geodb.client;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -12,25 +12,25 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.wft.geodb.client.GeoDbApi;
-import com.wft.geodb.client.net.ApiClient;
-import com.wft.geodb.client.net.ApiException;
-import com.wft.geodb.client.net.GeoDbApiClient;
-import com.wft.geodb.client.vo.CitiesResponse;
-import com.wft.geodb.client.vo.CitySummary;
-import com.wft.geodb.client.vo.CountriesResponse;
-import com.wft.geodb.client.vo.CountrySummary;
-import com.wft.geodb.client.vo.CurrenciesResponse;
-import com.wft.geodb.client.vo.CurrencyDescriptor;
-import com.wft.geodb.client.vo.FindCitiesRequest;
-import com.wft.geodb.client.vo.FindCountriesRequest;
-import com.wft.geodb.client.vo.FindCurrenciesRequest;
-import com.wft.geodb.client.vo.FindRegionCitiesRequest;
-import com.wft.geodb.client.vo.FindRegionsRequest;
-import com.wft.geodb.client.vo.LocationRadiusUnit;
-import com.wft.geodb.client.vo.NearLocationRequest;
-import com.wft.geodb.client.vo.RegionSummary;
-import com.wft.geodb.client.vo.RegionsResponse;
+import com.wirefreethought.geodb.client.GeoDbApi;
+import com.wirefreethought.geodb.client.net.ApiClient;
+import com.wirefreethought.geodb.client.net.ApiException;
+import com.wirefreethought.geodb.client.net.GeoDbApiClient;
+import com.wirefreethought.geodb.client.vo.CitiesResponse;
+import com.wirefreethought.geodb.client.vo.CitySummary;
+import com.wirefreethought.geodb.client.vo.CountriesResponse;
+import com.wirefreethought.geodb.client.vo.CountrySummary;
+import com.wirefreethought.geodb.client.vo.CurrenciesResponse;
+import com.wirefreethought.geodb.client.vo.CurrencyDescriptor;
+import com.wirefreethought.geodb.client.vo.FindCitiesRequest;
+import com.wirefreethought.geodb.client.vo.FindCountriesRequest;
+import com.wirefreethought.geodb.client.vo.FindCurrenciesRequest;
+import com.wirefreethought.geodb.client.vo.FindRegionCitiesRequest;
+import com.wirefreethought.geodb.client.vo.FindRegionsRequest;
+import com.wirefreethought.geodb.client.vo.LocationRadiusUnit;
+import com.wirefreethought.geodb.client.vo.NearLocationRequest;
+import com.wirefreethought.geodb.client.vo.RegionSummary;
+import com.wirefreethought.geodb.client.vo.RegionsResponse;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,10 +1,13 @@
-package com.wft.geodb.client.net;
+package com.wirefreethought.geodb.client.net;
 
 import java.util.List;
 import java.util.Map;
 
 import com.squareup.okhttp.Call;
-import com.wft.geodb.client.net.ProgressRequestBody.ProgressRequestListener;
+import com.wirefreethought.geodb.client.net.ApiClient;
+import com.wirefreethought.geodb.client.net.ApiException;
+import com.wirefreethought.geodb.client.net.Pair;
+import com.wirefreethought.geodb.client.net.ProgressRequestBody.ProgressRequestListener;
 
 /**
  * Use this client in place of the swagger-codegen-generated ApiClient. It implements a workaround for an authorization issue in that class.

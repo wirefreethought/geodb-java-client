@@ -1,2 +1,2 @@
-# geodb-java-client
-Provides Java client bindings to the GeoDB service.
+# GeoDB Java Client SDK
+Simplify your life when calling the GeoDB service form a Java or Android app by using this library.

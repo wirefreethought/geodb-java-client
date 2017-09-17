@@ -1,11 +1,11 @@
-package com.wft.geodb.client.vo;
+package com.wirefreethought.geodb.client.vo;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
 @Getter
-public class FindRegionsRequest
+public class FindCurrenciesRequest
 {
     private String countryCode;
     private Integer limit;

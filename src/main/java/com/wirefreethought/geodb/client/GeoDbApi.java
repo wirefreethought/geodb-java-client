@@ -1,23 +1,25 @@
-package com.wft.geodb.client;
+package com.wirefreethought.geodb.client;
 
-import com.wft.geodb.client.net.ApiClient;
-import com.wft.geodb.client.vo.CitiesResponse;
-import com.wft.geodb.client.vo.CityResponse;
-import com.wft.geodb.client.vo.CountriesResponse;
-import com.wft.geodb.client.vo.CountryResponse;
-import com.wft.geodb.client.vo.CurrenciesResponse;
-import com.wft.geodb.client.vo.FindCitiesRequest;
-import com.wft.geodb.client.vo.FindCountriesRequest;
-import com.wft.geodb.client.vo.FindCurrenciesRequest;
-import com.wft.geodb.client.vo.FindRegionCitiesRequest;
-import com.wft.geodb.client.vo.FindRegionRequest;
-import com.wft.geodb.client.vo.FindRegionsRequest;
-import com.wft.geodb.client.vo.IncludeDeletedMode;
-import com.wft.geodb.client.vo.LocalesResponse;
-import com.wft.geodb.client.vo.LocationRadiusUnit;
-import com.wft.geodb.client.vo.NearLocationRequest;
-import com.wft.geodb.client.vo.RegionResponse;
-import com.wft.geodb.client.vo.RegionsResponse;
+import com.wirefreethought.geodb.client.GeoApi;
+import com.wirefreethought.geodb.client.LocaleApi;
+import com.wirefreethought.geodb.client.net.ApiClient;
+import com.wirefreethought.geodb.client.vo.CitiesResponse;
+import com.wirefreethought.geodb.client.vo.CityResponse;
+import com.wirefreethought.geodb.client.vo.CountriesResponse;
+import com.wirefreethought.geodb.client.vo.CountryResponse;
+import com.wirefreethought.geodb.client.vo.CurrenciesResponse;
+import com.wirefreethought.geodb.client.vo.FindCitiesRequest;
+import com.wirefreethought.geodb.client.vo.FindCountriesRequest;
+import com.wirefreethought.geodb.client.vo.FindCurrenciesRequest;
+import com.wirefreethought.geodb.client.vo.FindRegionCitiesRequest;
+import com.wirefreethought.geodb.client.vo.FindRegionRequest;
+import com.wirefreethought.geodb.client.vo.FindRegionsRequest;
+import com.wirefreethought.geodb.client.vo.IncludeDeletedMode;
+import com.wirefreethought.geodb.client.vo.LocalesResponse;
+import com.wirefreethought.geodb.client.vo.LocationRadiusUnit;
+import com.wirefreethought.geodb.client.vo.NearLocationRequest;
+import com.wirefreethought.geodb.client.vo.RegionResponse;
+import com.wirefreethought.geodb.client.vo.RegionsResponse;
 
 public class GeoDbApi
 {

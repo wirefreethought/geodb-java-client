@@ -1,4 +1,4 @@
-package com.wft.geodb.client.vo;
+package com.wirefreethought.geodb.client.vo;
 
 import lombok.Getter;
 

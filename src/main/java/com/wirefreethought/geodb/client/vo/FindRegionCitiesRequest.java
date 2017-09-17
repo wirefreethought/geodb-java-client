@@ -1,17 +1,16 @@
-package com.wft.geodb.client.vo;
+package com.wirefreethought.geodb.client.vo;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
 @Getter
-public class FindCitiesRequest
+public class FindRegionCitiesRequest
 {
-    private String namePrefix;
     private String countryCode;
-    private Integer minPopulation;
-    private NearLocationRequest nearLocation;
     private IncludeDeletedMode includeDeleted;
     private Integer limit;
+    private Integer minPopulation;
     private Integer offset;
+    private String regionCode;
 }

@@ -7,7 +7,7 @@
  >
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.wft.geodb</groupId>
+  <groupId>com.wirefreethought.geodb</groupId>
   <artifactId>geodb-java-client</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
@@ -48,9 +48,9 @@
             <configuration>
               <inputSpec>src/main/resources/swagger.json</inputSpec>
 
-              <apiPackage>com.wft.geodb.client</apiPackage>
-              <invokerPackage>com.wft.geodb.client.net</invokerPackage>
-              <modelPackage>com.wft.geodb.client.vo</modelPackage>
+              <apiPackage>com.wirefreethought.geodb.client</apiPackage>
+              <invokerPackage>com.wirefreethought.geodb.client.net</invokerPackage>
+              <modelPackage>com.wirefreethought.geodb.client.vo</modelPackage>
 
               <language>java</language>
 
