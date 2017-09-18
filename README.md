@@ -1,7 +1,7 @@
 # GeoDB Java Client SDK
 Simplify your life when calling the [GeoDB](https://rapidapi.com/user/wirefreethought/package/GeoDB) service form a Java or Android app by using this library.
 
-# Setup
+## Setup
 1. Add the following compile-time dependencies to your Maven pom.xml:
     ```
     <dependency>
@@ -45,5 +45,36 @@ Simplify your life when calling the [GeoDB](https://rapidapi.com/user/wirefreeth
 4. [Select](https://rapidapi.com/user/wirefreethought/package/GeoDB/pricing) a GeoDB plan.
 5. In the project root, copy **build.properties.sample** to **build.properties**.
 6. In **build.properties**, substitute YOUR_MASHAPE_KEY for the key assigned to you by Rapid.
+7. From the project root, run: ```mvn test```
+
+## Usage
+```
+// Setup
+GeoDbApiClient apiClient = new GeoDbApiClient();
+apiClient.setApiKey(YOUR_MASHAPE_KEY);
+
+GeoDbApi geoDbApi = new GeoDbApi(apiClient);
+
+// Execute service calls. (See Cookbook section for examples.)
+geoDbApi.findCities(FindCitiesRequest.builder()...build());
+
+```
+
+## Cookbook
+
+### Find all cities in the US starting with 'San' and having a minimum population of 100,000.
+
+```
+geoDbApi.findCities(
+    FindCitiesRequest.builder()
+        .countryCode("US")
+        .namePrefix("San")
+        .minPopulation(100000)
+        .build());
+);
+```
+
+
+
 
 
