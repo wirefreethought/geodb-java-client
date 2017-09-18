@@ -70,7 +70,7 @@ geoDbApi.findCities(
         .countryCode("US")
         .namePrefix("San")
         .minPopulation(100000)
-        .build());
+        .build())
 );
 ```
 
@@ -90,6 +90,19 @@ geoDbApi.findCities(
         .build())
 )
 ```
+
+Find all cities in California having a minimum population of 100,000.
+
+```
+geoDbApi.findRegionCities(
+    FindRegionCitiesRequest.builder()
+        .countryCode("US")
+        .regionCode("CA")
+        .minPopulation(100000)
+        .build())
+);
+```
+
 
 
 
