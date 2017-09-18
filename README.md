@@ -55,7 +55,7 @@ apiClient.setApiKey(YOUR_MASHAPE_KEY);
 
 GeoDbApi geoDbApi = new GeoDbApi(apiClient);
 
-// Execute service calls. (See Cookbook section for examples.)
+// Execute service calls. (See below for examples.)
 geoDbApi.findCities(FindCitiesRequest.builder()...build());
 
 ```
@@ -72,6 +72,23 @@ geoDbApi.findCities(
         .minPopulation(100000)
         .build());
 );
+```
+
+Find all cities within 100 miles of the 90245 US zipcode and having a minimum population of 50,000.
+
+```
+geoDbApi.findCities(
+    FindCitiesRequest.builder()
+        .nearLocation(
+            NearLocationRequest.builder()
+                .latitude(33.915007)
+                .longitude(-118.404626)
+                .radius(100)
+                .radiusUnit(LocationRadiusUnit.MILES)
+                .build())
+        .minPopulation(50000)
+        .build())
+)
 ```
 
 
