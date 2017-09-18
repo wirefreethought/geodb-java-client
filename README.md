@@ -7,7 +7,7 @@ Simplify your life when calling the [GeoDB](https://rapidapi.com/user/wirefreeth
     <dependency>
       <groupId>com.wirefreethought.geodb</groupId>
       <artifactId>geodb-java-client</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0.0</version>
     </dependency>
     ```
 2. Create an account on [RapidAPI](https://rapidapi.com). As part of account creation, Rapid asks for credit-card info. As long as you stay within the free usage limits of the Basic plan, your credit card will not be charged.
