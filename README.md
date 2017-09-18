@@ -74,16 +74,21 @@ CitiesResponse citiesResponse = geoDbApi.findCities(
 );
 ```
 
-Find all cities within 100 miles of the 90245 US zipcode and having a minimum population of 50,000.
+Find all cities and towns in the Los Angeles area and having a minimum population of 50,000.
 
 ```
+// Get the location for Los Angeles.
+CityResponse cityResponse = geoDbApi.findCityById(98364);
+GeoLocation cityLocation = cityResponse.getData().getLocation();
+
+// Find all cities/towns within 50 miles of this location.
 CitiesResponse citiesResponse = geoDbApi.findCities(
     FindCitiesRequest.builder()
         .nearLocation(
             NearLocationRequest.builder()
-                .latitude(33.915007)
-                .longitude(-118.404626)
-                .radius(100)
+                .latitude(cityLocation.getLatitude())
+                .longitude(cityLocation.getLongitude())
+                .radius(50)
                 .radiusUnit(LocationRadiusUnit.MILES)
                 .build())
         .minPopulation(50000)
