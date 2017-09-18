@@ -70,7 +70,7 @@ CitiesResponse citiesResponse = geoDbApi.findCities(
         .countryCode("US")
         .namePrefix("San")
         .minPopulation(100000)
-        .build())
+        .build()
 );
 ```
 
@@ -87,7 +87,7 @@ CitiesResponse citiesResponse = geoDbApi.findCities(
                 .radiusUnit(LocationRadiusUnit.MILES)
                 .build())
         .minPopulation(50000)
-        .build())
+        .build()
 )
 ```
 
@@ -99,7 +99,17 @@ CitiesResponse citiesResponse = geoDbApi.findRegionCities(
         .countryCode("US")
         .regionCode("CA")
         .minPopulation(100000)
-        .build())
+        .build()
+);
+```
+
+Find all states in the US.
+
+```
+RegionsResponse regionsResponse = geoDbApi.findRegions(
+    FindRegionsRequest.builder()
+        .countryCode("US")
+        .build()
 );
 ```
 
