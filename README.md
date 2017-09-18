@@ -65,7 +65,7 @@ geoDbApi.findCities(FindCitiesRequest.builder()...build());
 Find all cities in the US starting with **San** and having a minimum population of 100,000.
 
 ```
-geoDbApi.findCities(
+CitiesResponse citiesResponse = geoDbApi.findCities(
     FindCitiesRequest.builder()
         .countryCode("US")
         .namePrefix("San")
@@ -77,7 +77,7 @@ geoDbApi.findCities(
 Find all cities within 100 miles of the 90245 US zipcode and having a minimum population of 50,000.
 
 ```
-geoDbApi.findCities(
+CitiesResponse citiesResponse = geoDbApi.findCities(
     FindCitiesRequest.builder()
         .nearLocation(
             NearLocationRequest.builder()
@@ -94,7 +94,7 @@ geoDbApi.findCities(
 Find all cities in California having a minimum population of 100,000.
 
 ```
-geoDbApi.findRegionCities(
+CitiesResponse citiesResponse = geoDbApi.findRegionCities(
     FindRegionCitiesRequest.builder()
         .countryCode("US")
         .regionCode("CA")
