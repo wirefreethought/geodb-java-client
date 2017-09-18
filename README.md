@@ -62,7 +62,7 @@ geoDbApi.findCities(FindCitiesRequest.builder()...build());
 
 ## Cookbook
 
-### Find all cities in the US starting with 'San' and having a minimum population of 100,000.
+Find all cities in the US starting with **San** and having a minimum population of 100,000.
 
 ```
 geoDbApi.findCities(
