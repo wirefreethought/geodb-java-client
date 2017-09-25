@@ -32,7 +32,6 @@ geoDbApi.findCities(FindCitiesRequest.builder()...build());
 ## Cookbook
 
 Find all cities in the US starting with **San** and having a minimum population of 100,000.
-
 ```
 CitiesResponse citiesResponse = geoDbApi.findCities(
     FindCitiesRequest.builder()
@@ -44,7 +43,6 @@ CitiesResponse citiesResponse = geoDbApi.findCities(
 ```
 
 Find all cities and towns in the Los Angeles area and having a minimum population of 50,000.
-
 ```
 // Get the location for Los Angeles.
 CityResponse cityResponse = geoDbApi.findCityById(98364);
@@ -66,7 +64,6 @@ CitiesResponse citiesResponse = geoDbApi.findCities(
 ```
 
 Find all cities in California having a minimum population of 100,000.
-
 ```
 CitiesResponse citiesResponse = geoDbApi.findRegionCities(
     FindRegionCitiesRequest.builder()
@@ -78,7 +75,6 @@ CitiesResponse citiesResponse = geoDbApi.findRegionCities(
 ```
 
 Find all states in the US.
-
 ```
 RegionsResponse regionsResponse = geoDbApi.findRegions(
     FindRegionsRequest.builder()
@@ -87,6 +83,8 @@ RegionsResponse regionsResponse = geoDbApi.findRegions(
 );
 ```
 
+## API Docs
+For detailed REST docs, including all supported endpoints as well as request/response format per endpoint, [go here](https://wirefreethought.github.io/geo-db-docs/).
 
 
 
