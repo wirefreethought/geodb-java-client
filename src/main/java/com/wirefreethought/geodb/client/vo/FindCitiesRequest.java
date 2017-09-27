@@ -1,5 +1,7 @@
 package com.wirefreethought.geodb.client.vo;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,7 +10,7 @@ import lombok.Getter;
 public class FindCitiesRequest
 {
     private String namePrefix;
-    private String countryCode;
+    private List<String> countryCodes;
     private Integer minPopulation;
     private NearLocationRequest nearLocation;
     private IncludeDeletedMode includeDeleted;

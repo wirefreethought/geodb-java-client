@@ -1,5 +1,7 @@
 package com.wirefreethought.geodb.client;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.wirefreethought.geodb.client.GeoApi;
 import com.wirefreethought.geodb.client.LocaleApi;
 import com.wirefreethought.geodb.client.net.ApiClient;
@@ -52,6 +54,10 @@ public class GeoDbApi
 
     public CitiesResponse findCities(FindCitiesRequest request)
     {
+        String countryCodes = request.getCountryCodes() != null && !request.getCountryCodes().isEmpty()
+            ? StringUtils.join(request.getCountryCodes(), ", ")
+            : null;
+
         String nearLocation = null;
         Integer nearLocationRadius = null;
         String nearLocationRadiusUnit = null;
@@ -67,7 +73,7 @@ public class GeoDbApi
 
         return geoApi.findCitiesUsingGET(
             request.getNamePrefix(),
-            request.getCountryCode(),
+            countryCodes,
             request.getMinPopulation(),
             nearLocation,
             nearLocationRadius,
