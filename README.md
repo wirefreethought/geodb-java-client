@@ -35,7 +35,7 @@ Find all cities in the US starting with **San** and having a minimum population 
 ```
 CitiesResponse citiesResponse = geoDbApi.findCities(
     FindCitiesRequest.builder()
-        .countryCode("US")
+        .countryCodes("US")
         .namePrefix("San")
         .minPopulation(100000)
         .build()
