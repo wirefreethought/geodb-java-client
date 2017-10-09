@@ -58,6 +58,10 @@ public class GeoDbApi
             ? StringUtils.join(request.getCountryCodes(), ", ")
             : null;
 
+        String excludedCountryCode = request.getExcludedCountryCodes() != null && !request.getExcludedCountryCodes().isEmpty()
+            ? StringUtils.join(request.getExcludedCountryCodes(), ", ")
+            : null;
+
         String nearLocation = null;
         Integer nearLocationRadius = null;
         String nearLocationRadiusUnit = null;
@@ -74,6 +78,7 @@ public class GeoDbApi
         return geoApi.findCitiesUsingGET(
             request.getNamePrefix(),
             countryCodes,
+            excludedCountryCode,
             request.getMinPopulation(),
             nearLocation,
             nearLocationRadius,

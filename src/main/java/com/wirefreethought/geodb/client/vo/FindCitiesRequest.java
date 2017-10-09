@@ -11,6 +11,7 @@ public class FindCitiesRequest
 {
     private String namePrefix;
     private List<String> countryCodes;
+    private List<String> excludedCountryCodes;
     private Integer minPopulation;
     private NearLocationRequest nearLocation;
     private IncludeDeletedMode includeDeleted;
