@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.wirefreethought.geodb.client.GeoDbApi;
 import com.wirefreethought.geodb.client.net.ApiClient;
 import com.wirefreethought.geodb.client.net.ApiException;
 import com.wirefreethought.geodb.client.net.GeoDbApiClient;
@@ -25,6 +24,7 @@ import com.wirefreethought.geodb.client.vo.CurrencyDescriptor;
 import com.wirefreethought.geodb.client.vo.FindCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindCountriesRequest;
 import com.wirefreethought.geodb.client.vo.FindCurrenciesRequest;
+import com.wirefreethought.geodb.client.vo.FindNearbyCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindRegionCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindRegionsRequest;
 import com.wirefreethought.geodb.client.vo.LocationRadiusUnit;
@@ -38,8 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GeoDbApiIntegrationTest
 {
-    private ApiClient apiClient;
     private GeoDbApi api;
+    private ApiClient apiClient;
 
     public GeoDbApiIntegrationTest()
     {
@@ -116,6 +116,24 @@ public class GeoDbApiIntegrationTest
             testFindCurrencies(
                 FindCurrenciesRequest.builder()
                     .countryCode("US")
+                    .build());
+        } catch (ApiException e)
+        {
+            handle(e);
+        }
+    }
+
+    @Test
+    public void testFindNearbyCities()
+    {
+        try
+        {
+            testFindNearbyCities(
+                FindNearbyCitiesRequest.builder()
+                    .cityId(1000)
+                    .minPopulation(100000)
+                    .nearLocationRadius(100)
+                    .nearLocationRadiusUnit(LocationRadiusUnit.MILES)
                     .build());
         } catch (ApiException e)
         {
@@ -320,6 +338,15 @@ public class GeoDbApiIntegrationTest
     private void testFindCurrencies(FindCurrenciesRequest request)
     {
         CurrenciesResponse response = this.api.findCurrencies(request);
+
+        assertValid(response);
+
+        log(response);
+    }
+
+    private void testFindNearbyCities(FindNearbyCitiesRequest request)
+    {
+        CitiesResponse response = this.api.findNearbyCities(request);
 
         assertValid(response);
 

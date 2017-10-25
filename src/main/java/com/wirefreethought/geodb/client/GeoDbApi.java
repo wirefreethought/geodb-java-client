@@ -2,8 +2,6 @@ package com.wirefreethought.geodb.client;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.wirefreethought.geodb.client.GeoApi;
-import com.wirefreethought.geodb.client.LocaleApi;
 import com.wirefreethought.geodb.client.net.ApiClient;
 import com.wirefreethought.geodb.client.vo.CitiesResponse;
 import com.wirefreethought.geodb.client.vo.CityResponse;
@@ -13,6 +11,7 @@ import com.wirefreethought.geodb.client.vo.CurrenciesResponse;
 import com.wirefreethought.geodb.client.vo.FindCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindCountriesRequest;
 import com.wirefreethought.geodb.client.vo.FindCurrenciesRequest;
+import com.wirefreethought.geodb.client.vo.FindNearbyCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindRegionCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindRegionRequest;
 import com.wirefreethought.geodb.client.vo.FindRegionsRequest;
@@ -101,6 +100,11 @@ public class GeoDbApi
             request.getOffset());
     }
 
+    public CountryResponse findCountryByCode(String code)
+    {
+        return this.geoApi.getCountryUsingGET(code);
+    }
+
     public CurrenciesResponse findCurrencies(FindCurrenciesRequest request)
     {
         return localeApi.getCurrenciesUsingGET(
@@ -109,9 +113,16 @@ public class GeoDbApi
             request.getOffset());
     }
 
-    public CountryResponse findCountryByCode(String code)
+    public CitiesResponse findNearbyCities(FindNearbyCitiesRequest request)
     {
-        return this.geoApi.getCountryUsingGET(code);
+        return geoApi.findNearbyCitiesUsingGET(
+            request.getCityId(),
+            request.getMinPopulation(),
+            request.getNearLocationRadius(),
+            toString(request.getNearLocationRadiusUnit()),
+            toString(request.getIncludeDeleted()),
+            request.getLimit(),
+            request.getOffset());
     }
 
     public RegionResponse findRegion(FindRegionRequest request)
