@@ -87,6 +87,7 @@
 
               <configOptions>
                 <dateLibrary>java8</dateLibrary>
+                <java8>true</java8>
                 <useRuntimeException>true</useRuntimeException>
               </configOptions>
             </configuration>
@@ -222,6 +223,11 @@
       <groupId>com.squareup.okhttp</groupId>
       <artifactId>logging-interceptor</artifactId>
       <version>${squareup.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.gsonfire</groupId>
+      <artifactId>gson-fire</artifactId>
+      <version>1.8.1</version>
     </dependency>
     <dependency>
       <groupId>io.swagger</groupId>

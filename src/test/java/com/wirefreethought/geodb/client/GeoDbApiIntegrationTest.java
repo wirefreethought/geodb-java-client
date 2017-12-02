@@ -6,6 +6,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +24,7 @@ import com.wirefreethought.geodb.client.vo.CountriesResponse;
 import com.wirefreethought.geodb.client.vo.CountrySummary;
 import com.wirefreethought.geodb.client.vo.CurrenciesResponse;
 import com.wirefreethought.geodb.client.vo.CurrencyDescriptor;
+import com.wirefreethought.geodb.client.vo.DateTimeResponse;
 import com.wirefreethought.geodb.client.vo.FindCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindCountriesRequest;
 import com.wirefreethought.geodb.client.vo.FindCurrenciesRequest;
@@ -31,6 +35,7 @@ import com.wirefreethought.geodb.client.vo.LocationRadiusUnit;
 import com.wirefreethought.geodb.client.vo.NearLocationRequest;
 import com.wirefreethought.geodb.client.vo.RegionSummary;
 import com.wirefreethought.geodb.client.vo.RegionsResponse;
+import com.wirefreethought.geodb.client.vo.TimeResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -86,6 +91,22 @@ public class GeoDbApiIntegrationTest
                             .radiusUnit(LocationRadiusUnit.MILES)
                             .build())
                     .minPopulation(100000)
+                    .build());
+        } catch (ApiException e)
+        {
+            handle(e);
+        }
+    }
+
+    @Test
+    public void testFindCities_timeZoneIds()
+    {
+        try
+        {
+            testFindCities(
+                FindCitiesRequest.builder()
+                    .minPopulation(100000)
+                    .timeZoneIds(Collections.singletonList("America__Los_Angeles"))
                     .build());
         } catch (ApiException e)
         {
@@ -167,6 +188,42 @@ public class GeoDbApiIntegrationTest
                 FindRegionsRequest.builder()
                     .countryCode("US")
                     .build());
+        } catch (ApiException e)
+        {
+            handle(e);
+        }
+    }
+
+    @Test
+    public void testGetTimeZoneDateTime()
+    {
+        try
+        {
+            DateTimeResponse response = this.api.getTimeZoneDateTime("America__Los_Angeles");
+
+            assertNotNull(response);
+            assertNotNull(response.getData());
+            assertNull(response.getErrors());
+
+            log(response);
+        } catch (ApiException e)
+        {
+            handle(e);
+        }
+    }
+
+    @Test
+    public void testGetTimeZoneTime()
+    {
+        try
+        {
+            TimeResponse response = this.api.getTimeZoneTime("America__Los_Angeles");
+
+            assertNotNull(response);
+            assertNotNull(response.getData());
+            assertNull(response.getErrors());
+
+            log(response);
         } catch (ApiException e)
         {
             handle(e);
@@ -266,7 +323,7 @@ public class GeoDbApiIntegrationTest
             totalCount = response.getMetadata().getTotalCount();
         }
 
-        log.info("Total resuls: {}", totalCount);
+        log.info("Total results: {}", totalCount);
     }
 
     private void log(CountriesResponse response)
@@ -301,6 +358,11 @@ public class GeoDbApiIntegrationTest
         log.info("Total resuls: {}", totalCount);
     }
 
+    private void log(DateTimeResponse response)
+    {
+        log.info("date-time: {}", response.getData().format(DateTimeFormatter.ISO_DATE_TIME));
+    }
+
     private void log(RegionsResponse response)
     {
         response.getData().forEach(c -> {
@@ -315,6 +377,13 @@ public class GeoDbApiIntegrationTest
         }
 
         log.info("Total resuls: {}", totalCount);
+    }
+
+    private void log(TimeResponse response)
+    {
+        String isoTime = response.getData();
+
+        log.info("time: {}", isoTime);
     }
 
     private void testFindCities(FindCitiesRequest request)

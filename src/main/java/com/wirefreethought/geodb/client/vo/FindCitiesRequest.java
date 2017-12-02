@@ -9,12 +9,13 @@ import lombok.Getter;
 @Getter
 public class FindCitiesRequest
 {
-    private String namePrefix;
     private List<String> countryCodes;
     private List<String> excludedCountryCodes;
-    private Integer minPopulation;
-    private NearLocationRequest nearLocation;
     private IncludeDeletedMode includeDeleted;
     private Integer limit;
+    private Integer minPopulation;
+    private String namePrefix;
+    private NearLocationRequest nearLocation;
     private Integer offset;
+    private List<String> timeZoneIds;
 }
