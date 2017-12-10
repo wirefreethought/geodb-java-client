@@ -9,6 +9,7 @@ import com.wirefreethought.geodb.client.vo.CountriesResponse;
 import com.wirefreethought.geodb.client.vo.CountryResponse;
 import com.wirefreethought.geodb.client.vo.CurrenciesResponse;
 import com.wirefreethought.geodb.client.vo.DateTimeResponse;
+import com.wirefreethought.geodb.client.vo.DistanceResponse;
 import com.wirefreethought.geodb.client.vo.FindCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindCountriesRequest;
 import com.wirefreethought.geodb.client.vo.FindCurrenciesRequest;
@@ -16,9 +17,10 @@ import com.wirefreethought.geodb.client.vo.FindNearbyCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindRegionCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindRegionRequest;
 import com.wirefreethought.geodb.client.vo.FindRegionsRequest;
+import com.wirefreethought.geodb.client.vo.GetCityDistanceRequest;
 import com.wirefreethought.geodb.client.vo.IncludeDeletedMode;
 import com.wirefreethought.geodb.client.vo.LocalesResponse;
-import com.wirefreethought.geodb.client.vo.LocationRadiusUnit;
+import com.wirefreethought.geodb.client.vo.DistanceUnit;
 import com.wirefreethought.geodb.client.vo.NearLocationRequest;
 import com.wirefreethought.geodb.client.vo.RegionResponse;
 import com.wirefreethought.geodb.client.vo.RegionsResponse;
@@ -28,7 +30,7 @@ import com.wirefreethought.geodb.client.vo.TimeZonesResponse;
 public class GeoDbApi
 {
     private final static IncludeDeletedMode DEFAULT_INCLUDE_DELETED_MODE = IncludeDeletedMode.NONE;
-    private final static LocationRadiusUnit DEFAULT_RADIUS_UNIT = LocationRadiusUnit.MILES;
+    private final static DistanceUnit DEFAULT_RADIUS_UNIT = DistanceUnit.MILES;
 
     private GeoApi geoApi;
     private LocaleApi localeApi;
@@ -167,6 +169,11 @@ public class GeoDbApi
         return this.geoApi.getCityDateTimeUsingGET(cityId);
     }
 
+    public DistanceResponse getCityDistance(GetCityDistanceRequest request)
+    {
+        return this.geoApi.getCityDistanceUsingGET(request.getFromCityId(), request.getToCityId(), request.getDistanceUnit().getTag());
+    }
+
     public TimeResponse getCityTime(Integer cityId)
     {
         return this.geoApi.getCityTimeUsingGET(cityId);
@@ -209,7 +216,7 @@ public class GeoDbApi
         return mode.getTag();
     }
 
-    private String toString(LocationRadiusUnit radiusUnit)
+    private String toString(DistanceUnit radiusUnit)
     {
         if (radiusUnit == null)
         {

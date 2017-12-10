@@ -25,13 +25,15 @@ import com.wirefreethought.geodb.client.vo.CountrySummary;
 import com.wirefreethought.geodb.client.vo.CurrenciesResponse;
 import com.wirefreethought.geodb.client.vo.CurrencyDescriptor;
 import com.wirefreethought.geodb.client.vo.DateTimeResponse;
+import com.wirefreethought.geodb.client.vo.DistanceResponse;
+import com.wirefreethought.geodb.client.vo.DistanceUnit;
 import com.wirefreethought.geodb.client.vo.FindCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindCountriesRequest;
 import com.wirefreethought.geodb.client.vo.FindCurrenciesRequest;
 import com.wirefreethought.geodb.client.vo.FindNearbyCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindRegionCitiesRequest;
 import com.wirefreethought.geodb.client.vo.FindRegionsRequest;
-import com.wirefreethought.geodb.client.vo.LocationRadiusUnit;
+import com.wirefreethought.geodb.client.vo.GetCityDistanceRequest;
 import com.wirefreethought.geodb.client.vo.NearLocationRequest;
 import com.wirefreethought.geodb.client.vo.RegionSummary;
 import com.wirefreethought.geodb.client.vo.RegionsResponse;
@@ -88,7 +90,7 @@ public class GeoDbApiIntegrationTest
                             .latitude(33.831965)
                             .longitude(-118.376601)
                             .radius(100)
-                            .radiusUnit(LocationRadiusUnit.MILES)
+                            .radiusUnit(DistanceUnit.MILES)
                             .build())
                     .minPopulation(100000)
                     .build());
@@ -154,7 +156,7 @@ public class GeoDbApiIntegrationTest
                     .cityId(1000)
                     .minPopulation(100000)
                     .nearLocationRadius(100)
-                    .nearLocationRadiusUnit(LocationRadiusUnit.MILES)
+                    .nearLocationRadiusUnit(DistanceUnit.MILES)
                     .build());
         } catch (ApiException e)
         {
@@ -188,6 +190,30 @@ public class GeoDbApiIntegrationTest
                 FindRegionsRequest.builder()
                     .countryCode("US")
                     .build());
+        } catch (ApiException e)
+        {
+            handle(e);
+        }
+    }
+
+    @Test
+    public void testGetCityDistance()
+    {
+        try
+        {
+            GetCityDistanceRequest request = GetCityDistanceRequest.builder()
+                .distanceUnit(DistanceUnit.MILES)
+                .fromCityId(5315)
+                .toCityId(100327)
+                .build();
+
+            DistanceResponse response = this.api.getCityDistance(request);
+
+            assertNotNull(response);
+            assertNotNull(response.getData());
+            assertNull(response.getErrors());
+
+            log(response);
         } catch (ApiException e)
         {
             handle(e);
@@ -361,6 +387,11 @@ public class GeoDbApiIntegrationTest
     private void log(DateTimeResponse response)
     {
         log.info("date-time: {}", response.getData().format(DateTimeFormatter.ISO_DATE_TIME));
+    }
+
+    private void log(DistanceResponse response)
+    {
+        log.info("distance: {}", response.getData());
     }
 
     private void log(RegionsResponse response)

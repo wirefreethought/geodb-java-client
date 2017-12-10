@@ -10,5 +10,5 @@ public class NearLocationRequest
     private double latitude;
     private double longitude;
     private int radius;
-    private LocationRadiusUnit radiusUnit;
+    private DistanceUnit radiusUnit;
 }

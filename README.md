@@ -7,7 +7,7 @@ Simplify your life when calling the [GeoDB](https://rapidapi.com/user/wirefreeth
     <dependency>
       <groupId>com.wirefreethought.geodb</groupId>
       <artifactId>geodb-java-client</artifactId>
-      <version>1.0.4</version>
+      <version>1.0.5</version>
     </dependency>
     ```
 2. Create an account on [RapidAPI](https://rapidapi.com). As part of account creation, Rapid asks for credit-card info. As long as you stay within the free usage limits of the Basic plan, your credit card will not be charged.
@@ -82,6 +82,18 @@ RegionsResponse regionsResponse = geoDbApi.findRegions(
         .build()
 );
 ```
+
+Find the distance between Los Angeles, CA and Dallas, TX.
+```
+DistanceResponse distanceResponse = geoDbApi.getCityDistance(
+    DistanceResponse.builder()
+        .fromCityId(93831)
+        .toCityId(65474)
+        .distanceUnit(DistanceUnit.MILES)
+        .build()
+);
+```
+
 
 ## API Docs
 For detailed REST docs, including all supported endpoints as well as request/response format per endpoint, [go here](https://wirefreethought.github.io/geo-db-docs/).

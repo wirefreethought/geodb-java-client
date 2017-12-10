@@ -12,6 +12,6 @@ public class FindNearbyCitiesRequest
     private Integer limit;
     private Integer minPopulation;
     private int nearLocationRadius;
-    private LocationRadiusUnit nearLocationRadiusUnit;
+    private DistanceUnit nearLocationRadiusUnit;
     private Integer offset;
 }
