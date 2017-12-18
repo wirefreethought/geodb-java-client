@@ -171,7 +171,7 @@ public class GeoDbApi
 
     public DistanceResponse getCityDistance(GetCityDistanceRequest request)
     {
-        return this.geoApi.getCityDistanceUsingGET(request.getFromCityId(), request.getToCityId(), request.getDistanceUnit().getTag());
+        return this.geoApi.getCityDistanceUsingGET(request.getToCityId(), request.getFromCityId(), request.getDistanceUnit().getTag());
     }
 
     public TimeResponse getCityTime(Integer cityId)
