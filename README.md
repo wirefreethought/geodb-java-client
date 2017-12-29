@@ -2,14 +2,14 @@
 Simplify your life when calling the [GeoDB](https://rapidapi.com/user/wirefreethought/package/GeoDB) service form a Java or Android app by using this library.
 
 ## Setup
-1. Add the following compile-time dependency to your Maven pom.xml:
-    ```
-    <dependency>
-      <groupId>com.wirefreethought.geodb</groupId>
-      <artifactId>geodb-java-client</artifactId>
-      <version>1.0.7</version>
-    </dependency>
-    ```
+Add the following compile-time dependency to your Maven pom.xml:
+ ```
+<dependency>
+    <groupId>com.wirefreethought.geodb</groupId>
+    <artifactId>geodb-java-client</artifactId>
+    <version>1.0.7</version>
+</dependency>
+```
 
 If you're using the FREE service:
 ```
