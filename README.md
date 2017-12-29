@@ -7,21 +7,26 @@ Simplify your life when calling the [GeoDB](https://rapidapi.com/user/wirefreeth
     <dependency>
       <groupId>com.wirefreethought.geodb</groupId>
       <artifactId>geodb-java-client</artifactId>
-      <version>1.0.6</version>
+      <version>1.0.7</version>
     </dependency>
     ```
-2. Create an account on [RapidAPI](https://rapidapi.com). As part of account creation, Rapid asks for credit-card info. As long as you stay within the free usage limits of the Basic plan, your credit card will not be charged.
-3. [Select](https://rapidapi.com/user/wirefreethought/package/GeoDB/pricing) a GeoDB plan.
-4. In the project root, copy **build.properties.sample** to **build.properties**.
-5. In **build.properties**, substitute YOUR_MASHAPE_KEY for the key assigned to you by Rapid.
-6. From the project root, run: ```mvn test```
+
+If you're using the FREE service:
+```
+GeoDbApiClient apiClient = new GeoDbApiClient(GeoDbInstanceType.FREE);
+```
+
+If you're using the PRO service:
+1. Create an account on [RapidAPI](https://rapidapi.com). As part of account creation, Rapid asks for credit-card info. As long as you stay within the free usage limits of the Basic plan, your credit card will not be charged.
+2. [Select](https://rapidapi.com/user/wirefreethought/package/GeoDB/pricing) a GeoDB plan.
+3. Instantiate the client.
+    ```
+    GeoDbApiClient apiClient = new GeoDbApiClient(GeoDbInstanceType.PRO);
+    apiClient.setApiKey(YOUR_MASHAPE_KEY);
+    ```
 
 ## Usage
 ```
-// Setup
-GeoDbApiClient apiClient = new GeoDbApiClient();
-apiClient.setApiKey(YOUR_MASHAPE_KEY);
-
 GeoDbApi geoDbApi = new GeoDbApi(apiClient);
 
 // Execute service calls. (See below for examples.)
@@ -96,7 +101,7 @@ DistanceResponse distanceResponse = geoDbApi.getCityDistance(
 
 
 ## API Docs
-For detailed REST docs, including all supported endpoints as well as request/response format per endpoint, [go here](https://wirefreethought.github.io/geo-db-docs/).
+For detailed REST docs, [go here](http://geodb-city-api.wirefreethought.com/docs/api-reference/rest-api).
 
 
 

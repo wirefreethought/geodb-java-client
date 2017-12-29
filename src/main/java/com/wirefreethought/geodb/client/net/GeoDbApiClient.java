@@ -20,6 +20,13 @@ public class GeoDbApiClient extends ApiClient
         "UserSecurity"
     };
 
+    public GeoDbApiClient(GeoDbInstanceType type)
+    {
+        super();
+
+        setBasePath(type.getInstanceUri());
+    }
+
     @Override
     public Call buildCall(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams,
         Map<String, Object> formParams, String[] authNames, ProgressRequestListener progressRequestListener) throws ApiException

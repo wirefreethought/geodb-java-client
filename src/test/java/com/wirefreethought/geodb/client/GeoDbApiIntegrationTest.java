@@ -18,6 +18,7 @@ import org.junit.runners.JUnit4;
 import com.wirefreethought.geodb.client.net.ApiClient;
 import com.wirefreethought.geodb.client.net.ApiException;
 import com.wirefreethought.geodb.client.net.GeoDbApiClient;
+import com.wirefreethought.geodb.client.net.GeoDbInstanceType;
 import com.wirefreethought.geodb.client.vo.CitiesResponse;
 import com.wirefreethought.geodb.client.vo.CitySummary;
 import com.wirefreethought.geodb.client.vo.CountriesResponse;
@@ -50,7 +51,7 @@ public class GeoDbApiIntegrationTest
 
     public GeoDbApiIntegrationTest()
     {
-        ApiClient client = new GeoDbApiClient();
+        ApiClient client = new GeoDbApiClient(GeoDbInstanceType.PRO);
         client.setApiKey(TestProperties.getApiKey());
 
         this.apiClient = client;
