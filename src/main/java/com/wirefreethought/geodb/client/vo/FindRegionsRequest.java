@@ -9,5 +9,6 @@ public class FindRegionsRequest
 {
     private String countryCode;
     private Integer limit;
+    private String namePrefix;
     private Integer offset;
 }

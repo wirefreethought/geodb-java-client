@@ -43,7 +43,7 @@ public class GeoDbApi
 
     public CountriesResponse findAllCountries(Integer limit, Integer offset)
     {
-        return geoApi.getCountriesUsingGET(null, limit, offset);
+        return geoApi.getCountriesUsingGET(null, null, limit, offset);
     }
 
     public CurrenciesResponse findAllCurrencies(Integer limit, Integer offset)
@@ -110,6 +110,7 @@ public class GeoDbApi
     public CountriesResponse findCountries(FindCountriesRequest request)
     {
         return geoApi.getCountriesUsingGET(
+            request.getNamePrefix(),
             request.getCurrencyCode(),
             request.getLimit(),
             request.getOffset());
@@ -160,6 +161,7 @@ public class GeoDbApi
     {
         return geoApi.getRegionsUsingGET(
             request.getCountryCode(),
+            request.getNamePrefix(),
             request.getLimit(),
             request.getOffset());
     }

@@ -9,5 +9,6 @@ public class FindCountriesRequest
 {
     private String currencyCode;
     private Integer limit;
+    private String namePrefix;
     private Integer offset;
 }
