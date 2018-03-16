@@ -7,7 +7,7 @@ Add the following compile-time dependency to your Maven pom.xml:
 <dependency>
     <groupId>com.wirefreethought.geodb</groupId>
     <artifactId>geodb-java-client</artifactId>
-    <version>1.0.12</version>
+    <version>1.0.13-SNAPSHOT</version>
 </dependency>
 ```
 
