@@ -7,7 +7,7 @@ Add the following compile-time dependency to your Maven pom.xml:
 <dependency>
     <groupId>com.wirefreethought.geodb</groupId>
     <artifactId>geodb-java-client</artifactId>
-    <version>1.0.9</version>
+    <version>1.0.11</version>
 </dependency>
 ```
 
@@ -47,7 +47,7 @@ CitiesResponse citiesResponse = geoDbApi.findCities(
 );
 ```
 
-Find all cities and towns in the Los Angeles area and having a minimum population of 50,000.
+Find all cities and towns in the Los Angeles area and having a minimum population of 50,000 - sorting results by population, high to low.
 ```
 // Get the location for Los Angeles.
 CityResponse cityResponse = geoDbApi.findCityById(98364);
@@ -64,17 +64,29 @@ CitiesResponse citiesResponse = geoDbApi.findCities(
                 .radiusUnit(LocationRadiusUnit.MILES)
                 .build())
         .minPopulation(50000)
+        .sort(
+            GeoDbSort.builder()
+                .fields(new SortField[] {
+                    new SortField(CitySortFields.FindCities.POPULATION, true)
+                })
+                .build())
         .build()
 )
 ```
 
-Find all cities in California having a minimum population of 100,000.
+Find all cities in California having a minimum population of 100,000 - sorting results by population, low to high.
 ```
 CitiesResponse citiesResponse = geoDbApi.findRegionCities(
     FindRegionCitiesRequest.builder()
         .countryCode("US")
         .regionCode("CA")
         .minPopulation(100000)
+        .sort(
+            GeoDbSort.builder()
+                .fields(new SortField[] {
+                    new SortField(CitySortFields.FindCities.POPULATION, false)
+                })
+                .build())
         .build()
 );
 ```
