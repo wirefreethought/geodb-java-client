@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class NearLocationRequest
+public class GeoDbLocationConstraint
 {
     private double latitude;
     private double longitude;
     private int radius;
-    private DistanceUnit radiusUnit;
+    private GeoDbDistanceUnit distanceUnit;
 }

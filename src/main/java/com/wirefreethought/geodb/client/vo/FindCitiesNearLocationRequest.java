@@ -5,13 +5,13 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class FindNearbyCitiesRequest
+public class FindCitiesNearLocationRequest
 {
-    private Integer cityId;
     private IncludeDeletedMode includeDeleted;
     private Integer limit;
     private Integer minPopulation;
-    private int nearLocationRadius;
-    private DistanceUnit nearLocationRadiusUnit;
+    private String namePrefix;
+    private GeoDbLocationConstraint nearLocation;
     private Integer offset;
+    private GeoDbSort sort;
 }

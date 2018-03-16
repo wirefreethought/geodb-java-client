@@ -15,7 +15,8 @@ public class FindCitiesRequest
     private Integer limit;
     private Integer minPopulation;
     private String namePrefix;
-    private NearLocationRequest nearLocation;
+    private GeoDbLocationConstraint nearLocation;
     private Integer offset;
+    private GeoDbSort sort;
     private List<String> timeZoneIds;
 }

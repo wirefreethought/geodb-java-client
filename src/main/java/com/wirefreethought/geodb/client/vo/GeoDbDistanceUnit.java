@@ -2,14 +2,14 @@ package com.wirefreethought.geodb.client.vo;
 
 import lombok.Getter;
 
-public enum DistanceUnit
+public enum GeoDbDistanceUnit
 {
     KILOMETERS("km"), MILES("mi");
 
     @Getter
     private String tag;
 
-    DistanceUnit(String tag)
+    GeoDbDistanceUnit(String tag)
     {
         this.tag = tag;
     }
