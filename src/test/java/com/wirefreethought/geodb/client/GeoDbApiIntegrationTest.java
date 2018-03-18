@@ -139,6 +139,30 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
+    public void testFindCitiesNearCity()
+    {
+        try
+        {
+            testFindCitiesNearCity(
+                FindCitiesNearCityRequest.builder()
+                    .cityId(1000)
+                    .minPopulation(100000)
+                    .radius(100)
+                    .distanceUnit(GeoDbDistanceUnit.MILES)
+                    .sort(
+                        GeoDbSort.builder()
+                            .fields(new SortField[] {
+                                new SortField(CitySortFields.FindCities.POPULATION, true)
+                            })
+                            .build())
+                    .build());
+        } catch (ApiException e)
+        {
+            handle(e);
+        }
+    }
+
+    @Test
     public void testFindCountries_currencyCode()
     {
         try
@@ -161,30 +185,6 @@ public class GeoDbApiIntegrationTest
             testFindCurrencies(
                 FindCurrenciesRequest.builder()
                     .countryCode("US")
-                    .build());
-        } catch (ApiException e)
-        {
-            handle(e);
-        }
-    }
-
-    @Test
-    public void testFindNearbyCities()
-    {
-        try
-        {
-            testFindNearbyCities(
-                FindCitiesNearCityRequest.builder()
-                    .cityId(1000)
-                    .minPopulation(100000)
-                    .radius(100)
-                    .distanceUnit(GeoDbDistanceUnit.MILES)
-                    .sort(
-                        GeoDbSort.builder()
-                            .fields(new SortField[] {
-                                new SortField(CitySortFields.FindCities.POPULATION, true)
-                            })
-                            .build())
                     .build());
         } catch (ApiException e)
         {
@@ -460,6 +460,15 @@ public class GeoDbApiIntegrationTest
         log(response);
     }
 
+    private void testFindCitiesNearCity(FindCitiesNearCityRequest request)
+    {
+        CitiesResponse response = this.api.findCities(request);
+
+        assertValid(response);
+
+        log(response);
+    }
+
     private void testFindCountries(FindCountriesRequest request)
     {
         CountriesResponse response = this.api.findCountries(request);
@@ -472,15 +481,6 @@ public class GeoDbApiIntegrationTest
     private void testFindCurrencies(FindCurrenciesRequest request)
     {
         CurrenciesResponse response = this.api.findCurrencies(request);
-
-        assertValid(response);
-
-        log(response);
-    }
-
-    private void testFindNearbyCities(FindCitiesNearCityRequest request)
-    {
-        CitiesResponse response = this.api.findCities(request);
 
         assertValid(response);
 
