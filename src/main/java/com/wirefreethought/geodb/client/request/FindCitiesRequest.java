@@ -1,6 +1,10 @@
-package com.wirefreethought.geodb.client.vo;
+package com.wirefreethought.geodb.client.request;
 
 import java.util.List;
+
+import com.wirefreethought.geodb.client.model.GeoDbLocationConstraint;
+import com.wirefreethought.geodb.client.model.GeoDbSort;
+import com.wirefreethought.geodb.client.model.IncludeDeletedMode;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.squareup.okhttp.Call;
+import com.wirefreethought.geodb.client.model.GeoDbInstanceType;
 import com.wirefreethought.geodb.client.net.ApiClient;
 import com.wirefreethought.geodb.client.net.ApiException;
 import com.wirefreethought.geodb.client.net.Pair;

@@ -1,4 +1,4 @@
-package com.wirefreethought.geodb.client.vo;
+package com.wirefreethought.geodb.client.model;
 
 import java.util.Arrays;
 import java.util.Collections;

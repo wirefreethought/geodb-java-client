@@ -1,4 +1,6 @@
-package com.wirefreethought.geodb.client.vo;
+package com.wirefreethought.geodb.client.request;
+
+import com.wirefreethought.geodb.client.model.GeoDbDistanceUnit;
 
 import lombok.Builder;
 import lombok.Getter;
