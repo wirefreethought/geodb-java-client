@@ -9,7 +9,7 @@
 
   <groupId>com.wirefreethought.geodb</groupId>
   <artifactId>geodb-java-client</artifactId>
-  <version>1.0.13-SNAPSHOT</version>
+  <version>1.1.1-SNAPSHOT</version>
 
   <name>GeoDB Java Client</name>
   <description>This library provides Java client bindings to the GeoDB service.</description>

@@ -7,7 +7,7 @@ Add the following compile-time dependency to your Maven pom.xml:
 <dependency>
     <groupId>com.wirefreethought.geodb</groupId>
     <artifactId>geodb-java-client</artifactId>
-    <version>1.0.13-SNAPSHOT</version>
+    <version>1.1.1-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -40,7 +40,7 @@ Find all cities in the US starting with **San** and having a minimum population 
 ```
 CitiesResponse citiesResponse = geoDbApi.findCities(
     FindCitiesRequest.builder()
-        .countryCodes("US")
+        .countryIds("US")
         .namePrefix("San")
         .minPopulation(100000)
         .build()
@@ -50,7 +50,7 @@ CitiesResponse citiesResponse = geoDbApi.findCities(
 Find all cities and towns in the Los Angeles area and having a minimum population of 50,000 - sorting results by population, high to low.
 ```
 // Get the location for Los Angeles.
-CityResponse cityResponse = geoDbApi.findCityById(98364);
+CityResponse cityResponse = geoDbApi.findCityById("Q65");
 GeoLocation cityLocation = cityResponse.getData().getLocation();
 
 // Find all cities/towns within 50 miles of this location.
@@ -78,7 +78,7 @@ Find all cities in California having a minimum population of 100,000 - sorting r
 ```
 CitiesResponse citiesResponse = geoDbApi.findRegionCities(
     FindRegionCitiesRequest.builder()
-        .countryCode("US")
+        .countryId("US")
         .regionCode("CA")
         .minPopulation(100000)
         .sort(
@@ -95,7 +95,7 @@ Find all states in the US.
 ```
 RegionsResponse regionsResponse = geoDbApi.findRegions(
     FindRegionsRequest.builder()
-        .countryCode("US")
+        .countryId("US")
         .build()
 );
 ```
@@ -104,8 +104,8 @@ Find the distance between Los Angeles, CA and Dallas, TX.
 ```
 DistanceResponse distanceResponse = geoDbApi.getCityDistance(
     DistanceResponse.builder()
-        .fromCityId(93831)
-        .toCityId(65474)
+        .fromCityId("Q65")
+        .toCityId("Q16557")
         .distanceUnit(DistanceUnit.MILES)
         .build()
 );
