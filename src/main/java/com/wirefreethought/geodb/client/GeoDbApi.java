@@ -4,32 +4,35 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.wirefreethought.geodb.client.model.CitiesResponse;
+import com.wirefreethought.geodb.client.model.CityResponse;
+import com.wirefreethought.geodb.client.model.CountriesResponse;
+import com.wirefreethought.geodb.client.model.CountryResponse;
+import com.wirefreethought.geodb.client.model.CurrenciesResponse;
+import com.wirefreethought.geodb.client.model.DateTimeResponse;
+import com.wirefreethought.geodb.client.model.DistanceResponse;
 import com.wirefreethought.geodb.client.model.GeoDbDistanceUnit;
 import com.wirefreethought.geodb.client.model.GeoDbLocationConstraint;
 import com.wirefreethought.geodb.client.model.GeoDbSort;
 import com.wirefreethought.geodb.client.model.IncludeDeletedMode;
+import com.wirefreethought.geodb.client.model.LanguagesResponse;
+import com.wirefreethought.geodb.client.model.LocalesResponse;
+import com.wirefreethought.geodb.client.model.RegionResponse;
+import com.wirefreethought.geodb.client.model.RegionsResponse;
+import com.wirefreethought.geodb.client.model.TimeResponse;
+import com.wirefreethought.geodb.client.model.TimeZonesResponse;
 import com.wirefreethought.geodb.client.net.ApiClient;
 import com.wirefreethought.geodb.client.request.FindCitiesNearCityRequest;
 import com.wirefreethought.geodb.client.request.FindCitiesNearLocationRequest;
 import com.wirefreethought.geodb.client.request.FindCitiesRequest;
+import com.wirefreethought.geodb.client.request.FindCityRequest;
 import com.wirefreethought.geodb.client.request.FindCountriesRequest;
+import com.wirefreethought.geodb.client.request.FindCountryRequest;
 import com.wirefreethought.geodb.client.request.FindCurrenciesRequest;
 import com.wirefreethought.geodb.client.request.FindRegionCitiesRequest;
 import com.wirefreethought.geodb.client.request.FindRegionRequest;
 import com.wirefreethought.geodb.client.request.FindRegionsRequest;
 import com.wirefreethought.geodb.client.request.GetCityDistanceRequest;
-import com.wirefreethought.geodb.client.vo.CitiesResponse;
-import com.wirefreethought.geodb.client.vo.CityResponse;
-import com.wirefreethought.geodb.client.vo.CountriesResponse;
-import com.wirefreethought.geodb.client.vo.CountryResponse;
-import com.wirefreethought.geodb.client.vo.CurrenciesResponse;
-import com.wirefreethought.geodb.client.vo.DateTimeResponse;
-import com.wirefreethought.geodb.client.vo.DistanceResponse;
-import com.wirefreethought.geodb.client.vo.LocalesResponse;
-import com.wirefreethought.geodb.client.vo.RegionResponse;
-import com.wirefreethought.geodb.client.vo.RegionsResponse;
-import com.wirefreethought.geodb.client.vo.TimeResponse;
-import com.wirefreethought.geodb.client.vo.TimeZonesResponse;
 
 public class GeoDbApi
 {
@@ -45,14 +48,18 @@ public class GeoDbApi
         this.localeApi = new LocaleApi(client);
     }
 
-    public CountriesResponse findAllCountries(Integer limit, Integer offset)
+    public CountriesResponse findAllCountries(boolean asciiMode, String languageCode, Integer limit, Integer offset)
     {
-        return geoApi.getCountriesUsingGET(null, null, limit, offset);
+        return geoApi.getCountriesUsingGET(null, null, asciiMode, languageCode, limit, offset);
     }
 
     public CurrenciesResponse findAllCurrencies(Integer limit, Integer offset)
     {
         return localeApi.getCurrenciesUsingGET(null, limit, offset);
+    }
+
+    public LanguagesResponse findAllLanguages(Integer limit, Integer offset) {
+        return localeApi.getLanguagesUsingGET(limit, offset);
     }
 
     public LocalesResponse findAllLocales(Integer limit, Integer offset)
@@ -72,10 +79,12 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getRadius(),
             toString(request.getDistanceUnit()),
-            toString(request.getIncludeDeleted()),
+            request.getAsciiMode(),
+            request.getLanguageCode(),
             request.getLimit(),
             request.getOffset(),
-            toString(request.getSort()));
+            toString(request.getSort()),
+            toString(request.getIncludeDeleted()));
     }
 
     public CitiesResponse findCities(FindCitiesNearLocationRequest request)
@@ -83,23 +92,24 @@ public class GeoDbApi
         return geoApi.findCitiesNearLocationUsingGET(
             toLocationId(request.getNearLocation()),
             request.getMinPopulation(),
-            request.getNamePrefix(),
             request.getNearLocation().getRadius(),
             toString(request.getNearLocation().getDistanceUnit()),
-            toString(request.getIncludeDeleted()),
+            request.getAsciiMode(),
+            request.getLanguageCode(),
             request.getLimit(),
             request.getOffset(),
-            toString(request.getSort()));
+            toString(request.getSort()),
+            toString(request.getIncludeDeleted()));
     }
 
     public CitiesResponse findCities(FindCitiesRequest request)
     {
-        String countryCodes = request.getCountryCodes() != null && !request.getCountryCodes().isEmpty()
-            ? StringUtils.join(request.getCountryCodes(), ", ")
+        String countryIds = request.getCountryIds() != null && !request.getCountryIds().isEmpty()
+            ? StringUtils.join(request.getCountryIds(), ", ")
             : null;
 
-        String excludedCountryCode = request.getExcludedCountryCodes() != null && !request.getExcludedCountryCodes().isEmpty()
-            ? StringUtils.join(request.getExcludedCountryCodes(), ", ")
+        String excludedCountryIds = request.getExcludedCountryIds() != null && !request.getExcludedCountryIds().isEmpty()
+            ? StringUtils.join(request.getExcludedCountryIds(), ", ")
             : null;
 
         String timeZoneIds = request.getTimeZoneIds() != null && !request.getTimeZoneIds().isEmpty()
@@ -121,22 +131,27 @@ public class GeoDbApi
 
         return geoApi.findCitiesUsingGET(
             request.getNamePrefix(),
-            countryCodes,
-            excludedCountryCode,
+            countryIds,
+            excludedCountryIds,
             request.getMinPopulation(),
             location,
             locationRadius,
             distanceUnit,
             timeZoneIds,
-            toString(request.getIncludeDeleted()),
+            request.getAsciiMode(),
+            request.getLanguageCode(),
             request.getLimit(),
             request.getOffset(),
-            toString(request.getSort()));
+            toString(request.getSort()),
+            toString(request.getIncludeDeleted()));
     }
 
-    public CityResponse findCityById(Integer id)
+    public CityResponse findCity(FindCityRequest request)
     {
-        return this.geoApi.getCityUsingGET(id);
+        return this.geoApi.getCityUsingGET(
+            request.getCityId(),
+            request.getAsciiMode(),
+            request.getLanguageCode());
     }
 
     public CountriesResponse findCountries(FindCountriesRequest request)
@@ -144,60 +159,76 @@ public class GeoDbApi
         return geoApi.getCountriesUsingGET(
             request.getNamePrefix(),
             request.getCurrencyCode(),
+            request.getAsciiMode(),
+            request.getLanguageCode(),
             request.getLimit(),
             request.getOffset());
     }
 
-    public CountryResponse findCountryByCode(String code)
+    public CountryResponse findCountry(FindCountryRequest request)
     {
-        return this.geoApi.getCountryUsingGET(code);
+        return this.geoApi.getCountryUsingGET(
+            request.getCountryId(),
+            request.getAsciiMode(),
+            request.getLanguageCode());
     }
 
     public CurrenciesResponse findCurrencies(FindCurrenciesRequest request)
     {
         return localeApi.getCurrenciesUsingGET(
-            request.getCountryCode(),
+            request.getCountryId(),
             request.getLimit(),
             request.getOffset());
     }
 
     public RegionResponse findRegion(FindRegionRequest request)
     {
-        return this.geoApi.getRegionUsingGET(request.getCountryCode(), request.getRegionCode());
+        return this.geoApi.getRegionUsingGET(
+            request.getCountryId(),
+            request.getRegionCode(),
+            request.getAsciiMode(),
+            request.getLanguageCode());
     }
 
     public CitiesResponse findRegionCities(FindRegionCitiesRequest request)
     {
         return geoApi.findRegionCitiesUsingGET(
-            request.getCountryCode(),
+            request.getCountryId(),
             request.getRegionCode(),
             request.getMinPopulation(),
-            toString(request.getIncludeDeleted()),
+            request.getAsciiMode(),
+            request.getLanguageCode(),
             request.getLimit(),
             request.getOffset(),
-            toString(request.getSort()));
+            toString(request.getSort()),
+            toString(request.getIncludeDeleted()));
     }
 
     public RegionsResponse findRegions(FindRegionsRequest request)
     {
         return geoApi.getRegionsUsingGET(
-            request.getCountryCode(),
+            request.getCountryId(),
             request.getNamePrefix(),
+            request.getAsciiMode(),
+            request.getLanguageCode(),
             request.getLimit(),
             request.getOffset());
     }
 
-    public DateTimeResponse getCityDateTime(Integer cityId)
+    public DateTimeResponse getCityDateTime(String cityId)
     {
         return this.geoApi.getCityDateTimeUsingGET(cityId);
     }
 
     public DistanceResponse getCityDistance(GetCityDistanceRequest request)
     {
-        return this.geoApi.getCityDistanceUsingGET(request.getToCityId(), request.getFromCityId(), request.getDistanceUnit().getTag());
+        return this.geoApi.getCityDistanceUsingGET(
+            request.getToCityId(),
+            request.getFromCityId(),
+            request.getDistanceUnit().getTag());
     }
 
-    public TimeResponse getCityTime(Integer cityId)
+    public TimeResponse getCityTime(String cityId)
     {
         return this.geoApi.getCityTimeUsingGET(cityId);
     }

@@ -13,9 +13,11 @@ import lombok.Getter;
 @Getter
 public class FindCitiesRequest
 {
-    private List<String> countryCodes;
-    private List<String> excludedCountryCodes;
+    private Boolean asciiMode;
+    private List<String> countryIds;
+    private List<String> excludedCountryIds;
     private IncludeDeletedMode includeDeleted;
+    private String languageCode;
     private Integer limit;
     private Integer minPopulation;
     private String namePrefix;

@@ -5,12 +5,9 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class FindCountriesRequest
+public class FindCountryRequest
 {
     private Boolean asciiMode;
-    private String currencyCode;
+    private String countryId;
     private String languageCode;
-    private Integer limit;
-    private String namePrefix;
-    private Integer offset;
 }

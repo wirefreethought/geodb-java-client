@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class GetCityDistanceRequest
 {
-    private Integer fromCityId;
-    private Integer toCityId;
+    private String fromCityId;
+    private String toCityId;
     private GeoDbDistanceUnit distanceUnit;
 }

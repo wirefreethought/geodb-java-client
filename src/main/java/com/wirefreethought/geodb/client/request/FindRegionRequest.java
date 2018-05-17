@@ -7,6 +7,8 @@ import lombok.Getter;
 @Getter
 public class FindRegionRequest
 {
-    private String countryCode;
+    private Boolean asciiMode;
+    private String countryId;
+    private String languageCode;
     private String regionCode;
 }

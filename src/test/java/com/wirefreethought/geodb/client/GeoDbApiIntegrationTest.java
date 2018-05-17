@@ -15,12 +15,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import com.wirefreethought.geodb.client.model.CitiesResponse;
 import com.wirefreethought.geodb.client.model.CitySortFields;
+import com.wirefreethought.geodb.client.model.CitySummary;
+import com.wirefreethought.geodb.client.model.CountriesResponse;
+import com.wirefreethought.geodb.client.model.CountrySummary;
+import com.wirefreethought.geodb.client.model.CurrenciesResponse;
+import com.wirefreethought.geodb.client.model.CurrencyDescriptor;
+import com.wirefreethought.geodb.client.model.DateTimeResponse;
+import com.wirefreethought.geodb.client.model.DistanceResponse;
 import com.wirefreethought.geodb.client.model.GeoDbDistanceUnit;
 import com.wirefreethought.geodb.client.model.GeoDbInstanceType;
 import com.wirefreethought.geodb.client.model.GeoDbLocationConstraint;
 import com.wirefreethought.geodb.client.model.GeoDbSort;
 import com.wirefreethought.geodb.client.model.GeoDbSort.SortField;
+import com.wirefreethought.geodb.client.model.RegionSummary;
+import com.wirefreethought.geodb.client.model.RegionsResponse;
+import com.wirefreethought.geodb.client.model.TimeResponse;
 import com.wirefreethought.geodb.client.net.ApiClient;
 import com.wirefreethought.geodb.client.net.ApiException;
 import com.wirefreethought.geodb.client.net.GeoDbApiClient;
@@ -31,17 +42,6 @@ import com.wirefreethought.geodb.client.request.FindCurrenciesRequest;
 import com.wirefreethought.geodb.client.request.FindRegionCitiesRequest;
 import com.wirefreethought.geodb.client.request.FindRegionsRequest;
 import com.wirefreethought.geodb.client.request.GetCityDistanceRequest;
-import com.wirefreethought.geodb.client.vo.CitiesResponse;
-import com.wirefreethought.geodb.client.vo.CitySummary;
-import com.wirefreethought.geodb.client.vo.CountriesResponse;
-import com.wirefreethought.geodb.client.vo.CountrySummary;
-import com.wirefreethought.geodb.client.vo.CurrenciesResponse;
-import com.wirefreethought.geodb.client.vo.CurrencyDescriptor;
-import com.wirefreethought.geodb.client.vo.DateTimeResponse;
-import com.wirefreethought.geodb.client.vo.DistanceResponse;
-import com.wirefreethought.geodb.client.vo.RegionSummary;
-import com.wirefreethought.geodb.client.vo.RegionsResponse;
-import com.wirefreethought.geodb.client.vo.TimeResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -145,7 +145,7 @@ public class GeoDbApiIntegrationTest
         {
             testFindCitiesNearCity(
                 FindCitiesNearCityRequest.builder()
-                    .cityId(1000)
+                    .cityId("1000")
                     .minPopulation(100000)
                     .radius(100)
                     .distanceUnit(GeoDbDistanceUnit.MILES)
@@ -184,7 +184,7 @@ public class GeoDbApiIntegrationTest
         {
             testFindCurrencies(
                 FindCurrenciesRequest.builder()
-                    .countryCode("US")
+                    .countryId("US")
                     .build());
         } catch (ApiException e)
         {
@@ -199,7 +199,7 @@ public class GeoDbApiIntegrationTest
         {
             testFindRegionCities(
                 FindRegionCitiesRequest.builder()
-                    .countryCode("US")
+                    .countryId("US")
                     .regionCode("CA")
                     .minPopulation(100000)
                     .sort(
@@ -222,7 +222,7 @@ public class GeoDbApiIntegrationTest
         {
             testFindRegions(
                 FindRegionsRequest.builder()
-                    .countryCode("US")
+                    .countryId("US")
                     .build());
         } catch (ApiException e)
         {
@@ -237,8 +237,8 @@ public class GeoDbApiIntegrationTest
         {
             GetCityDistanceRequest request = GetCityDistanceRequest.builder()
                 .distanceUnit(GeoDbDistanceUnit.MILES)
-                .fromCityId(5315)
-                .toCityId(100327)
+                .fromCityId("5315")
+                .toCityId("100327")
                 .build();
 
             DistanceResponse response = this.api.getCityDistance(request);
@@ -323,7 +323,7 @@ public class GeoDbApiIntegrationTest
     private void assertValid(CountrySummary country)
     {
         assertTrue(StringUtils.isNotBlank(country.getCode()));
-        assertTrue(StringUtils.isNotBlank(country.getCurrencyCode()));
+        assertTrue(!country.getCurrencyCodes().isEmpty());
         assertTrue(StringUtils.isNotBlank(country.getName()));
     }
 

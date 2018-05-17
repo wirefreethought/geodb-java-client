@@ -81,7 +81,7 @@
 
               <apiPackage>com.wirefreethought.geodb.client</apiPackage>
               <invokerPackage>com.wirefreethought.geodb.client.net</invokerPackage>
-              <modelPackage>com.wirefreethought.geodb.client.vo</modelPackage>
+              <modelPackage>com.wirefreethought.geodb.client.model</modelPackage>
 
               <language>java</language>
 

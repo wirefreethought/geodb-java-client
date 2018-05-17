@@ -10,8 +10,10 @@ import lombok.Getter;
 @Getter
 public class FindRegionCitiesRequest
 {
-    private String countryCode;
+    private Boolean asciiMode;
+    private String countryId;
     private IncludeDeletedMode includeDeleted;
+    private String languageCode;
     private Integer limit;
     private Integer minPopulation;
     private Integer offset;

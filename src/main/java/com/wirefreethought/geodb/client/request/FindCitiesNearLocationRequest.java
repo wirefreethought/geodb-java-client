@@ -11,10 +11,11 @@ import lombok.Getter;
 @Getter
 public class FindCitiesNearLocationRequest
 {
+    private Boolean asciiMode;
     private IncludeDeletedMode includeDeleted;
+    private String languageCode;
     private Integer limit;
     private Integer minPopulation;
-    private String namePrefix;
     private GeoDbLocationConstraint nearLocation;
     private Integer offset;
     private GeoDbSort sort;

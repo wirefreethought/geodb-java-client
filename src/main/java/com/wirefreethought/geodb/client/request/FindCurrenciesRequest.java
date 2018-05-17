@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class FindCurrenciesRequest
 {
-    private String countryCode;
+    private String countryId;
     private Integer limit;
     private Integer offset;
 }
