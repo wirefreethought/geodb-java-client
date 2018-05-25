@@ -1,5 +1,5 @@
 # GeoDB Java Client SDK
-Simplify your life when calling the [GeoDB](https://rapidapi.com/user/wirefreethought/package/GeoDB) service form a Java or Android app by using this library.
+Simplify your life when calling the [GeoDB](https://rapidapi.com/wirefreethought/api/GeoDB%20Cities) service form a Java or Android app by using this library.
 
 ## Setup
 Add the following compile-time dependency to your Maven pom.xml:
@@ -18,7 +18,7 @@ GeoDbApiClient apiClient = new GeoDbApiClient(GeoDbInstanceType.FREE);
 
 If you're using the PRO service:
 1. Create an account on [RapidAPI](https://rapidapi.com). As part of account creation, Rapid asks for credit-card info. As long as you stay within the free usage limits of the Basic plan, your credit card will not be charged.
-2. [Select](https://rapidapi.com/user/wirefreethought/package/GeoDB/pricing) a GeoDB plan.
+2. [Select](https://rapidapi.com/wirefreethought/api/GeoDB%20Cities/pricing) a GeoDB plan.
 3. Instantiate the client.
     ```
     GeoDbApiClient apiClient = new GeoDbApiClient(GeoDbInstanceType.PRO);
