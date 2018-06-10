@@ -9,11 +9,11 @@
 
   <groupId>com.wirefreethought.geodb</groupId>
   <artifactId>geodb-java-client</artifactId>
-  <version>1.1.1-SNAPSHOT</version>
+  <version>1.1.1</version>
 
   <name>GeoDB Java Client</name>
-  <description>This library provides Java client bindings to the GeoDB service.</description>
-  <url>https://github.com/wirefreethought/geo-db-java-client</url>
+  <description>This library provides Java client bindings to the GeoDB Cities service.</description>
+  <url>https://github.com/wirefreethought/geodb-java-client</url>
 
   <licenses>
     <license>
@@ -39,9 +39,9 @@
   </developers>
 
   <scm>
-    <url>https://github.com/wirefreethought/geo-db-java-client</url>
-    <connection>scm:git:git@github.com:wirefreethought/geo-db-java-client.git</connection>
-    <developerConnection>scm:git:git@github.com:wirefreethought/geo-db-java-client.git</developerConnection>
+    <url>https://github.com/wirefreethought/geodb-java-client</url>
+    <connection>scm:git:git@github.com:wirefreethought/geodb-java-client.git</connection>
+    <developerConnection>scm:git:git@github.com:wirefreethought/geodb-java-client.git</developerConnection>
   </scm>
 
   <distributionManagement>

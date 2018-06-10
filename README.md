@@ -1,5 +1,5 @@
 # GeoDB Java Client SDK
-Simplify your life when calling the [GeoDB](https://rapidapi.com/wirefreethought/api/GeoDB%20Cities) service form a Java or Android app by using this library.
+Simplify your life when calling the [GeoDB](https://geodb-cities-api.wirefreethought.com) service form a Java or Android app by using this library.
 
 ## Setup
 Add the following compile-time dependency to your Maven pom.xml:
@@ -113,7 +113,7 @@ DistanceResponse distanceResponse = geoDbApi.getCityDistance(
 
 
 ## API Docs
-For detailed REST docs, [go here](http://geodb-city-api.wirefreethought.com/docs/api-reference/rest-api).
+For detailed REST docs, [go here](http://geodb-cities-api.wirefreethought.com/docs/api-reference/rest-api).
 
 
 
