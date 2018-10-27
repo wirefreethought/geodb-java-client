@@ -50,26 +50,26 @@ public class GeoDbApi
 
     public CountriesResponse findAllCountries(boolean asciiMode, String languageCode, Integer limit, Integer offset)
     {
-        return geoApi.getCountriesUsingGET(null, null, asciiMode, languageCode, limit, offset);
+        return geoApi.getCountriesUsingGET(null, null, asciiMode, languageCode, limit, offset, false);
     }
 
     public CurrenciesResponse findAllCurrencies(Integer limit, Integer offset)
     {
-        return localeApi.getCurrenciesUsingGET(null, limit, offset);
+        return localeApi.getCurrenciesUsingGET(null, limit, offset, false);
     }
 
     public LanguagesResponse findAllLanguages(Integer limit, Integer offset) {
-        return localeApi.getLanguagesUsingGET(limit, offset);
+        return localeApi.getLanguagesUsingGET(limit, offset, false);
     }
 
     public LocalesResponse findAllLocales(Integer limit, Integer offset)
     {
-        return localeApi.getLocalesUsingGET(limit, offset);
+        return localeApi.getLocalesUsingGET(limit, offset, false);
     }
 
     public TimeZonesResponse findAllTimezones(Integer limit, Integer offset)
     {
-        return localeApi.getTimezonesUsingGET(limit, offset);
+        return localeApi.getTimezonesUsingGET(limit, offset, false);
     }
 
     public CitiesResponse findCities(FindCitiesNearCityRequest request)
@@ -84,7 +84,8 @@ public class GeoDbApi
             request.getLimit(),
             request.getOffset(),
             toString(request.getSort()),
-            toString(request.getIncludeDeleted()));
+            toString(request.getIncludeDeleted()),
+            false);
     }
 
     public CitiesResponse findCities(FindCitiesNearLocationRequest request)
@@ -99,7 +100,8 @@ public class GeoDbApi
             request.getLimit(),
             request.getOffset(),
             toString(request.getSort()),
-            toString(request.getIncludeDeleted()));
+            toString(request.getIncludeDeleted()),
+            false);
     }
 
     public CitiesResponse findCities(FindCitiesRequest request)
@@ -143,7 +145,8 @@ public class GeoDbApi
             request.getLimit(),
             request.getOffset(),
             toString(request.getSort()),
-            toString(request.getIncludeDeleted()));
+            toString(request.getIncludeDeleted()),
+            false);
     }
 
     public CityResponse findCity(FindCityRequest request)
@@ -162,7 +165,8 @@ public class GeoDbApi
             request.getAsciiMode(),
             request.getLanguageCode(),
             request.getLimit(),
-            request.getOffset());
+            request.getOffset(),
+            false);
     }
 
     public CountryResponse findCountry(FindCountryRequest request)
@@ -178,7 +182,8 @@ public class GeoDbApi
         return localeApi.getCurrenciesUsingGET(
             request.getCountryId(),
             request.getLimit(),
-            request.getOffset());
+            request.getOffset(),
+            false);
     }
 
     public RegionResponse findRegion(FindRegionRequest request)
@@ -201,7 +206,8 @@ public class GeoDbApi
             request.getLimit(),
             request.getOffset(),
             toString(request.getSort()),
-            toString(request.getIncludeDeleted()));
+            toString(request.getIncludeDeleted()),
+            false);
     }
 
     public RegionsResponse findRegions(FindRegionsRequest request)
@@ -212,7 +218,8 @@ public class GeoDbApi
             request.getAsciiMode(),
             request.getLanguageCode(),
             request.getLimit(),
-            request.getOffset());
+            request.getOffset(),
+            false);
     }
 
     public DateTimeResponse getCityDateTime(String cityId)
