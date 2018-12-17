@@ -23,9 +23,14 @@ public class GeoDbApiClient extends ApiClient
 
     public GeoDbApiClient(GeoDbInstanceType type)
     {
+        this(type.getInstanceUri());
+    }
+
+    public GeoDbApiClient(String instanceUri) {
+
         super();
 
-        setBasePath(type.getInstanceUri());
+        setBasePath(instanceUri);
     }
 
     @Override
