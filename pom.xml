@@ -124,7 +124,7 @@
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
+              <version>1.18.4</version>
             </path>
           </annotationProcessorPaths>
 
@@ -214,7 +214,7 @@
                   <pluginExecutionFilter>
                     <groupId>io.swagger</groupId>
                     <artifactId>swagger-codegen-maven-plugin</artifactId>
-                    <versionRange>[1.0.0-SNAPSHOT,)</versionRange>
+                    <versionRange>[1.0.0,)</versionRange>
                     <goals>
                       <goal>generate</goal>
                     </goals>
