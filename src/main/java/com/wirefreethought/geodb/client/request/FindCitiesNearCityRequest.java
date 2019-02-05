@@ -1,5 +1,7 @@
 package com.wirefreethought.geodb.client.request;
 
+import java.util.Set;
+
 import com.wirefreethought.geodb.client.model.GeoDbDistanceUnit;
 import com.wirefreethought.geodb.client.model.GeoDbSort;
 import com.wirefreethought.geodb.client.model.IncludeDeletedMode;
@@ -21,4 +23,5 @@ public class FindCitiesNearCityRequest
     private Integer offset;
     private int radius;
     private GeoDbSort sort;
+    private Set<CityRequestType> types;
 }

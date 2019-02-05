@@ -1,5 +1,6 @@
 package com.wirefreethought.geodb.client;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +13,7 @@ import com.wirefreethought.geodb.client.model.CurrenciesResponse;
 import com.wirefreethought.geodb.client.model.DateTimeResponse;
 import com.wirefreethought.geodb.client.model.DistanceResponse;
 import com.wirefreethought.geodb.client.model.GeoDbDistanceUnit;
+import com.wirefreethought.geodb.client.model.GeoDbEnum;
 import com.wirefreethought.geodb.client.model.GeoDbLocationConstraint;
 import com.wirefreethought.geodb.client.model.GeoDbSort;
 import com.wirefreethought.geodb.client.model.IncludeDeletedMode;
@@ -39,7 +41,76 @@ public class GeoDbApi
     private final static IncludeDeletedMode DEFAULT_INCLUDE_DELETED_MODE = IncludeDeletedMode.NONE;
     private final static GeoDbDistanceUnit DEFAULT_RADIUS_UNIT = GeoDbDistanceUnit.MILES;
 
+    private static String toLocationId(GeoDbLocationConstraint nearLocationRequest)
+    {
+        String locationStringFormat = "%s%s";
+
+        if (nearLocationRequest.getLatitude() >= 0)
+        {
+            locationStringFormat = "+" + locationStringFormat;
+        }
+
+        if (nearLocationRequest.getLongitude() >= 0)
+        {
+            locationStringFormat = "%s+%s";
+        }
+
+        return String.format(locationStringFormat, "" + nearLocationRequest.getLatitude(), "" + nearLocationRequest.getLongitude());
+    }
+
+    private static String toString(GeoDbDistanceUnit radiusUnit)
+    {
+        return toString(radiusUnit, DEFAULT_RADIUS_UNIT);
+    }
+
+    private static String toString(GeoDbEnum enumValue, GeoDbEnum defaultEnumValue)
+    {
+        return enumValue != null
+            ? enumValue.getTag()
+            : (defaultEnumValue != null
+                ? defaultEnumValue.getTag()
+                : null);
+    }
+
+    private static String toString(GeoDbSort sort)
+    {
+        String sortString = StringUtils.EMPTY;
+
+        if (sort != null)
+        {
+            sortString = sort.getFields().stream()
+                .map(f -> String.format("%s%s", f.isReverse() ? "-" : "+", f.getName()))
+                .collect(Collectors.joining(","));
+        }
+
+        return sortString;
+    }
+
+    private static String toString(IncludeDeletedMode mode)
+    {
+        return toString(mode, DEFAULT_INCLUDE_DELETED_MODE);
+    }
+
+    private static <T extends GeoDbEnum> String toStringFromEnumSet(Set<T> values)
+    {
+        return values != null && !values.isEmpty()
+            ? values.stream()
+                .map(GeoDbEnum::getTag)
+                .collect(Collectors.joining(","))
+            : null;
+    }
+
+    private static String toStringFromStringSet(Set<String> values)
+    {
+        return values != null && !values.isEmpty()
+            ? values.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(","))
+            : null;
+    }
+
     private GeoApi geoApi;
+
     private LocaleApi localeApi;
 
     public GeoDbApi(ApiClient client)
@@ -58,7 +129,8 @@ public class GeoDbApi
         return localeApi.getCurrenciesUsingGET(null, limit, offset, false);
     }
 
-    public LanguagesResponse findAllLanguages(Integer limit, Integer offset) {
+    public LanguagesResponse findAllLanguages(Integer limit, Integer offset)
+    {
         return localeApi.getLanguagesUsingGET(limit, offset, false);
     }
 
@@ -77,6 +149,7 @@ public class GeoDbApi
         return geoApi.findCitiesNearCityUsingGET(
             request.getCityId(),
             request.getMinPopulation(),
+            toStringFromEnumSet(request.getTypes()),
             request.getRadius(),
             toString(request.getDistanceUnit()),
             request.getAsciiMode(),
@@ -93,6 +166,7 @@ public class GeoDbApi
         return geoApi.findCitiesNearLocationUsingGET(
             toLocationId(request.getNearLocation()),
             request.getMinPopulation(),
+            toStringFromEnumSet(request.getTypes()),
             request.getNearLocation().getRadius(),
             toString(request.getNearLocation().getDistanceUnit()),
             request.getAsciiMode(),
@@ -106,18 +180,6 @@ public class GeoDbApi
 
     public CitiesResponse findCities(FindCitiesRequest request)
     {
-        String countryIds = request.getCountryIds() != null && !request.getCountryIds().isEmpty()
-            ? StringUtils.join(request.getCountryIds(), ", ")
-            : null;
-
-        String excludedCountryIds = request.getExcludedCountryIds() != null && !request.getExcludedCountryIds().isEmpty()
-            ? StringUtils.join(request.getExcludedCountryIds(), ", ")
-            : null;
-
-        String timeZoneIds = request.getTimeZoneIds() != null && !request.getTimeZoneIds().isEmpty()
-            ? StringUtils.join(request.getTimeZoneIds(), ", ")
-            : null;
-
         String location = null;
         Integer locationRadius = null;
         String distanceUnit = null;
@@ -133,13 +195,14 @@ public class GeoDbApi
 
         return geoApi.findCitiesUsingGET(
             request.getNamePrefix(),
-            countryIds,
-            excludedCountryIds,
+            toStringFromStringSet(request.getCountryIds()),
+            toStringFromStringSet(request.getExcludedCountryIds()),
             request.getMinPopulation(),
             location,
             locationRadius,
             distanceUnit,
-            timeZoneIds,
+            toStringFromStringSet(request.getTimeZoneIds()),
+            toStringFromEnumSet(request.getTypes()),
             request.getAsciiMode(),
             request.getLanguageCode(),
             request.getLimit(),
@@ -201,6 +264,7 @@ public class GeoDbApi
             request.getCountryId(),
             request.getRegionCode(),
             request.getMinPopulation(),
+            toStringFromEnumSet(request.getTypes()),
             request.getAsciiMode(),
             request.getLanguageCode(),
             request.getLimit(),
@@ -248,56 +312,5 @@ public class GeoDbApi
     public TimeResponse getTimeZoneTime(String zoneId)
     {
         return localeApi.getTimeZoneTimeUsingGET(zoneId);
-    }
-
-    private String toLocationId(GeoDbLocationConstraint nearLocationRequest)
-    {
-        String locationStringFormat = "%s%s";
-
-        if (nearLocationRequest.getLatitude() >= 0)
-        {
-            locationStringFormat = "+" + locationStringFormat;
-        }
-
-        if (nearLocationRequest.getLongitude() >= 0)
-        {
-            locationStringFormat = "%s+%s";
-        }
-
-        return String.format(locationStringFormat, "" + nearLocationRequest.getLatitude(), "" + nearLocationRequest.getLongitude());
-    }
-
-    private String toString(GeoDbDistanceUnit radiusUnit)
-    {
-        if (radiusUnit == null)
-        {
-            radiusUnit = DEFAULT_RADIUS_UNIT;
-        }
-
-        return radiusUnit.getTag();
-    }
-
-    private String toString(GeoDbSort sort)
-    {
-        String sortString = StringUtils.EMPTY;
-
-        if (sort != null)
-        {
-            sortString = sort.getFields().stream()
-                .map(f -> String.format("%s%s", f.isReverse() ? "-" : "+", f.getName()))
-                .collect(Collectors.joining(","));
-        }
-
-        return sortString;
-    }
-
-    private String toString(IncludeDeletedMode mode)
-    {
-        if (mode == null)
-        {
-            mode = DEFAULT_INCLUDE_DELETED_MODE;
-        }
-
-        return mode.getTag();
     }
 }

@@ -35,6 +35,7 @@ import com.wirefreethought.geodb.client.model.TimeResponse;
 import com.wirefreethought.geodb.client.net.ApiClient;
 import com.wirefreethought.geodb.client.net.ApiException;
 import com.wirefreethought.geodb.client.net.GeoDbApiClient;
+import com.wirefreethought.geodb.client.request.CityRequestType;
 import com.wirefreethought.geodb.client.request.FindCitiesNearCityRequest;
 import com.wirefreethought.geodb.client.request.FindCitiesRequest;
 import com.wirefreethought.geodb.client.request.FindCountriesRequest;
@@ -75,6 +76,7 @@ public class GeoDbApiIntegrationTest
                 FindCitiesRequest.builder()
                     .namePrefix("Los")
                     .minPopulation(100000)
+                    .types(Collections.singleton(CityRequestType.CITY))
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {
@@ -103,6 +105,7 @@ public class GeoDbApiIntegrationTest
                             .distanceUnit(GeoDbDistanceUnit.MILES)
                             .build())
                     .minPopulation(100000)
+                    .types(Collections.singleton(CityRequestType.CITY))
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {
@@ -124,7 +127,8 @@ public class GeoDbApiIntegrationTest
             testFindCities(
                 FindCitiesRequest.builder()
                     .minPopulation(100000)
-                    .timeZoneIds(Collections.singletonList("America__Los_Angeles"))
+                    .timeZoneIds(Collections.singleton("America__Los_Angeles"))
+                    .types(Collections.singleton(CityRequestType.CITY))
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {
@@ -149,6 +153,7 @@ public class GeoDbApiIntegrationTest
                     .minPopulation(100000)
                     .radius(100)
                     .distanceUnit(GeoDbDistanceUnit.MILES)
+                    .types(Collections.singleton(CityRequestType.CITY))
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {

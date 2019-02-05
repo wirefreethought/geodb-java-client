@@ -1,5 +1,7 @@
 package com.wirefreethought.geodb.client.request;
 
+import java.util.Set;
+
 import com.wirefreethought.geodb.client.model.GeoDbSort;
 import com.wirefreethought.geodb.client.model.IncludeDeletedMode;
 
@@ -19,4 +21,5 @@ public class FindRegionCitiesRequest
     private Integer offset;
     private String regionCode;
     private GeoDbSort sort;
+    private Set<CityRequestType> types;
 }

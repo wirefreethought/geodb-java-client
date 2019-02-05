@@ -1,6 +1,6 @@
 package com.wirefreethought.geodb.client.request;
 
-import java.util.List;
+import java.util.Set;
 
 import com.wirefreethought.geodb.client.model.GeoDbLocationConstraint;
 import com.wirefreethought.geodb.client.model.GeoDbSort;
@@ -14,8 +14,8 @@ import lombok.Getter;
 public class FindCitiesRequest
 {
     private Boolean asciiMode;
-    private List<String> countryIds;
-    private List<String> excludedCountryIds;
+    private Set<String> countryIds;
+    private Set<String> excludedCountryIds;
     private IncludeDeletedMode includeDeleted;
     private String languageCode;
     private Integer limit;
@@ -24,5 +24,6 @@ public class FindCitiesRequest
     private GeoDbLocationConstraint nearLocation;
     private Integer offset;
     private GeoDbSort sort;
-    private List<String> timeZoneIds;
+    private Set<String> timeZoneIds;
+    private Set<CityRequestType> types;
 }
