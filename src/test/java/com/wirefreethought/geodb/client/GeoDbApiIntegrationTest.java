@@ -149,7 +149,7 @@ public class GeoDbApiIntegrationTest
         {
             testFindCitiesNearCity(
                 FindCitiesNearCityRequest.builder()
-                    .cityId("1000")
+                    .cityId("Q90")
                     .minPopulation(100000)
                     .radius(100)
                     .distanceUnit(GeoDbDistanceUnit.MILES)
