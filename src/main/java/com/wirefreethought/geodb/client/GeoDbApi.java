@@ -5,8 +5,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.wirefreethought.geodb.client.model.CitiesResponse;
-import com.wirefreethought.geodb.client.model.CityResponse;
 import com.wirefreethought.geodb.client.model.CountriesResponse;
 import com.wirefreethought.geodb.client.model.CountryResponse;
 import com.wirefreethought.geodb.client.model.CurrenciesResponse;
@@ -19,11 +17,15 @@ import com.wirefreethought.geodb.client.model.GeoDbSort;
 import com.wirefreethought.geodb.client.model.IncludeDeletedMode;
 import com.wirefreethought.geodb.client.model.LanguagesResponse;
 import com.wirefreethought.geodb.client.model.LocalesResponse;
+import com.wirefreethought.geodb.client.model.PopulatedPlaceResponse;
+import com.wirefreethought.geodb.client.model.PopulatedPlacesResponse;
 import com.wirefreethought.geodb.client.model.RegionResponse;
 import com.wirefreethought.geodb.client.model.RegionsResponse;
 import com.wirefreethought.geodb.client.model.TimeResponse;
 import com.wirefreethought.geodb.client.model.TimeZonesResponse;
 import com.wirefreethought.geodb.client.net.ApiClient;
+import com.wirefreethought.geodb.client.request.CityRequestType;
+import com.wirefreethought.geodb.client.request.FindAdminDivisionsRequest;
 import com.wirefreethought.geodb.client.request.FindCitiesNearCityRequest;
 import com.wirefreethought.geodb.client.request.FindCitiesNearLocationRequest;
 import com.wirefreethought.geodb.client.request.FindCitiesRequest;
@@ -31,6 +33,7 @@ import com.wirefreethought.geodb.client.request.FindCityRequest;
 import com.wirefreethought.geodb.client.request.FindCountriesRequest;
 import com.wirefreethought.geodb.client.request.FindCountryRequest;
 import com.wirefreethought.geodb.client.request.FindCurrenciesRequest;
+import com.wirefreethought.geodb.client.request.FindDivisionsNearCityRequest;
 import com.wirefreethought.geodb.client.request.FindRegionCitiesRequest;
 import com.wirefreethought.geodb.client.request.FindRegionRequest;
 import com.wirefreethought.geodb.client.request.FindRegionsRequest;
@@ -119,6 +122,56 @@ public class GeoDbApi
         this.localeApi = new LocaleApi(client);
     }
 
+    public PopulatedPlacesResponse findAdminDivisions(FindAdminDivisionsRequest request)
+    {
+        String location = null;
+        Integer locationRadius = null;
+        String distanceUnit = null;
+
+        if (request.getNearLocation() != null)
+        {
+            GeoDbLocationConstraint nearLocation = request.getNearLocation();
+
+            location = toLocationId(nearLocation);
+            locationRadius = nearLocation.getRadius();
+            distanceUnit = toString(nearLocation.getDistanceUnit());
+        }
+
+        return geoApi.findAdminDivisionsUsingGET(
+            request.getNamePrefix(),
+            toStringFromStringSet(request.getCountryIds()),
+            toStringFromStringSet(request.getExcludedCountryIds()),
+            request.getMinPopulation(),
+            location,
+            locationRadius,
+            distanceUnit,
+            toStringFromStringSet(request.getTimeZoneIds()),
+            request.getAsciiMode(),
+            request.getLanguageCode(),
+            request.getLimit(),
+            request.getOffset(),
+            toString(request.getSort()),
+            toString(request.getIncludeDeleted()),
+            false);
+    }
+
+    public PopulatedPlacesResponse findAdminDivisions(FindDivisionsNearCityRequest request)
+    {
+        return geoApi.findCitiesNearCityUsingGET(
+            request.getCityId(),
+            request.getMinPopulation(),
+            toString(CityRequestType.ADMIN_DIVISION_2),
+            request.getRadius(),
+            toString(request.getDistanceUnit()),
+            request.getAsciiMode(),
+            request.getLanguageCode(),
+            request.getLimit(),
+            request.getOffset(),
+            toString(request.getSort()),
+            toString(request.getIncludeDeleted()),
+            false);
+    }
+
     public CountriesResponse findAllCountries(boolean asciiMode, String languageCode, Integer limit, Integer offset)
     {
         return geoApi.getCountriesUsingGET(null, null, asciiMode, languageCode, limit, offset, false);
@@ -144,7 +197,7 @@ public class GeoDbApi
         return localeApi.getTimezonesUsingGET(limit, offset, false);
     }
 
-    public CitiesResponse findCities(FindCitiesNearCityRequest request)
+    public PopulatedPlacesResponse findCities(FindCitiesNearCityRequest request)
     {
         return geoApi.findCitiesNearCityUsingGET(
             request.getCityId(),
@@ -161,7 +214,7 @@ public class GeoDbApi
             false);
     }
 
-    public CitiesResponse findCities(FindCitiesNearLocationRequest request)
+    public PopulatedPlacesResponse findCities(FindCitiesNearLocationRequest request)
     {
         return geoApi.findCitiesNearLocationUsingGET(
             toLocationId(request.getNearLocation()),
@@ -178,7 +231,7 @@ public class GeoDbApi
             false);
     }
 
-    public CitiesResponse findCities(FindCitiesRequest request)
+    public PopulatedPlacesResponse findCities(FindCitiesRequest request)
     {
         String location = null;
         Integer locationRadius = null;
@@ -212,7 +265,7 @@ public class GeoDbApi
             false);
     }
 
-    public CityResponse findCity(FindCityRequest request)
+    public PopulatedPlaceResponse findCity(FindCityRequest request)
     {
         return this.geoApi.getCityUsingGET(
             request.getCityId(),
@@ -258,7 +311,7 @@ public class GeoDbApi
             request.getLanguageCode());
     }
 
-    public CitiesResponse findRegionCities(FindRegionCitiesRequest request)
+    public PopulatedPlacesResponse findRegionCities(FindRegionCitiesRequest request)
     {
         return geoApi.findRegionCitiesUsingGET(
             request.getCountryId(),
@@ -312,5 +365,10 @@ public class GeoDbApi
     public TimeResponse getTimeZoneTime(String zoneId)
     {
         return localeApi.getTimeZoneTimeUsingGET(zoneId);
+    }
+
+    private String toString(GeoDbEnum geoDbEnum)
+    {
+        return geoDbEnum.getTag();
     }
 }
