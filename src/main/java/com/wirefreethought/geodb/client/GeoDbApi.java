@@ -24,20 +24,20 @@ import com.wirefreethought.geodb.client.model.RegionsResponse;
 import com.wirefreethought.geodb.client.model.TimeResponse;
 import com.wirefreethought.geodb.client.model.TimeZonesResponse;
 import com.wirefreethought.geodb.client.net.ApiClient;
-import com.wirefreethought.geodb.client.request.CityRequestType;
+import com.wirefreethought.geodb.client.request.PlaceRequestType;
 import com.wirefreethought.geodb.client.request.FindAdminDivisionsRequest;
-import com.wirefreethought.geodb.client.request.FindCitiesNearCityRequest;
-import com.wirefreethought.geodb.client.request.FindCitiesNearLocationRequest;
-import com.wirefreethought.geodb.client.request.FindCitiesRequest;
-import com.wirefreethought.geodb.client.request.FindCityRequest;
+import com.wirefreethought.geodb.client.request.FindPlacesNearPlaceRequest;
+import com.wirefreethought.geodb.client.request.FindPlacesNearLocationRequest;
+import com.wirefreethought.geodb.client.request.FindPlacesRequest;
+import com.wirefreethought.geodb.client.request.FindPlaceRequest;
 import com.wirefreethought.geodb.client.request.FindCountriesRequest;
 import com.wirefreethought.geodb.client.request.FindCountryRequest;
 import com.wirefreethought.geodb.client.request.FindCurrenciesRequest;
-import com.wirefreethought.geodb.client.request.FindDivisionsNearCityRequest;
-import com.wirefreethought.geodb.client.request.FindRegionCitiesRequest;
+import com.wirefreethought.geodb.client.request.FindDivisionsNearPlaceRequest;
+import com.wirefreethought.geodb.client.request.FindRegionPlacesRequest;
 import com.wirefreethought.geodb.client.request.FindRegionRequest;
 import com.wirefreethought.geodb.client.request.FindRegionsRequest;
-import com.wirefreethought.geodb.client.request.GetCityDistanceRequest;
+import com.wirefreethought.geodb.client.request.GetPlaceDistanceRequest;
 
 public class GeoDbApi
 {
@@ -155,12 +155,12 @@ public class GeoDbApi
             false);
     }
 
-    public PopulatedPlacesResponse findAdminDivisions(FindDivisionsNearCityRequest request)
+    public PopulatedPlacesResponse findAdminDivisions(FindDivisionsNearPlaceRequest request)
     {
         return geoApi.findCitiesNearCityUsingGET(
-            request.getCityId(),
+            request.getPlaceId(),
             request.getMinPopulation(),
-            toString(CityRequestType.ADMIN_DIVISION_2),
+            toString(PlaceRequestType.ADMIN_DIVISION_2),
             request.getRadius(),
             toString(request.getDistanceUnit()),
             request.getAsciiMode(),
@@ -197,24 +197,44 @@ public class GeoDbApi
         return localeApi.getTimezonesUsingGET(limit, offset, false);
     }
 
-    public PopulatedPlacesResponse findCities(FindCitiesNearCityRequest request)
+    public CountriesResponse findCountries(FindCountriesRequest request)
     {
-        return geoApi.findCitiesNearCityUsingGET(
-            request.getCityId(),
-            request.getMinPopulation(),
-            toStringFromEnumSet(request.getTypes()),
-            request.getRadius(),
-            toString(request.getDistanceUnit()),
+        return geoApi.getCountriesUsingGET(
+            request.getNamePrefix(),
+            request.getCurrencyCode(),
             request.getAsciiMode(),
             request.getLanguageCode(),
             request.getLimit(),
             request.getOffset(),
-            toString(request.getSort()),
-            toString(request.getIncludeDeleted()),
             false);
     }
 
-    public PopulatedPlacesResponse findCities(FindCitiesNearLocationRequest request)
+    public CountryResponse findCountry(FindCountryRequest request)
+    {
+        return this.geoApi.getCountryUsingGET(
+            request.getCountryId(),
+            request.getAsciiMode(),
+            request.getLanguageCode());
+    }
+
+    public CurrenciesResponse findCurrencies(FindCurrenciesRequest request)
+    {
+        return localeApi.getCurrenciesUsingGET(
+            request.getCountryId(),
+            request.getLimit(),
+            request.getOffset(),
+            false);
+    }
+
+    public PopulatedPlaceResponse findPlace(FindPlaceRequest request)
+    {
+        return this.geoApi.getCityUsingGET(
+            request.getPlaceId(),
+            request.getAsciiMode(),
+            request.getLanguageCode());
+    }
+
+    public PopulatedPlacesResponse findPlaces(FindPlacesNearLocationRequest request)
     {
         return geoApi.findCitiesNearLocationUsingGET(
             toLocationId(request.getNearLocation()),
@@ -231,7 +251,24 @@ public class GeoDbApi
             false);
     }
 
-    public PopulatedPlacesResponse findCities(FindCitiesRequest request)
+    public PopulatedPlacesResponse findPlaces(FindPlacesNearPlaceRequest request)
+    {
+        return geoApi.findCitiesNearCityUsingGET(
+            request.getPlaceId(),
+            request.getMinPopulation(),
+            toStringFromEnumSet(request.getTypes()),
+            request.getRadius(),
+            toString(request.getDistanceUnit()),
+            request.getAsciiMode(),
+            request.getLanguageCode(),
+            request.getLimit(),
+            request.getOffset(),
+            toString(request.getSort()),
+            toString(request.getIncludeDeleted()),
+            false);
+    }
+
+    public PopulatedPlacesResponse findPlaces(FindPlacesRequest request)
     {
         String location = null;
         Integer locationRadius = null;
@@ -265,43 +302,6 @@ public class GeoDbApi
             false);
     }
 
-    public PopulatedPlaceResponse findCity(FindCityRequest request)
-    {
-        return this.geoApi.getCityUsingGET(
-            request.getCityId(),
-            request.getAsciiMode(),
-            request.getLanguageCode());
-    }
-
-    public CountriesResponse findCountries(FindCountriesRequest request)
-    {
-        return geoApi.getCountriesUsingGET(
-            request.getNamePrefix(),
-            request.getCurrencyCode(),
-            request.getAsciiMode(),
-            request.getLanguageCode(),
-            request.getLimit(),
-            request.getOffset(),
-            false);
-    }
-
-    public CountryResponse findCountry(FindCountryRequest request)
-    {
-        return this.geoApi.getCountryUsingGET(
-            request.getCountryId(),
-            request.getAsciiMode(),
-            request.getLanguageCode());
-    }
-
-    public CurrenciesResponse findCurrencies(FindCurrenciesRequest request)
-    {
-        return localeApi.getCurrenciesUsingGET(
-            request.getCountryId(),
-            request.getLimit(),
-            request.getOffset(),
-            false);
-    }
-
     public RegionResponse findRegion(FindRegionRequest request)
     {
         return this.geoApi.getRegionUsingGET(
@@ -311,7 +311,7 @@ public class GeoDbApi
             request.getLanguageCode());
     }
 
-    public PopulatedPlacesResponse findRegionCities(FindRegionCitiesRequest request)
+    public PopulatedPlacesResponse findRegionPlaces(FindRegionPlacesRequest request)
     {
         return geoApi.findRegionCitiesUsingGET(
             request.getCountryId(),
@@ -339,20 +339,20 @@ public class GeoDbApi
             false);
     }
 
-    public DateTimeResponse getCityDateTime(String cityId)
+    public DateTimeResponse getPlaceDateTime(String cityId)
     {
         return this.geoApi.getCityDateTimeUsingGET(cityId);
     }
 
-    public DistanceResponse getCityDistance(GetCityDistanceRequest request)
+    public DistanceResponse getPlaceDistance(GetPlaceDistanceRequest request)
     {
         return this.geoApi.getCityDistanceUsingGET(
-            request.getToCityId(),
-            request.getFromCityId(),
+            request.getToPlaceId(),
+            request.getFromPlaceId(),
             request.getDistanceUnit().getTag());
     }
 
-    public TimeResponse getCityTime(String cityId)
+    public TimeResponse getPlaceTime(String cityId)
     {
         return this.geoApi.getCityTimeUsingGET(cityId);
     }

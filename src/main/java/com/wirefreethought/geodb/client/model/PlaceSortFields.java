@@ -1,6 +1,6 @@
 package com.wirefreethought.geodb.client.model;
 
-public interface CitySortFields
+public interface PlaceSortFields
 {
     public interface Common
     {
@@ -9,12 +9,12 @@ public interface CitySortFields
         String POPULATION = "population";
     }
 
-    public interface FindCities extends Common
+    public interface FindPlaces extends Common
     {
         String COUNTRY_CODE = "countryCode";
     }
 
-    public interface FindRegionCities extends Common
+    public interface FindRegionPlaces extends Common
     {
     }
 }

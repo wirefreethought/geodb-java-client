@@ -7,9 +7,9 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class GetCityDistanceRequest
+public class GetPlaceDistanceRequest
 {
-    private String fromCityId;
-    private String toCityId;
     private GeoDbDistanceUnit distanceUnit;
+    private String fromPlaceId;
+    private String toPlaceId;
 }

@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class FindCityRequest
+public class FindPlaceRequest
 {
     private Boolean asciiMode;
-    private String cityId;
     private String languageCode;
+    private String placeId;
 }

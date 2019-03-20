@@ -4,7 +4,7 @@ import com.wirefreethought.geodb.client.model.GeoDbEnum;
 
 import lombok.Getter;
 
-public enum CityRequestType implements GeoDbEnum
+public enum PlaceRequestType implements GeoDbEnum
 {
     ADMIN_DIVISION_2("ADM2"),
     CITY("CITY");
@@ -12,7 +12,7 @@ public enum CityRequestType implements GeoDbEnum
     @Getter
     private String tag;
 
-    CityRequestType(String tag)
+    PlaceRequestType(String tag)
     {
         this.tag = tag;
     }

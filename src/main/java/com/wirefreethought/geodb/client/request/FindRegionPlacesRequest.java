@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class FindRegionCitiesRequest
+public class FindRegionPlacesRequest
 {
     private Boolean asciiMode;
     private String countryId;
@@ -21,5 +21,5 @@ public class FindRegionCitiesRequest
     private Integer offset;
     private String regionCode;
     private GeoDbSort sort;
-    private Set<CityRequestType> types;
+    private Set<PlaceRequestType> types;
 }

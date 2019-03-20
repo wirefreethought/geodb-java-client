@@ -1,6 +1,8 @@
 package com.wirefreethought.geodb.client.request;
 
-import com.wirefreethought.geodb.client.model.GeoDbDistanceUnit;
+import java.util.Set;
+
+import com.wirefreethought.geodb.client.model.GeoDbLocationConstraint;
 import com.wirefreethought.geodb.client.model.GeoDbSort;
 import com.wirefreethought.geodb.client.model.IncludeDeletedMode;
 
@@ -9,16 +11,15 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class FindDivisionsNearCityRequest
+public class FindPlacesNearLocationRequest
 {
     private Boolean asciiMode;
-    private String cityId;
-    private GeoDbDistanceUnit distanceUnit;
     private IncludeDeletedMode includeDeleted;
     private String languageCode;
     private Integer limit;
     private Integer minPopulation;
+    private GeoDbLocationConstraint nearLocation;
     private Integer offset;
-    private int radius;
     private GeoDbSort sort;
+    private Set<PlaceRequestType> types;
 }

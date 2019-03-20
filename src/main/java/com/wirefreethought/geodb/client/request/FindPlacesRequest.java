@@ -11,15 +11,19 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class FindCitiesNearLocationRequest
+public class FindPlacesRequest
 {
     private Boolean asciiMode;
+    private Set<String> countryIds;
+    private Set<String> excludedCountryIds;
     private IncludeDeletedMode includeDeleted;
     private String languageCode;
     private Integer limit;
     private Integer minPopulation;
+    private String namePrefix;
     private GeoDbLocationConstraint nearLocation;
     private Integer offset;
     private GeoDbSort sort;
-    private Set<CityRequestType> types;
+    private Set<String> timeZoneIds;
+    private Set<PlaceRequestType> types;
 }

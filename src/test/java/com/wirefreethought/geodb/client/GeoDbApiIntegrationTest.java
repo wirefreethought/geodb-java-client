@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.wirefreethought.geodb.client.model.CitySortFields;
+import com.wirefreethought.geodb.client.model.PlaceSortFields;
 import com.wirefreethought.geodb.client.model.CountriesResponse;
 import com.wirefreethought.geodb.client.model.CountrySummary;
 import com.wirefreethought.geodb.client.model.CurrenciesResponse;
@@ -35,16 +35,16 @@ import com.wirefreethought.geodb.client.model.TimeResponse;
 import com.wirefreethought.geodb.client.net.ApiClient;
 import com.wirefreethought.geodb.client.net.ApiException;
 import com.wirefreethought.geodb.client.net.GeoDbApiClient;
-import com.wirefreethought.geodb.client.request.CityRequestType;
+import com.wirefreethought.geodb.client.request.PlaceRequestType;
 import com.wirefreethought.geodb.client.request.FindAdminDivisionsRequest;
-import com.wirefreethought.geodb.client.request.FindCitiesNearCityRequest;
-import com.wirefreethought.geodb.client.request.FindCitiesRequest;
+import com.wirefreethought.geodb.client.request.FindPlacesNearPlaceRequest;
+import com.wirefreethought.geodb.client.request.FindPlacesRequest;
 import com.wirefreethought.geodb.client.request.FindCountriesRequest;
 import com.wirefreethought.geodb.client.request.FindCurrenciesRequest;
-import com.wirefreethought.geodb.client.request.FindDivisionsNearCityRequest;
-import com.wirefreethought.geodb.client.request.FindRegionCitiesRequest;
+import com.wirefreethought.geodb.client.request.FindDivisionsNearPlaceRequest;
+import com.wirefreethought.geodb.client.request.FindRegionPlacesRequest;
 import com.wirefreethought.geodb.client.request.FindRegionsRequest;
-import com.wirefreethought.geodb.client.request.GetCityDistanceRequest;
+import com.wirefreethought.geodb.client.request.GetPlaceDistanceRequest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -81,31 +81,7 @@ public class GeoDbApiIntegrationTest
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {
-                                new SortField(CitySortFields.FindCities.POPULATION, true)
-                            })
-                            .build())
-                    .build());
-        } catch (ApiException e)
-        {
-            handle(e);
-        }
-    }
-
-    @Test
-    public void testFindAdminDivisions_nearCity()
-    {
-        try
-        {
-            testFindDivisionsNearCity(
-                FindDivisionsNearCityRequest.builder()
-                    .cityId("Q90")
-                    .minPopulation(100000)
-                    .radius(100)
-                    .distanceUnit(GeoDbDistanceUnit.MILES)
-                    .sort(
-                        GeoDbSort.builder()
-                            .fields(new SortField[] {
-                                new SortField(CitySortFields.FindCities.POPULATION, true)
+                                new SortField(PlaceSortFields.FindPlaces.POPULATION, true)
                             })
                             .build())
                     .build());
@@ -133,7 +109,31 @@ public class GeoDbApiIntegrationTest
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {
-                                new SortField(CitySortFields.FindCities.POPULATION, true)
+                                new SortField(PlaceSortFields.FindPlaces.POPULATION, true)
+                            })
+                            .build())
+                    .build());
+        } catch (ApiException e)
+        {
+            handle(e);
+        }
+    }
+
+    @Test
+    public void testFindAdminDivisions_nearPlace()
+    {
+        try
+        {
+            testFindDivisionsNearCity(
+                FindDivisionsNearPlaceRequest.builder()
+                    .placeId("Q90")
+                    .minPopulation(100000)
+                    .radius(100)
+                    .distanceUnit(GeoDbDistanceUnit.MILES)
+                    .sort(
+                        GeoDbSort.builder()
+                            .fields(new SortField[] {
+                                new SortField(PlaceSortFields.FindPlaces.POPULATION, true)
                             })
                             .build())
                     .build());
@@ -155,7 +155,7 @@ public class GeoDbApiIntegrationTest
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {
-                                new SortField(CitySortFields.FindCities.POPULATION, true)
+                                new SortField(PlaceSortFields.FindPlaces.POPULATION, true)
                             })
                             .build())
                     .build());
@@ -171,39 +171,14 @@ public class GeoDbApiIntegrationTest
         try
         {
             testFindCities(
-                FindCitiesRequest.builder()
+                FindPlacesRequest.builder()
                     .namePrefix("Los")
                     .minPopulation(100000)
-                    .types(Collections.singleton(CityRequestType.CITY))
+                    .types(Collections.singleton(PlaceRequestType.CITY))
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {
-                                new SortField(CitySortFields.FindCities.POPULATION, true)
-                            })
-                            .build())
-                    .build());
-        } catch (ApiException e)
-        {
-            handle(e);
-        }
-    }
-
-    @Test
-    public void testFindCities_nearCity()
-    {
-        try
-        {
-            testFindCitiesNearCity(
-                FindCitiesNearCityRequest.builder()
-                    .cityId("Q90")
-                    .minPopulation(100000)
-                    .radius(100)
-                    .distanceUnit(GeoDbDistanceUnit.MILES)
-                    .types(Collections.singleton(CityRequestType.CITY))
-                    .sort(
-                        GeoDbSort.builder()
-                            .fields(new SortField[] {
-                                new SortField(CitySortFields.FindCities.POPULATION, true)
+                                new SortField(PlaceSortFields.FindPlaces.POPULATION, true)
                             })
                             .build())
                     .build());
@@ -219,7 +194,7 @@ public class GeoDbApiIntegrationTest
         try
         {
             testFindCities(
-                FindCitiesRequest.builder()
+                FindPlacesRequest.builder()
                     .nearLocation(
                         GeoDbLocationConstraint.builder()
                             .latitude(33.831965)
@@ -228,11 +203,36 @@ public class GeoDbApiIntegrationTest
                             .distanceUnit(GeoDbDistanceUnit.MILES)
                             .build())
                     .minPopulation(100000)
-                    .types(Collections.singleton(CityRequestType.CITY))
+                    .types(Collections.singleton(PlaceRequestType.CITY))
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {
-                                new SortField(CitySortFields.FindCities.POPULATION, true)
+                                new SortField(PlaceSortFields.FindPlaces.POPULATION, true)
+                            })
+                            .build())
+                    .build());
+        } catch (ApiException e)
+        {
+            handle(e);
+        }
+    }
+
+    @Test
+    public void testFindCities_nearPlace()
+    {
+        try
+        {
+            testFindCitiesNearCity(
+                FindPlacesNearPlaceRequest.builder()
+                    .placeId("Q90")
+                    .minPopulation(100000)
+                    .radius(100)
+                    .distanceUnit(GeoDbDistanceUnit.MILES)
+                    .types(Collections.singleton(PlaceRequestType.CITY))
+                    .sort(
+                        GeoDbSort.builder()
+                            .fields(new SortField[] {
+                                new SortField(PlaceSortFields.FindPlaces.POPULATION, true)
                             })
                             .build())
                     .build());
@@ -248,14 +248,14 @@ public class GeoDbApiIntegrationTest
         try
         {
             testFindCities(
-                FindCitiesRequest.builder()
+                FindPlacesRequest.builder()
                     .minPopulation(100000)
                     .timeZoneIds(Collections.singleton("America__Los_Angeles"))
-                    .types(Collections.singleton(CityRequestType.CITY))
+                    .types(Collections.singleton(PlaceRequestType.CITY))
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {
-                                new SortField(CitySortFields.FindCities.POPULATION, true)
+                                new SortField(PlaceSortFields.FindPlaces.POPULATION, true)
                             })
                             .build())
                     .build());
@@ -281,7 +281,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindCurrencies_countryCode()
+    public void testFindCurrencies_countryId()
     {
         try
         {
@@ -296,19 +296,19 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindRegionCities()
+    public void testFindRegionPlaces()
     {
         try
         {
-            testFindRegionCities(
-                FindRegionCitiesRequest.builder()
+            testFindRegionPlaces(
+                FindRegionPlacesRequest.builder()
                     .countryId("US")
                     .regionCode("CA")
                     .minPopulation(100000)
                     .sort(
                         GeoDbSort.builder()
                             .fields(new SortField[] {
-                                new SortField(CitySortFields.FindCities.POPULATION, true)
+                                new SortField(PlaceSortFields.FindPlaces.POPULATION, true)
                             })
                             .build())
                     .build());
@@ -334,17 +334,17 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testGetCityDistance()
+    public void testGetPlaceDistance()
     {
         try
         {
-            GetCityDistanceRequest request = GetCityDistanceRequest.builder()
+            GetPlaceDistanceRequest request = GetPlaceDistanceRequest.builder()
                 .distanceUnit(GeoDbDistanceUnit.MILES)
-                .fromCityId("Q60")
-                .toCityId("Q90")
+                .fromPlaceId("Q60")
+                .toPlaceId("Q90")
                 .build();
 
-            DistanceResponse response = api.getCityDistance(request);
+            DistanceResponse response = api.getPlaceDistance(request);
 
             assertNotNull(response);
             assertNotNull(response.getData());
@@ -563,18 +563,18 @@ public class GeoDbApiIntegrationTest
         log(response);
     }
 
-    private void testFindCities(FindCitiesRequest request)
+    private void testFindCities(FindPlacesRequest request)
     {
-        PopulatedPlacesResponse response = api.findCities(request);
+        PopulatedPlacesResponse response = api.findPlaces(request);
 
         assertValid(response);
 
         log(response);
     }
 
-    private void testFindCitiesNearCity(FindCitiesNearCityRequest request)
+    private void testFindCitiesNearCity(FindPlacesNearPlaceRequest request)
     {
-        PopulatedPlacesResponse response = api.findCities(request);
+        PopulatedPlacesResponse response = api.findPlaces(request);
 
         assertValid(response);
 
@@ -599,7 +599,7 @@ public class GeoDbApiIntegrationTest
         log(response);
     }
 
-    private void testFindDivisionsNearCity(FindDivisionsNearCityRequest request)
+    private void testFindDivisionsNearCity(FindDivisionsNearPlaceRequest request)
     {
         PopulatedPlacesResponse response = api.findAdminDivisions(request);
 
@@ -608,9 +608,9 @@ public class GeoDbApiIntegrationTest
         log(response);
     }
 
-    private void testFindRegionCities(FindRegionCitiesRequest request)
+    private void testFindRegionPlaces(FindRegionPlacesRequest request)
     {
-        PopulatedPlacesResponse response = api.findRegionCities(request);
+        PopulatedPlacesResponse response = api.findRegionPlaces(request);
 
         assertValid(response);
 

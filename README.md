@@ -7,7 +7,7 @@ Add the following compile-time dependency to your Maven pom.xml:
 <dependency>
     <groupId>com.wirefreethought.geodb</groupId>
     <artifactId>geodb-java-client</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
@@ -38,11 +38,12 @@ geoDbApi.findCities(FindCitiesRequest.builder()...build());
 
 Find all cities in the US starting with **San** and having a minimum population of 100,000.
 ```
-CitiesResponse citiesResponse = geoDbApi.findCities(
-    FindCitiesRequest.builder()
+PopulatedPlacesResponse placesResponse = geoDbApi.findPlaces(
+    FindPlacesRequest.builder()
         .countryIds("US")
         .namePrefix("San")
         .minPopulation(100000)
+        .types(Collections.singleton(PlaceRequestType.CITY))
         .build()
 );
 ```
@@ -50,24 +51,25 @@ CitiesResponse citiesResponse = geoDbApi.findCities(
 Find all cities and towns in the Los Angeles area and having a minimum population of 50,000 - sorting results by population, high to low.
 ```
 // Get the location for Los Angeles.
-CityResponse cityResponse = geoDbApi.findCityById("Q65");
-GeoLocation cityLocation = cityResponse.getData().getLocation();
+PopulatedPlaceResponse placeResponse = geoDbApi.findPlaceById("Q65");
+GeoLocation placeLocation = placeResponse.getData().getLocation();
 
 // Find all cities/towns within 50 miles of this location.
-CitiesResponse citiesResponse = geoDbApi.findCities(
-    FindCitiesRequest.builder()
+PopulatedPlacesResponse placesResponse = geoDbApi.findPlaces(
+    FindPlacesRequest.builder()
         .nearLocation(
             NearLocationRequest.builder()
-                .latitude(cityLocation.getLatitude())
-                .longitude(cityLocation.getLongitude())
+                .latitude(placeLocation.getLatitude())
+                .longitude(placeLocation.getLongitude())
                 .radius(50)
                 .radiusUnit(LocationRadiusUnit.MILES)
                 .build())
         .minPopulation(50000)
+        .types(Collections.singleton(PlaceRequestType.CITY))
         .sort(
             GeoDbSort.builder()
                 .fields(new SortField[] {
-                    new SortField(CitySortFields.FindCities.POPULATION, true)
+                    new SortField(PlaceSortFields.FindPlaces.POPULATION, true)
                 })
                 .build())
         .build()
@@ -76,15 +78,16 @@ CitiesResponse citiesResponse = geoDbApi.findCities(
 
 Find all cities in California having a minimum population of 100,000 - sorting results by population, low to high.
 ```
-CitiesResponse citiesResponse = geoDbApi.findRegionCities(
-    FindRegionCitiesRequest.builder()
+PopulatedPlacesResponse placesResponse = geoDbApi.findRegionPlaces(
+    FindRegionPlacesRequest.builder()
         .countryId("US")
         .regionCode("CA")
         .minPopulation(100000)
+        .types(Collections.singleton(PlaceRequestType.CITY))
         .sort(
             GeoDbSort.builder()
                 .fields(new SortField[] {
-                    new SortField(CitySortFields.FindCities.POPULATION, false)
+                    new SortField(PlaceSortFields.FindPlaces.POPULATION, false)
                 })
                 .build())
         .build()
