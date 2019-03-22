@@ -24,20 +24,21 @@ import com.wirefreethought.geodb.client.model.RegionsResponse;
 import com.wirefreethought.geodb.client.model.TimeResponse;
 import com.wirefreethought.geodb.client.model.TimeZonesResponse;
 import com.wirefreethought.geodb.client.net.ApiClient;
-import com.wirefreethought.geodb.client.request.PlaceRequestType;
 import com.wirefreethought.geodb.client.request.FindAdminDivisionsRequest;
-import com.wirefreethought.geodb.client.request.FindPlacesNearPlaceRequest;
-import com.wirefreethought.geodb.client.request.FindPlacesNearLocationRequest;
-import com.wirefreethought.geodb.client.request.FindPlacesRequest;
-import com.wirefreethought.geodb.client.request.FindPlaceRequest;
 import com.wirefreethought.geodb.client.request.FindCountriesRequest;
 import com.wirefreethought.geodb.client.request.FindCountryRequest;
 import com.wirefreethought.geodb.client.request.FindCurrenciesRequest;
 import com.wirefreethought.geodb.client.request.FindDivisionsNearPlaceRequest;
+import com.wirefreethought.geodb.client.request.FindPlaceRequest;
+import com.wirefreethought.geodb.client.request.FindPlacesNearLocationRequest;
+import com.wirefreethought.geodb.client.request.FindPlacesNearPlaceRequest;
+import com.wirefreethought.geodb.client.request.FindPlacesRequest;
+import com.wirefreethought.geodb.client.request.FindRegionDivisionsRequest;
 import com.wirefreethought.geodb.client.request.FindRegionPlacesRequest;
 import com.wirefreethought.geodb.client.request.FindRegionRequest;
 import com.wirefreethought.geodb.client.request.FindRegionsRequest;
 import com.wirefreethought.geodb.client.request.GetPlaceDistanceRequest;
+import com.wirefreethought.geodb.client.request.PlaceRequestType;
 
 public class GeoDbApi
 {
@@ -309,6 +310,21 @@ public class GeoDbApi
             request.getRegionCode(),
             request.getAsciiMode(),
             request.getLanguageCode());
+    }
+
+    public PopulatedPlacesResponse findRegionDivisions(FindRegionDivisionsRequest request)
+    {
+        return geoApi.findRegionDivisionsUsingGET(
+            request.getCountryId(),
+            request.getRegionCode(),
+            request.getMinPopulation(),
+            request.getAsciiMode(),
+            request.getLanguageCode(),
+            request.getLimit(),
+            request.getOffset(),
+            toString(request.getSort()),
+            toString(request.getIncludeDeleted()),
+            false);
     }
 
     public PopulatedPlacesResponse findRegionPlaces(FindRegionPlacesRequest request)
