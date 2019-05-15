@@ -1,5 +1,7 @@
 package com.wirefreethought.geodb.client.request;
 
+import java.util.Set;
+
 import com.wirefreethought.geodb.client.model.GeoDbDistanceUnit;
 import com.wirefreethought.geodb.client.model.GeoDbSort;
 import com.wirefreethought.geodb.client.model.IncludeDeletedMode;
@@ -12,7 +14,9 @@ import lombok.Getter;
 public class FindDivisionsNearPlaceRequest
 {
     private Boolean asciiMode;
+    private Set<String> countryIds;
     private GeoDbDistanceUnit distanceUnit;
+    private Set<String> excludedCountryIds;
     private IncludeDeletedMode includeDeleted;
     private String languageCode;
     private Integer limit;

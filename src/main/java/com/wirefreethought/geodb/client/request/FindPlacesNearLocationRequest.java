@@ -14,6 +14,8 @@ import lombok.Getter;
 public class FindPlacesNearLocationRequest
 {
     private Boolean asciiMode;
+    private Set<String> countryIds;
+    private Set<String> excludedCountryIds;
     private IncludeDeletedMode includeDeleted;
     private String languageCode;
     private Integer limit;

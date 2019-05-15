@@ -160,6 +160,8 @@ public class GeoDbApi
     {
         return geoApi.findCitiesNearCityUsingGET(
             request.getPlaceId(),
+            toStringFromStringSet(request.getCountryIds()),
+            toStringFromStringSet(request.getExcludedCountryIds()),
             request.getMinPopulation(),
             toString(PlaceRequestType.ADMIN_DIVISION_2),
             request.getRadius(),
@@ -239,6 +241,8 @@ public class GeoDbApi
     {
         return geoApi.findCitiesNearLocationUsingGET(
             toLocationId(request.getNearLocation()),
+            toStringFromStringSet(request.getCountryIds()),
+            toStringFromStringSet(request.getExcludedCountryIds()),
             request.getMinPopulation(),
             toStringFromEnumSet(request.getTypes()),
             request.getNearLocation().getRadius(),
@@ -256,6 +260,8 @@ public class GeoDbApi
     {
         return geoApi.findCitiesNearCityUsingGET(
             request.getPlaceId(),
+            toStringFromStringSet(request.getCountryIds()),
+            toStringFromStringSet(request.getExcludedCountryIds()),
             request.getMinPopulation(),
             toStringFromEnumSet(request.getTypes()),
             request.getRadius(),

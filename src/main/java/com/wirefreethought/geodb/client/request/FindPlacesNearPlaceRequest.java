@@ -14,7 +14,9 @@ import lombok.Getter;
 public class FindPlacesNearPlaceRequest
 {
     private Boolean asciiMode;
+    private Set<String> countryIds;
     private GeoDbDistanceUnit distanceUnit;
+    private Set<String> excludedCountryIds;
     private IncludeDeletedMode includeDeleted;
     private String languageCode;
     private Integer limit;
