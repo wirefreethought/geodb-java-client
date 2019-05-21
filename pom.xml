@@ -59,7 +59,8 @@
     <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <slf4j.version>1.7.25</slf4j.version>
+    <lombok.version>1.18.8</lombok.version>
+    <slf4j.version>1.7.26</slf4j.version>
     <squareup.version>2.7.5</squareup.version>
   </properties>
 
@@ -70,7 +71,7 @@
       <plugin>
         <groupId>io.swagger</groupId>
         <artifactId>swagger-codegen-maven-plugin</artifactId>
-        <version>2.4.2</version>
+        <version>2.4.5</version>
         <executions>
           <execution>
             <goals>
@@ -115,7 +116,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
+        <version>3.8.1</version>
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
@@ -124,7 +125,7 @@
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>1.18.4</version>
+              <version>${lombok.version}</version>
             </path>
           </annotationProcessorPaths>
 
@@ -138,7 +139,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.1</version>
+        <version>2.22.2</version>
         <configuration>
           <argLine>--illegal-access=permit</argLine>
           <systemPropertiesFile>${basedir}/build.properties</systemPropertiesFile>
@@ -148,7 +149,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>2.22.1</version>
+        <version>2.22.2</version>
         <configuration>
           <argLine>--illegal-access=permit</argLine>
         </configuration>
@@ -171,7 +172,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>3.1.0</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -255,7 +256,7 @@
     <dependency>
       <groupId>io.swagger</groupId>
       <artifactId>swagger-annotations</artifactId>
-      <version>1.5.21</version>
+      <version>1.5.22</version>
     </dependency>
     <dependency>
       <groupId>javax.annotation</groupId>
@@ -265,12 +266,12 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.8.1</version>
+      <version>3.9</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.2</version>
+      <version>${lombok.version}</version>
     </dependency>
 
     <!-- Testing -->
