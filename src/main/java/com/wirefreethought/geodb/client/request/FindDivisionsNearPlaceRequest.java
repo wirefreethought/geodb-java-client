@@ -21,8 +21,10 @@ public class FindDivisionsNearPlaceRequest
     private String languageCode;
     private Integer limit;
     private Integer minPopulation;
+    private String namePrefix;
     private Integer offset;
     private String placeId;
     private int radius;
     private GeoDbSort sort;
+    private Set<String> timeZoneIds;
 }

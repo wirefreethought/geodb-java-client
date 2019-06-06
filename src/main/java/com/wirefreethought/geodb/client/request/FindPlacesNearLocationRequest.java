@@ -20,8 +20,10 @@ public class FindPlacesNearLocationRequest
     private String languageCode;
     private Integer limit;
     private Integer minPopulation;
+    private String namePrefix;
     private GeoDbLocationConstraint nearLocation;
     private Integer offset;
     private GeoDbSort sort;
+    private Set<String> timeZoneIds;
     private Set<PlaceRequestType> types;
 }
