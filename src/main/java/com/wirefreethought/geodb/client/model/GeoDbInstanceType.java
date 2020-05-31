@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum GeoDbInstanceType
 {
     FREE("http://geodb-free-service.wirefreethought.com"),
-    PRO("https://wft-geo-db.p.mashape.com");
+    PRO("https://wft-geo-db.p.rapidapi.com");
 
     private String instanceUri;
 
