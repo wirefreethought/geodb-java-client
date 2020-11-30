@@ -20,6 +20,7 @@ public class FindPlacesRequest
     private String languageCode;
     private Integer limit;
     private Integer minPopulation;
+    private Integer maxPopulation;
     private String namePrefix;
     private GeoDbLocationConstraint nearLocation;
     private Integer offset;

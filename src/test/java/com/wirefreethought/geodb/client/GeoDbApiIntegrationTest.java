@@ -18,7 +18,7 @@ import org.junit.runners.JUnit4;
 import com.wirefreethought.geodb.client.model.CountriesResponse;
 import com.wirefreethought.geodb.client.model.CountrySummary;
 import com.wirefreethought.geodb.client.model.CurrenciesResponse;
-import com.wirefreethought.geodb.client.model.CurrencyDescriptor;
+import com.wirefreethought.geodb.client.model.Currency;
 import com.wirefreethought.geodb.client.model.DateTimeResponse;
 import com.wirefreethought.geodb.client.model.DistanceResponse;
 import com.wirefreethought.geodb.client.model.GeoDbDistanceUnit;
@@ -58,7 +58,7 @@ public class GeoDbApiIntegrationTest
 
     public GeoDbApiIntegrationTest()
     {
-        ApiClient client = new GeoDbApiClient(GeoDbInstanceType.PRO);
+        ApiClient client = new GeoDbApiClient(GeoDbInstanceType.FREE);
         client.setApiKey(TestProperties.getApiKey());
 
         this.apiClient = client;
@@ -448,7 +448,7 @@ public class GeoDbApiIntegrationTest
         });
     }
 
-    private void assertValid(CurrencyDescriptor currency)
+    private void assertValid(Currency currency)
     {
         assertTrue(StringUtils.isNotBlank(currency.getCode()));
         assertNotNull(currency.getCountryCodes());

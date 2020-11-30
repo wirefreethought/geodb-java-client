@@ -18,6 +18,7 @@ public class FindRegionPlacesRequest
     private String languageCode;
     private Integer limit;
     private Integer minPopulation;
+    private Integer maxPopulation;
     private String namePrefix;
     private Integer offset;
     private String regionCode;
