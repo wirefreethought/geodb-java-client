@@ -1,5 +1,5 @@
 # GeoDB Java Client SDK
-Simplify your life when calling the [GeoDB](https://geodb-cities-api.wirefreethought.com) service form a Java or Android app by using this library.
+Simplify your life when calling the [GeoDB](https://geodb-cities-api.wirefreethought.com) service from a Java or Android app by using this library.
 
 ## Setup
 Add the following compile-time dependency to your Maven pom.xml:
@@ -7,7 +7,7 @@ Add the following compile-time dependency to your Maven pom.xml:
 <dependency>
     <groupId>com.wirefreethought.geodb</groupId>
     <artifactId>geodb-java-client</artifactId>
-    <version>1.3.4</version>
+    <version>1.4.0</version>
 </dependency>
 ```
 
