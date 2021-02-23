@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class FindPlaceRequest
+public class GetPlaceRequest
 {
     private Boolean asciiMode;
     private String languageCode;

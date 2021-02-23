@@ -27,6 +27,7 @@ import com.wirefreethought.geodb.client.model.GeoDbLocationConstraint;
 import com.wirefreethought.geodb.client.model.GeoDbSort;
 import com.wirefreethought.geodb.client.model.GeoDbSort.SortField;
 import com.wirefreethought.geodb.client.model.PlaceSortFields;
+import com.wirefreethought.geodb.client.model.PopulatedPlaceResponse;
 import com.wirefreethought.geodb.client.model.PopulatedPlaceSummary;
 import com.wirefreethought.geodb.client.model.PopulatedPlacesResponse;
 import com.wirefreethought.geodb.client.model.RegionSummary;
@@ -45,6 +46,7 @@ import com.wirefreethought.geodb.client.request.FindRegionDivisionsRequest;
 import com.wirefreethought.geodb.client.request.FindRegionPlacesRequest;
 import com.wirefreethought.geodb.client.request.FindRegionsRequest;
 import com.wirefreethought.geodb.client.request.GetPlaceDistanceRequest;
+import com.wirefreethought.geodb.client.request.GetPlaceRequest;
 import com.wirefreethought.geodb.client.request.PlaceRequestType;
 
 import lombok.extern.slf4j.Slf4j;
@@ -358,6 +360,28 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
+    public void testGetPlaceAdminRegion()
+    {
+        try
+        {
+            GetPlaceRequest request = GetPlaceRequest.builder()
+                .placeId("Q65")
+                .build();
+
+            PopulatedPlaceResponse response = api.getPlaceAdminRegion(request);
+
+            assertNotNull(response);
+            assertNotNull(response.getData());
+            assertNull(response.getErrors());
+
+            log(response);
+        } catch (ApiException e)
+        {
+            handle(e);
+        }
+    }
+
+    @Test
     public void testGetPlaceDistance()
     {
         try
@@ -537,6 +561,11 @@ public class GeoDbApiIntegrationTest
     private void log(DistanceResponse response)
     {
         log.info("Distance: {}", response.getData());
+    }
+
+    private void log(PopulatedPlaceResponse response)
+    {
+        log.info("name: {}", response.getData().getName());
     }
 
     private void log(PopulatedPlacesResponse response)

@@ -29,7 +29,7 @@ import com.wirefreethought.geodb.client.request.FindCountriesRequest;
 import com.wirefreethought.geodb.client.request.FindCountryRequest;
 import com.wirefreethought.geodb.client.request.FindCurrenciesRequest;
 import com.wirefreethought.geodb.client.request.FindDivisionsNearPlaceRequest;
-import com.wirefreethought.geodb.client.request.FindPlaceRequest;
+import com.wirefreethought.geodb.client.request.GetPlaceRequest;
 import com.wirefreethought.geodb.client.request.FindPlacesNearLocationRequest;
 import com.wirefreethought.geodb.client.request.FindPlacesNearPlaceRequest;
 import com.wirefreethought.geodb.client.request.FindPlacesRequest;
@@ -233,14 +233,6 @@ public class GeoDbApi
             request.getOffset());
     }
 
-    public PopulatedPlaceResponse findPlace(FindPlaceRequest request)
-    {
-        return this.geoApi.getCityUsingGET(
-            request.getPlaceId(),
-            request.getAsciiMode(),
-            request.getLanguageCode());
-    }
-
     public PopulatedPlacesResponse findPlaces(FindPlacesNearLocationRequest request)
     {
         return geoApi.findCitiesNearLocationUsingGET(
@@ -376,6 +368,22 @@ public class GeoDbApi
             request.getLanguageCode(),
             request.getLimit(),
             request.getOffset());
+    }
+
+    public PopulatedPlaceResponse getPlace(GetPlaceRequest request)
+    {
+        return this.geoApi.getCityUsingGET(
+            request.getPlaceId(),
+            request.getAsciiMode(),
+            request.getLanguageCode());
+    }
+
+    public PopulatedPlaceResponse getPlaceAdminRegion(GetPlaceRequest request)
+    {
+        return this.geoApi.getCityLocatedInUsingGET(
+            request.getPlaceId(),
+            request.getAsciiMode(),
+            request.getLanguageCode());
     }
 
     public DateTimeResponse getPlaceDateTime(String cityId)
