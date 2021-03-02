@@ -7,7 +7,7 @@ Add the following compile-time dependency to your Maven pom.xml:
 <dependency>
     <groupId>com.wirefreethought.geodb</groupId>
     <artifactId>geodb-java-client</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
 </dependency>
 ```
 
@@ -22,7 +22,7 @@ If you're using the PRO service:
 3. Instantiate the client.
     ```
     GeoDbApiClient apiClient = new GeoDbApiClient(GeoDbInstanceType.PRO);
-    apiClient.setApiKey(YOUR_MASHAPE_KEY);
+    apiClient.setApiKey(YOUR_RAPIDAPI_KEY);
     ```
 
 ## Usage
