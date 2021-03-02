@@ -1864,15 +1864,19 @@
       "description": "Currency info",
       "properties": {
         "code": {
-          "description": "A ISO-4217 currency code",
+          "description": "The ISO-4217 currency code",
           "type": "string"
         },
         "countryCodes": {
-          "description": "A list of ISO-3166 country codes",
+          "description": "A list of ISO-3166 country codes of countries supporting this currency",
           "type": "array",
           "items": {
             "type": "string"
           }
+        },
+        "symbol": {
+          "description": "The currency symbol",
+          "type": "string"
         }
       },
       "example": {
@@ -1894,7 +1898,8 @@
           "MH",
           "EC",
           "US"
-        ]
+        ],
+        "symbol": "$"
       }
     },
     "Error": {
@@ -2157,10 +2162,15 @@
         "code": {
           "description": "The locale code",
           "type": "string"
+        },
+        "name": {
+          "description": "The locale name",
+          "type": "string"
         }
       },
       "example": {
-        "code": "en_US"
+        "code": "en_US",
+        "name": "English (US)"
       }
     },
     "Metadata": {
