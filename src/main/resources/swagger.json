@@ -2314,6 +2314,11 @@
           "description": "The place name (varies by languageCode)",
           "type": "string"
         },
+        "population": {
+          "description": "The place population",
+          "type": "integer",
+          "format": "int32"
+        },
         "region": {
           "description": "The region name (varies by languageCode)",
           "type": "string"
