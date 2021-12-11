@@ -1822,6 +1822,10 @@
           "description": "The ISO-3166 country code",
           "type": "string"
         },
+        "callingCode": {
+          "description": "The country dialing prefix",
+          "type": "string"
+        },
         "currencyCodes": {
           "description": "A list of supported ISO-4217 currency codes",
           "type": "array",
@@ -1849,6 +1853,7 @@
       },
       "example": {
         "code": "US",
+        "callingCode": "+1",
         "currencyCodes": [
           "USD"
         ],
@@ -2634,6 +2639,7 @@
       "example": {
         "data": {
           "code": "US",
+          "callingCode": "+1",
           "currencyCodes": [
             "USD"
           ],

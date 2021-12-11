@@ -59,8 +59,8 @@
     <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <lombok.version>1.18.18</lombok.version>
-    <slf4j.version>1.7.30</slf4j.version>
+    <lombok.version>1.18.22</lombok.version>
+    <slf4j.version>1.7.32</slf4j.version>
     <squareup.version>2.7.5</squareup.version>
   </properties>
 
