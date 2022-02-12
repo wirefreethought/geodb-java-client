@@ -147,6 +147,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             request.getAsciiMode(),
             false,
@@ -168,6 +169,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             toString(PlaceRequestType.ADMIN_DIVISION_2),
             request.getAsciiMode(),
@@ -181,7 +183,7 @@ public class GeoDbApi
 
     public CountriesResponse findAllCountries(boolean asciiMode, String languageCode, Integer limit, Integer offset)
     {
-        return geoApi.getCountriesUsingGET(null, null, asciiMode, false, languageCode, limit, offset);
+        return geoApi.getCountriesUsingGET(null, null, null, asciiMode, false, languageCode, limit, offset);
     }
 
     public CurrenciesResponse findAllCurrencies(Integer limit, Integer offset)
@@ -209,6 +211,7 @@ public class GeoDbApi
         return geoApi.getCountriesUsingGET(
             request.getCurrencyCode(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             request.getAsciiMode(),
             false,
             request.getLanguageCode(),
@@ -244,6 +247,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             toStringFromEnumSet(request.getTypes()),
             request.getAsciiMode(),
@@ -266,6 +270,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             toStringFromEnumSet(request.getTypes()),
             request.getAsciiMode(),
@@ -301,6 +306,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             toStringFromEnumSet(request.getTypes()),
             request.getAsciiMode(),
@@ -329,6 +335,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             request.getAsciiMode(),
             false,
@@ -347,6 +354,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             toStringFromEnumSet(request.getTypes()),
             request.getAsciiMode(),
@@ -363,6 +371,7 @@ public class GeoDbApi
         return geoApi.getRegionsUsingGET(
             request.getCountryId(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             request.getAsciiMode(),
             false,
             request.getLanguageCode(),

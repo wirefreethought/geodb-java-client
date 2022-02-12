@@ -12,5 +12,6 @@ public class FindRegionsRequest
     private String languageCode;
     private Integer limit;
     private String namePrefix;
+    private Boolean namePrefixDefaultLangResults;
     private Integer offset;
 }
