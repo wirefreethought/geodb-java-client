@@ -83,11 +83,16 @@ public class GeoDbApi
         if (sort != null)
         {
             sortString = sort.getFields().stream()
-                .map(f -> String.format("%s%s", f.isReverse() ? "-" : "+", f.getName()))
+                .map(f -> toString(f))
                 .collect(Collectors.joining(","));
         }
 
         return sortString;
+    }
+
+    private static String toString(GeoDbSort.SortField field)
+    {
+        return String.format("%s%s", field.isReverse() ? "-" : "+", field.getName());
     }
 
     private static String toString(IncludeDeletedMode mode)
@@ -181,9 +186,9 @@ public class GeoDbApi
             toString(request.getIncludeDeleted()));
     }
 
-    public CountriesResponse findAllCountries(boolean asciiMode, String languageCode, Integer limit, Integer offset)
+    public CountriesResponse findAllCountries(boolean asciiMode, String languageCode, Integer limit, Integer offset, GeoDbSort.SortField sort)
     {
-        return geoApi.getCountriesUsingGET(null, null, null, asciiMode, false, languageCode, limit, offset);
+        return geoApi.getCountriesUsingGET(null, null, null, asciiMode, false, languageCode, limit, offset, toString(sort));
     }
 
     public CurrenciesResponse findAllCurrencies(Integer limit, Integer offset)
@@ -216,7 +221,8 @@ public class GeoDbApi
             false,
             request.getLanguageCode(),
             request.getLimit(),
-            request.getOffset());
+            request.getOffset(),
+            toString(request.getSort()));
     }
 
     public CountryResponse findCountry(FindCountryRequest request)
@@ -376,7 +382,8 @@ public class GeoDbApi
             false,
             request.getLanguageCode(),
             request.getLimit(),
-            request.getOffset());
+            request.getOffset(),
+            toString(request.getSort()));
     }
 
     public PopulatedPlaceResponse getPlace(GetPlaceRequest request)

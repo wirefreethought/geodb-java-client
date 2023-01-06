@@ -932,6 +932,9 @@
           },
           {
             "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.country.sort"
           }
         ],
         "responses": {
@@ -1032,6 +1035,9 @@
           },
           {
             "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.region.sort"
           }
         ],
         "responses": {
@@ -1561,6 +1567,13 @@
       "required": false,
       "type": "string"
     },
+    "query.country.sort": {
+      "name": "sort",
+      "in": "query",
+      "description": "How to sort countries. \nFormat: ±SORT_FIELD \nwhere SORT_FIELD = code | name",
+      "required": false,
+      "type": "string"
+    },
     "query.currency.countryId": {
       "name": "countryId",
       "in": "query",
@@ -1667,7 +1680,7 @@
     "query.place.sort": {
       "name": "sort",
       "in": "query",
-      "description": "How to sort place results. \n'Format: ±SORT_FIELD,±SORT_FIELD' \nwhere SORT_FIELD = countryCode | elevation | name | population\n",
+      "description": "How to sort places. \nFormat: ±SORT_FIELD,±SORT_FIELD \nwhere SORT_FIELD = countryCode | elevation | name | population\n",
       "required": false,
       "type": "string"
     },
@@ -1675,6 +1688,13 @@
       "name": "sort",
       "in": "query",
       "description": "How to sort place results. \n'Format: ±SORT_FIELD,±SORT_FIELD' \nwhere SORT_FIELD = elevation | name | population\n",
+      "required": false,
+      "type": "string"
+    },
+    "query.region.sort": {
+      "name": "sort",
+      "in": "query",
+      "description": "How to sort regions. \nFormat: ±SORT_FIELD \nwhere SORT_FIELD = fipsCode | isoCode | name",
       "required": false,
       "type": "string"
     },
