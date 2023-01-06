@@ -222,7 +222,9 @@ public class GeoDbApi
             request.getLanguageCode(),
             request.getLimit(),
             request.getOffset(),
-            toString(request.getSort()));
+            request.getSort() != null
+                ? toString(request.getSort())
+                : null);
     }
 
     public CountryResponse findCountry(FindCountryRequest request)
@@ -383,7 +385,9 @@ public class GeoDbApi
             request.getLanguageCode(),
             request.getLimit(),
             request.getOffset(),
-            toString(request.getSort()));
+            request.getSort() != null
+                ? toString(request.getSort())
+                : null);
     }
 
     public PopulatedPlaceResponse getPlace(GetPlaceRequest request)
