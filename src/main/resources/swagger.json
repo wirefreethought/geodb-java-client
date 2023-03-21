@@ -45,7 +45,7 @@
         "tags": [
           "Geo"
         ],
-        "summary": "Find administrative divisions",
+        "summary": "Find admin divisions",
         "description": "Find administrative divisions, filtering by optional criteria. If no criteria are set, you will get back all\nknown divisions.\n",
         "operationId": "findAdminDivisionsUsingGET",
         "consumes": [
@@ -128,8 +128,8 @@
         "tags": [
           "Geo"
         ],
-        "summary": "Get administrative division details",
-        "description": "Get the details for a specific administrative division, including location coordinates, population, and\nelevation above sea-level (if available).\n",
+        "summary": "Get admin division details",
+        "description": "Get administrative division details such as location coordinates, population, and\nelevation above sea-level (if available).\n",
         "operationId": "getAdminDivisionUsingGET",
         "consumes": [
           "application/json"
@@ -261,8 +261,8 @@
         "tags": [
           "Geo"
         ],
-        "summary": "Find divisions near division",
-        "description": "Find administrative divisions near the given origin division, filtering by optional criteria. If no criteria\nare set, you will get back all known divisions.\n",
+        "summary": "Find admin divisions near division",
+        "description": "Find administrative divisions near the given division, filtering by optional criteria. If no criteria\nare set, you will get back all known divisions.\n",
         "operationId": "findDivisionsNearAdminDivisionUsingGET",
         "consumes": [
           "application/json"
@@ -523,7 +523,7 @@
           "Geo"
         ],
         "summary": "Find cities near city",
-        "description": "Find cities near the given origin city, filtering by optional criteria. If no criteria are set, you will get\nback all cities within the default radius.\n",
+        "description": "Find cities near the given city, filtering by optional criteria. If no criteria are set, you will get\nback all cities within the default radius.\n",
         "operationId": "findCitiesNearCityUsingGET",
         "consumes": [
           "application/json"
@@ -611,8 +611,8 @@
         "tags": [
           "Geo"
         ],
-        "summary": "Find administrative divisions near city",
-        "description": "Find administrative divisions near the given origin city, filtering by optional criteria. If no criteria are set, you will get\nback all divisions within the default radius.\n",
+        "summary": "Find admin divisions near city",
+        "description": "Find administrative divisions near the given city, filtering by optional criteria. If no criteria are set, you will get\nback all divisions within the default radius.\n",
         "operationId": "findDivisionsNearCityUsingGET",
         "consumes": [
           "application/json"
@@ -698,7 +698,7 @@
           "Geo"
         ],
         "summary": "Find places near city",
-        "description": "Find places near the given origin city, filtering by optional criteria. If no criteria are set, you will get\nback all places within the default radius.\n",
+        "description": "Find places near the given city, filtering by optional criteria. If no criteria are set, you will get\nback all places within the default radius.\n",
         "operationId": "findPlacesNearCityUsingGET",
         "consumes": [
           "application/json"
@@ -787,7 +787,7 @@
           "Geo"
         ],
         "summary": "Get city details",
-        "description": "Get the details for a specific city, including location coordinates, population, and elevation above sea-level\n(if available).\n",
+        "description": "Get city details such as location coordinates, population, and elevation above sea-level\n(if available).\n",
         "operationId": "getCityUsingGET",
         "consumes": [
           "application/json"
@@ -1054,7 +1054,7 @@
           "Geo"
         ],
         "summary": "Get country details",
-        "description": "Get the details for a specific country, including number of regions.",
+        "description": "Get country details such as number of regions.",
         "operationId": "getCountryUsingGET",
         "consumes": [
           "application/json"
@@ -1098,7 +1098,7 @@
           "Geo"
         ],
         "summary": "Find country places",
-        "description": "Get the places in a specific country. The country is omitted in the response.\n",
+        "description": "Get the country's places. The country is omitted in the response.\n",
         "operationId": "findCountryPlacesUsingGET",
         "consumes": [
           "application/json"
@@ -1175,7 +1175,7 @@
           "Geo"
         ],
         "summary": "Find country regions",
-        "description": "Get all regions in a specific country. These could be states, provinces, districts, or otherwise major\npolitical divisions.\n",
+        "description": "Get the country's regions. These could be states, provinces, districts, or otherwise major\npolitical divisions.\n",
         "operationId": "getRegionsUsingGET",
         "consumes": [
           "application/json"
@@ -1237,7 +1237,7 @@
           "Geo"
         ],
         "summary": "Get region details",
-        "description": "Get the details of a specific country region, including number of cities.",
+        "description": "Get country region details such as number of cities.",
         "operationId": "getRegionUsingGET",
         "consumes": [
           "application/json"
@@ -1284,7 +1284,7 @@
           "Geo"
         ],
         "summary": "Find country region administrative divisions",
-        "description": "Get the administrative divisions in a specific country region. The country and region info is omitted in the\nresponse.\n",
+        "description": "Get country region administrative divisions. The country and region info is omitted in the\nresponse.\n",
         "operationId": "findRegionDivisionsUsingGET",
         "consumes": [
           "application/json"
@@ -1361,7 +1361,7 @@
           "Geo"
         ],
         "summary": "Find country region cities",
-        "description": "Get the cities in a specific country region. The country and region info is omitted in the response.\n",
+        "description": "Get country region cities. The country and region info is omitted in the response.\n",
         "operationId": "findRegionCitiesUsingGET",
         "consumes": [
           "application/json"
@@ -1441,7 +1441,7 @@
           "Geo"
         ],
         "summary": "Find country region places",
-        "description": "Get the places in a specific country region. The country and region info is omitted in the response.\n",
+        "description": "Get country region places. The country and region info is omitted in the response.\n",
         "operationId": "findRegionPlacesUsingGET",
         "consumes": [
           "application/json"
@@ -1606,7 +1606,7 @@
         "tags": [
           "Geo"
         ],
-        "summary": "Find divisions near location",
+        "summary": "Find admin divisions near location",
         "description": "Find administrative divisions near the given location, filtering by optional criteria. If no criteria are set,\nyou will get back all divisions within the default radius.\n",
         "operationId": "findDivisionsNearLocationUsingGET",
         "consumes": [
@@ -1862,7 +1862,7 @@
           "Geo"
         ],
         "summary": "Find places near place",
-        "description": "Find places near the given origin place, filtering by optional criteria. If no criteria are set, you will get\nback all places within the default radius.\n",
+        "description": "Find places near the given place, filtering by optional criteria. If no criteria are set, you will get\nback all places within the default radius.\n",
         "operationId": "findPlacesNearPlaceUsingGET",
         "consumes": [
           "application/json"
@@ -1951,7 +1951,7 @@
           "Geo"
         ],
         "summary": "Get place details",
-        "description": "Get the details for a specific place, including location coordinates, population, and elevation above sea-level\n(if available).\n",
+        "description": "Get place details such as location coordinates, population, and elevation above sea-level\n(if available).\n",
         "operationId": "getPlaceUsingGET",
         "consumes": [
           "application/json"
