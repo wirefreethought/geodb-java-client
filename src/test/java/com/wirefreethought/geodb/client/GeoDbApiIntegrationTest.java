@@ -2,7 +2,6 @@ package com.wirefreethought.geodb.client;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -227,8 +226,8 @@ public class GeoDbApiIntegrationTest
         {
             testFindCitiesNearCity(
                 FindPlacesNearPlaceRequest.builder()
-                    .placeId("Q90")
-                    .minPopulation(100000)
+                    .placeId("Q60")
+                    .minPopulation(50000)
                     .radius(100)
                     .distanceUnit(GeoDbDistanceUnit.MILES)
                     .types(Collections.singleton(PlaceRequestType.CITY))
@@ -372,7 +371,7 @@ public class GeoDbApiIntegrationTest
 
             assertNotNull(response);
             assertNotNull(response.getData());
-            assertNull(response.getErrors());
+            assertTrue(response.getErrors().isEmpty());
 
             log(response);
         } catch (ApiException e)
@@ -396,7 +395,7 @@ public class GeoDbApiIntegrationTest
 
             assertNotNull(response);
             assertNotNull(response.getData());
-            assertNull(response.getErrors());
+            assertTrue(response.getErrors().isEmpty());
 
             log(response);
         } catch (ApiException e)
@@ -414,7 +413,7 @@ public class GeoDbApiIntegrationTest
 
             assertNotNull(response);
             assertNotNull(response.getData());
-            assertNull(response.getErrors());
+            assertTrue(response.getErrors().isEmpty());
 
             log(response);
         } catch (ApiException e)
@@ -432,7 +431,7 @@ public class GeoDbApiIntegrationTest
 
             assertNotNull(response);
             assertNotNull(response.getData());
-            assertNull(response.getErrors());
+            assertTrue(response.getErrors().isEmpty());
 
             log(response);
         } catch (ApiException e)
@@ -445,7 +444,7 @@ public class GeoDbApiIntegrationTest
     {
         assertNotNull(response);
         assertNotNull(response.getData());
-        assertNull(response.getErrors());
+        assertTrue(response.getErrors().isEmpty());
         assertFalse(response.getData().isEmpty());
 
         response.getData().forEach(c -> {
@@ -464,7 +463,7 @@ public class GeoDbApiIntegrationTest
     {
         assertNotNull(response);
         assertNotNull(response.getData());
-        assertNull(response.getErrors());
+        assertTrue(response.getErrors().isEmpty());
         assertFalse(response.getData().isEmpty());
 
         response.getData().forEach(c -> {
@@ -483,7 +482,7 @@ public class GeoDbApiIntegrationTest
     {
         assertNotNull(response);
         assertNotNull(response.getData());
-        assertNull(response.getErrors());
+        assertTrue(response.getErrors().isEmpty());
         assertFalse(response.getData().isEmpty());
 
         response.getData().forEach(c -> {
@@ -501,7 +500,7 @@ public class GeoDbApiIntegrationTest
     {
         assertNotNull(response);
         assertNotNull(response.getData());
-        assertNull(response.getErrors());
+        assertTrue(response.getErrors().isEmpty());
         assertFalse(response.getData().isEmpty());
 
         response.getData().forEach(r -> {

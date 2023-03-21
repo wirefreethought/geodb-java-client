@@ -246,7 +246,7 @@ public class GeoDbApi
 
     public PopulatedPlacesResponse findPlaces(FindPlacesNearLocationRequest request)
     {
-        return geoApi.findCitiesNearLocationUsingGET(
+        return geoApi.findPlacesNearLocationUsingGET(
             toLocationId(request.getNearLocation()),
             request.getNearLocation().getRadius(),
             toString(request.getNearLocation().getDistanceUnit()),
@@ -269,7 +269,7 @@ public class GeoDbApi
 
     public PopulatedPlacesResponse findPlaces(FindPlacesNearPlaceRequest request)
     {
-        return geoApi.findCitiesNearCityUsingGET(
+        return geoApi.findPlacesNearPlaceUsingGET(
             request.getPlaceId(),
             request.getRadius(),
             toString(request.getDistanceUnit()),
@@ -305,7 +305,7 @@ public class GeoDbApi
             distanceUnit = toString(nearLocation.getDistanceUnit());
         }
 
-        return geoApi.findCitiesUsingGET(
+        return geoApi.findPlacesUsingGET(
             location,
             locationRadius,
             distanceUnit,
@@ -356,7 +356,7 @@ public class GeoDbApi
 
     public PopulatedPlacesResponse findRegionPlaces(FindRegionPlacesRequest request)
     {
-        return geoApi.findRegionCitiesUsingGET(
+        return geoApi.findRegionPlacesUsingGET(
             request.getCountryId(),
             request.getRegionCode(),
             request.getMinPopulation(),
@@ -392,7 +392,7 @@ public class GeoDbApi
 
     public PopulatedPlaceResponse getPlace(GetPlaceRequest request)
     {
-        return this.geoApi.getCityUsingGET(
+        return this.geoApi.getPlaceUsingGET(
             request.getPlaceId(),
             request.getAsciiMode(),
             request.getLanguageCode());
@@ -400,7 +400,7 @@ public class GeoDbApi
 
     public PopulatedPlaceResponse getPlaceAdminRegion(GetPlaceRequest request)
     {
-        return this.geoApi.getCityLocatedInUsingGET(
+        return this.geoApi.getPlaceLocatedInUsingGET(
             request.getPlaceId(),
             request.getAsciiMode(),
             request.getLanguageCode());
@@ -408,12 +408,12 @@ public class GeoDbApi
 
     public DateTimeResponse getPlaceDateTime(String cityId)
     {
-        return this.geoApi.getCityDateTimeUsingGET(cityId);
+        return this.geoApi.getPlaceDateTimeUsingGET(cityId);
     }
 
     public DistanceResponse getPlaceDistance(GetPlaceDistanceRequest request)
     {
-        return this.geoApi.getCityDistanceUsingGET(
+        return this.geoApi.getPlaceDistanceUsingGET(
             request.getToPlaceId(),
             request.getFromPlaceId(),
             request.getDistanceUnit().getTag());
@@ -421,7 +421,7 @@ public class GeoDbApi
 
     public TimeResponse getPlaceTime(String cityId)
     {
-        return this.geoApi.getCityTimeUsingGET(cityId);
+        return this.geoApi.getPlaceTimeUsingGET(cityId);
     }
 
     public DateTimeResponse getTimeZoneDateTime(String zoneId)

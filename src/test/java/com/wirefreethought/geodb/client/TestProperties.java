@@ -4,6 +4,6 @@ public class TestProperties
 {
     public static String getApiKey()
     {
-        return System.getProperty("apiKey");
+        return System.getenv("RAPID_API_KEY");
     }
 }
