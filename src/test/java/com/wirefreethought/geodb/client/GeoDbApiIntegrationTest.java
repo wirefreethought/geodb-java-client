@@ -52,7 +52,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RunWith(JUnit4.class)
 @Slf4j
-class GeoDbApiIntegrationTest
+public class GeoDbApiIntegrationTest
 {
     private GeoDbApi api;
     private ApiClient apiClient;
@@ -72,7 +72,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findAdminDivisions_namePrefix()
+    public void findAdminDivisions_namePrefix()
     {
         try
         {
@@ -94,7 +94,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findAdminDivisions_nearLocation()
+    public void findAdminDivisions_nearLocation()
     {
         try
         {
@@ -122,7 +122,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findAdminDivisions_nearPlace()
+    public void findAdminDivisions_nearPlace()
     {
         try
         {
@@ -146,7 +146,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findAdminDivisions_timeZoneIds()
+    public void findAdminDivisions_timeZoneIds()
     {
         try
         {
@@ -168,7 +168,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findCities_namePrefix()
+    public void findCities_namePrefix()
     {
         try
         {
@@ -191,7 +191,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findCities_nearLocation()
+    public void findCities_nearLocation()
     {
         try
         {
@@ -220,7 +220,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findCities_nearPlace()
+    public void findCities_nearPlace()
     {
         try
         {
@@ -245,7 +245,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findCities_timeZoneIds()
+    public void findCities_timeZoneIds()
     {
         try
         {
@@ -268,7 +268,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findCountries_currencyCode()
+    public void findCountries_currencyCode()
     {
         try
         {
@@ -283,7 +283,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findCurrencies_countryId()
+    public void findCurrencies_countryId()
     {
         try
         {
@@ -298,7 +298,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findRegionDivisions()
+    public void findRegionDivisions()
     {
         try
         {
@@ -321,7 +321,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findRegionPlaces()
+    public void findRegionPlaces()
     {
         try
         {
@@ -344,7 +344,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void findRegions()
+    public void findRegions()
     {
         try
         {
@@ -359,7 +359,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void getPlaceAdminRegion()
+    public void getPlaceAdminRegion()
     {
         try
         {
@@ -381,7 +381,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void getPlaceDistance()
+    public void getPlaceDistance()
     {
         try
         {
@@ -405,7 +405,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void getTimeZoneDateTime()
+    public void getTimeZoneDateTime()
     {
         try
         {
@@ -423,7 +423,7 @@ class GeoDbApiIntegrationTest
     }
 
     @Test
-    void getTimeZoneTime()
+    public void getTimeZoneTime()
     {
         try
         {
