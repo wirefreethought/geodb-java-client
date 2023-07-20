@@ -227,8 +227,8 @@ public class GeoDbApiIntegrationTest
         {
             testFindCitiesNearCity(
                 FindPlacesNearPlaceRequest.builder()
-                    .placeId("Q90")
-                    .minPopulation(100000)
+                    .placeId("Q60")
+                    .minPopulation(50000)
                     .radius(100)
                     .distanceUnit(GeoDbDistanceUnit.MILES)
                     .types(Collections.singleton(PlaceRequestType.CITY))
