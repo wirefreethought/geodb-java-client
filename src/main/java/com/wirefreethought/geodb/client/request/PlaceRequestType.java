@@ -7,7 +7,8 @@ import lombok.Getter;
 public enum PlaceRequestType implements GeoDbEnum
 {
     ADMIN_DIVISION_2("ADM2"),
-    CITY("CITY");
+    CITY("CITY"),
+    ISLAND("ISLAND");
 
     @Getter
     private String tag;

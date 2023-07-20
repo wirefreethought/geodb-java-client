@@ -9,6 +9,10 @@ public interface PlaceSortFields
         String POPULATION = "population";
     }
 
+    public interface FindCountryPlaces extends Common
+    {
+    }
+
     public interface FindPlaces extends Common
     {
         String COUNTRY_CODE = "countryCode";

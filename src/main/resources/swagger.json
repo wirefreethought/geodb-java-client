@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.0",
     "title": "GeoDB Cities API",
-    "description": "The GeoDB API focuses on getting global city and region data. Easily obtain country, region, and city data for use\nin your apps! \n<ul>\n  <li>Filter cities by name prefix, country, location, time-zone, and even minimum population.</li>\n  <li>Sort cities by name, country code, elevation, and population - or any combination of these.</li> \n  <li>Get all country regions.</li> <li>Get all cities in a given region.</li>\n  <li>\n    Display results in multiple languages.</li> <li>RESTful API adheres to industry best-practices, including\n    HATEOAS-style links to facilitate paging results.\n  </li> \n  <li>Backed by cloud-based load-balanced infrastructure for resiliency and performance!</li>\n  <li>Data is periodically refreshed from GeoNames and WikiData.</li>\n</ul>\n<p>Notes:\n<ul>\n  <li>\n    Since the database is periodically updated, this may <strong>very rarely</strong> result in certain cities\n    being marked deleted (e.g., duplicates removed). By default, endpoints returning city data will exclude\n    cities marked deleted. However, in the unlikely event that this occurs while your app is paging through a set\n    of affected results - and you care about the paged results suddenly changing underneath - specify \n    <tt>includeDeleted=SINCE_YESTERDAY</tt> (or <tt>SINCE_LAST_WEEK</tt> if you're really paranoid!).\n  </li>\n</ul>\n<hr/>\n<h3>Useful Resources</h3>\n<ul>\n  <li>\n    SDKs\n    <ul>\n      <li>\n        <a href='https://www.npmjs.com/package/wft-geodb-angular-client'>Angular</a>, \n        <a href='https://github.com/wirefreethought/geodb-sample-angular-app'>Sample App</a>\n      </li>\n      <li><a href='https://github.com/wirefreethought/geodb-java-client'>Java</a></li>\n      <li><a href='https://www.npmjs.com/package/wft-geodb-js-client'>JavaScript</a></li>\n    </ul>\n    <li><a href='swagger.json'>Swagger Docs</a></li>\n    <li><a href='http://creativecommons.org/licenses/by/3.0/'>Usage License</a></li>\n  </li>      \n</ul>\n",
+    "description": "The GeoDB API focuses on getting global places and regions. Easily obtain country, region, and place data for use\nin your apps! \n<ul>\n  <li>Filter places by name prefix, country, location, time-zone, and even minimum population.</li>\n  <li>Sort places by name, country code, elevation, and population - or any combination of these.</li> \n  <li>Get all country regions.</li> <li>Get all places in a given country or region.</li>\n  <li>\n    Display results in multiple languages.</li> <li>RESTful API adheres to industry best-practices, including\n    HATEOAS-style links to facilitate paging results.\n  </li> \n  <li>Backed by cloud-based load-balanced infrastructure.</li>\n  <li>Data is periodically refreshed from GeoNames and WikiData.</li>\n</ul>\n<p>Notes:\n<ul>\n  <li>\n    Since the database is periodically updated, this may <strong>very rarely</strong> result in certain places\n    being marked deleted (e.g., duplicates removed). By default, endpoints returning place data will exclude\n    places marked deleted. However, in the unlikely event that this occurs while your app is paging through a set\n    of affected results - and you care about the paged results suddenly changing underneath - specify \n    <tt>includeDeleted=SINCE_YESTERDAY</tt> (or <tt>SINCE_LAST_WEEK</tt> if you're really paranoid!).\n  </li>\n</ul>\n<hr/>\n<h3>Useful Resources</h3>\n<ul>\n  <li>\n    SDKs\n    <ul>\n      <li>\n        <a href='https://www.npmjs.com/package/wft-geodb-angular-client'>Angular</a>, \n        <a href='https://github.com/wirefreethought/geodb-sample-angular-app'>Sample App</a>\n      </li>\n      <li><a href='https://github.com/wirefreethought/geodb-java-client'>Java</a></li>\n      <li><a href='https://www.npmjs.com/package/wft-geodb-js-client'>JavaScript</a></li>\n    </ul>\n    <li><a href='swagger.json'>Swagger Docs</a></li>\n    <li><a href='http://creativecommons.org/licenses/by/3.0/'>Usage License</a></li>\n  </li>      \n</ul>\n",
     "license": {
       "name": "Creative Commons Attribution 3.0",
       "url": "http://creativecommons.org/licenses/by/3.0/"
@@ -30,7 +30,7 @@
   "securityDefinitions": {
     "UserSecurity": {
       "type": "apiKey",
-      "name": "x-rapidapi-key",
+      "name": "X-RapidAPI-Key",
       "in": "header"
     }
   },
@@ -45,7 +45,7 @@
         "tags": [
           "Geo"
         ],
-        "summary": "Find administrative divisions",
+        "summary": "Find admin divisions",
         "description": "Find administrative divisions, filtering by optional criteria. If no criteria are set, you will get back all\nknown divisions.\n",
         "operationId": "findAdminDivisionsUsingGET",
         "consumes": [
@@ -78,6 +78,9 @@
           },
           {
             "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
           },
           {
             "$ref": "#/parameters/query.timeZoneIds"
@@ -120,14 +123,14 @@
         }
       }
     },
-    "/geo/adminDivisions/{divisionId}/nearbyDivisions": {
+    "/geo/adminDivisions/{divisionId}": {
       "get": {
         "tags": [
           "Geo"
         ],
-        "summary": "Find divisions near division",
-        "description": "Find administrative divisions near the given origin division, filtering by optional criteria. If no criteria\nare set, you will get back all known divisions.\n",
-        "operationId": "findDivisionsNearAdminDivisionUsingGET",
+        "summary": "Get admin division details",
+        "description": "Get administrative division details such as location coordinates, population, and\nelevation above sea-level (if available).\n",
+        "operationId": "getAdminDivisionUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -139,54 +142,15 @@
             "$ref": "#/parameters/path.divisionId"
           },
           {
-            "$ref": "#/parameters/query.place.location.radiusOf"
-          },
-          {
-            "$ref": "#/parameters/query.distanceUnit"
-          },
-          {
-            "$ref": "#/parameters/query.place.countryIds"
-          },
-          {
-            "$ref": "#/parameters/query.place.excludedCountryIds"
-          },
-          {
-            "$ref": "#/parameters/query.place.minPopulation"
-          },
-          {
-            "$ref": "#/parameters/query.place.maxPopulation"
-          },
-          {
-            "$ref": "#/parameters/query.entity.namePrefix"
-          },
-          {
-            "$ref": "#/parameters/query.timeZoneIds"
-          },
-          {
             "$ref": "#/parameters/query.asciiMode"
           },
           {
-            "$ref": "#/parameters/query.hateoasMode"
-          },
-          {
             "$ref": "#/parameters/query.languageCode"
-          },
-          {
-            "$ref": "#/parameters/query.limit"
-          },
-          {
-            "$ref": "#/parameters/query.offset"
-          },
-          {
-            "$ref": "#/parameters/query.place.sort"
-          },
-          {
-            "$ref": "#/parameters/query.includeDeleted"
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/PopulatedPlaces"
+            "$ref": "#/responses/PopulatedPlace"
           },
           "400": {
             "$ref": "#/responses/BadRequest"
@@ -241,6 +205,184 @@
           },
           {
             "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
+            "$ref": "#/parameters/query.timeZoneIds"
+          },
+          {
+            "$ref": "#/parameters/query.city.types"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.hateoasMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          },
+          {
+            "$ref": "#/parameters/query.limit"
+          },
+          {
+            "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.place.sort"
+          },
+          {
+            "$ref": "#/parameters/query.includeDeleted"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlaces"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/geo/adminDivisions/{divisionId}/nearbyDivisions": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Find admin divisions near division",
+        "description": "Find administrative divisions near the given division, filtering by optional criteria. If no criteria\nare set, you will get back all known divisions.\n",
+        "operationId": "findDivisionsNearAdminDivisionUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.divisionId"
+          },
+          {
+            "$ref": "#/parameters/query.place.location.radiusOf"
+          },
+          {
+            "$ref": "#/parameters/query.distanceUnit"
+          },
+          {
+            "$ref": "#/parameters/query.place.countryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.excludedCountryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.minPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.place.maxPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
+            "$ref": "#/parameters/query.timeZoneIds"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.hateoasMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          },
+          {
+            "$ref": "#/parameters/query.limit"
+          },
+          {
+            "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.place.sort"
+          },
+          {
+            "$ref": "#/parameters/query.includeDeleted"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlaces"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/geo/adminDivisions/{divisionId}/nearbyPlaces": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Find places near division",
+        "description": "Find places near the given administrative division, filtering by optional criteria. If no criteria are set, you\nwill get back all known places.\n",
+        "operationId": "findPlacesNearAdminDivisionUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.divisionId"
+          },
+          {
+            "$ref": "#/parameters/query.place.location.radiusOf"
+          },
+          {
+            "$ref": "#/parameters/query.distanceUnit"
+          },
+          {
+            "$ref": "#/parameters/query.place.countryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.excludedCountryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.minPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.place.maxPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
           },
           {
             "$ref": "#/parameters/query.timeZoneIds"
@@ -329,10 +471,13 @@
             "$ref": "#/parameters/query.entity.namePrefix"
           },
           {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
             "$ref": "#/parameters/query.timeZoneIds"
           },
           {
-            "$ref": "#/parameters/query.place.types"
+            "$ref": "#/parameters/query.city.types"
           },
           {
             "$ref": "#/parameters/query.asciiMode"
@@ -378,7 +523,7 @@
           "Geo"
         ],
         "summary": "Find cities near city",
-        "description": "Find cities near the given origin city, filtering by optional criteria. If no criteria are set, you will get\nback all known cities.\n",
+        "description": "Find cities near the given city, filtering by optional criteria. If no criteria are set, you will get\nback all cities within the default radius.\n",
         "operationId": "findCitiesNearCityUsingGET",
         "consumes": [
           "application/json"
@@ -412,10 +557,13 @@
             "$ref": "#/parameters/query.entity.namePrefix"
           },
           {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
             "$ref": "#/parameters/query.timeZoneIds"
           },
           {
-            "$ref": "#/parameters/query.place.types"
+            "$ref": "#/parameters/query.city.types"
           },
           {
             "$ref": "#/parameters/query.asciiMode"
@@ -458,14 +606,14 @@
         }
       }
     },
-    "/geo/locations/{locationId}/nearbyDivisions": {
+    "/geo/cities/{cityId}/nearbyDivisions": {
       "get": {
         "tags": [
           "Geo"
         ],
-        "summary": "Find divisions near location",
-        "description": "Find administrative divisions near the given location, filtering by optional criteria. If no criteria are set,\nyou will get back all known divisions.\n",
-        "operationId": "findDivisionsNearLocationUsingGET",
+        "summary": "Find admin divisions near city",
+        "description": "Find administrative divisions near the given city, filtering by optional criteria. If no criteria are set, you will get\nback all divisions within the default radius.\n",
+        "operationId": "findDivisionsNearCityUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -474,7 +622,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/parameters/path.location.id"
+            "$ref": "#/parameters/path.cityId"
           },
           {
             "$ref": "#/parameters/query.place.location.radiusOf"
@@ -496,6 +644,9 @@
           },
           {
             "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
           },
           {
             "$ref": "#/parameters/query.timeZoneIds"
@@ -534,18 +685,21 @@
           },
           "403": {
             "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
           }
         }
       }
     },
-    "/geo/locations/{locationId}/nearbyCities": {
+    "/geo/cities/{cityId}/nearbyPlaces": {
       "get": {
         "tags": [
           "Geo"
         ],
-        "summary": "Find cities near location",
-        "description": "Find cities near the given location, filtering by optional criteria. If no criteria are set, you will get back\nall known cities.\n",
-        "operationId": "findCitiesNearLocationUsingGET",
+        "summary": "Find places near city",
+        "description": "Find places near the given city, filtering by optional criteria. If no criteria are set, you will get\nback all places within the default radius.\n",
+        "operationId": "findPlacesNearCityUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -554,7 +708,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/parameters/path.location.id"
+            "$ref": "#/parameters/path.cityId"
           },
           {
             "$ref": "#/parameters/query.place.location.radiusOf"
@@ -576,6 +730,9 @@
           },
           {
             "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
           },
           {
             "$ref": "#/parameters/query.timeZoneIds"
@@ -608,47 +765,6 @@
         "responses": {
           "200": {
             "$ref": "#/responses/PopulatedPlaces"
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/responses/Forbidden"
-          }
-        }
-      }
-    },
-    "/geo/adminDivisions/{divisionId}": {
-      "get": {
-        "tags": [
-          "Geo"
-        ],
-        "summary": "Get administrative division details",
-        "description": "Get the details for a specific administrative division, including location coordinates, population, and\nelevation above sea-level (if available).\n",
-        "operationId": "getAdminDivisionUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/path.divisionId"
-          },
-          {
-            "$ref": "#/parameters/query.asciiMode"
-          },
-          {
-            "$ref": "#/parameters/query.languageCode"
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/PopulatedPlace"
           },
           "400": {
             "$ref": "#/responses/BadRequest"
@@ -671,7 +787,7 @@
           "Geo"
         ],
         "summary": "Get city details",
-        "description": "Get the details for a specific city, including location coordinates, population, and elevation above sea-level\n(if available).\n",
+        "description": "Get city details such as location coordinates, population, and elevation above sea-level\n(if available).\n",
         "operationId": "getCityUsingGET",
         "consumes": [
           "application/json"
@@ -796,8 +912,8 @@
         "tags": [
           "Geo"
         ],
-        "summary": "Get this city's containing populated place (e.g., its county or other administrative division)",
-        "description": "Get the details for the containing populated place, including location coordinates, population, and elevation above sea-level\n(if available).\n",
+        "summary": "Get city containing region",
+        "description": "Get the details for the containing populated place (e.g., its county or other administrative division), including location coordinates, population, and elevation above sea-level\n(if available).\n",
         "operationId": "getCityLocatedInUsingGET",
         "consumes": [
           "application/json"
@@ -895,6 +1011,9 @@
             "$ref": "#/parameters/query.entity.namePrefix"
           },
           {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
             "$ref": "#/parameters/query.asciiMode"
           },
           {
@@ -908,6 +1027,9 @@
           },
           {
             "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.country.sort"
           }
         ],
         "responses": {
@@ -932,7 +1054,7 @@
           "Geo"
         ],
         "summary": "Get country details",
-        "description": "Get the details for a specific country, including number of regions.",
+        "description": "Get country details such as number of regions.",
         "operationId": "getCountryUsingGET",
         "consumes": [
           "application/json"
@@ -970,14 +1092,14 @@
         }
       }
     },
-    "/geo/countries/{countryId}/regions": {
+    "/geo/countries/{countryId}/places": {
       "get": {
         "tags": [
           "Geo"
         ],
-        "summary": "Find country regions",
-        "description": "Get all regions in a specific country. These could be states, provinces, districts, or otherwise major\npolitical divisions.\n",
-        "operationId": "getRegionsUsingGET",
+        "summary": "Find country places",
+        "description": "Get the country's places. The country is omitted in the response.\n",
+        "operationId": "findCountryPlacesUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -989,7 +1111,22 @@
             "$ref": "#/parameters/path.countryId"
           },
           {
+            "$ref": "#/parameters/query.place.minPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.place.maxPopulation"
+          },
+          {
             "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
+            "$ref": "#/parameters/query.timeZoneIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.types"
           },
           {
             "$ref": "#/parameters/query.asciiMode"
@@ -1005,6 +1142,74 @@
           },
           {
             "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.place.sort.withinRegion"
+          },
+          {
+            "$ref": "#/parameters/query.includeDeleted"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlaces"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/geo/countries/{countryId}/regions": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Find country regions",
+        "description": "Get the country's regions. These could be states, provinces, districts, or otherwise major\npolitical divisions.\n",
+        "operationId": "getRegionsUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.countryId"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.hateoasMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          },
+          {
+            "$ref": "#/parameters/query.limit"
+          },
+          {
+            "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.region.sort"
           }
         ],
         "responses": {
@@ -1032,7 +1237,7 @@
           "Geo"
         ],
         "summary": "Get region details",
-        "description": "Get the details of a specific country region, including number of cities.",
+        "description": "Get country region details such as number of cities.",
         "operationId": "getRegionUsingGET",
         "consumes": [
           "application/json"
@@ -1079,7 +1284,7 @@
           "Geo"
         ],
         "summary": "Find country region administrative divisions",
-        "description": "Get the administrative divisions in a specific country region. The country and region info is omitted in the\nresponse.\n",
+        "description": "Get country region administrative divisions. The country and region info is omitted in the\nresponse.\n",
         "operationId": "findRegionDivisionsUsingGET",
         "consumes": [
           "application/json"
@@ -1102,6 +1307,9 @@
           },
           {
             "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
           },
           {
             "$ref": "#/parameters/query.timeZoneIds"
@@ -1153,7 +1361,7 @@
           "Geo"
         ],
         "summary": "Find country region cities",
-        "description": "Get the cities in a specific country region. The country and region info is omitted in the response.\n",
+        "description": "Get country region cities. The country and region info is omitted in the response.\n",
         "operationId": "findRegionCitiesUsingGET",
         "consumes": [
           "application/json"
@@ -1176,6 +1384,89 @@
           },
           {
             "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
+            "$ref": "#/parameters/query.timeZoneIds"
+          },
+          {
+            "$ref": "#/parameters/query.city.types"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.hateoasMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          },
+          {
+            "$ref": "#/parameters/query.limit"
+          },
+          {
+            "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.place.sort.withinRegion"
+          },
+          {
+            "$ref": "#/parameters/query.includeDeleted"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlaces"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/geo/countries/{countryId}/regions/{regionCode}/places": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Find country region places",
+        "description": "Get country region places. The country and region info is omitted in the response.\n",
+        "operationId": "findRegionPlacesUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.countryId"
+          },
+          {
+            "$ref": "#/parameters/path.regionCode"
+          },
+          {
+            "$ref": "#/parameters/query.place.minPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.place.maxPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
           },
           {
             "$ref": "#/parameters/query.timeZoneIds"
@@ -1208,6 +1499,644 @@
         "responses": {
           "200": {
             "$ref": "#/responses/PopulatedPlaces"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/geo/locations/{locationId}/nearbyCities": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Find cities near location",
+        "description": "Find cities near the given location, filtering by optional criteria. If no criteria are set, you will get back\nall cities within the default radius.\n",
+        "operationId": "findCitiesNearLocationUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.location.id"
+          },
+          {
+            "$ref": "#/parameters/query.place.location.radiusOf"
+          },
+          {
+            "$ref": "#/parameters/query.distanceUnit"
+          },
+          {
+            "$ref": "#/parameters/query.place.countryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.excludedCountryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.minPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.place.maxPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
+            "$ref": "#/parameters/query.timeZoneIds"
+          },
+          {
+            "$ref": "#/parameters/query.city.types"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.hateoasMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          },
+          {
+            "$ref": "#/parameters/query.limit"
+          },
+          {
+            "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.place.sort"
+          },
+          {
+            "$ref": "#/parameters/query.includeDeleted"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlaces"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/geo/locations/{locationId}/nearbyDivisions": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Find admin divisions near location",
+        "description": "Find administrative divisions near the given location, filtering by optional criteria. If no criteria are set,\nyou will get back all divisions within the default radius.\n",
+        "operationId": "findDivisionsNearLocationUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.location.id"
+          },
+          {
+            "$ref": "#/parameters/query.place.location.radiusOf"
+          },
+          {
+            "$ref": "#/parameters/query.distanceUnit"
+          },
+          {
+            "$ref": "#/parameters/query.place.countryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.excludedCountryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.minPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.place.maxPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
+            "$ref": "#/parameters/query.timeZoneIds"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.hateoasMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          },
+          {
+            "$ref": "#/parameters/query.limit"
+          },
+          {
+            "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.place.sort"
+          },
+          {
+            "$ref": "#/parameters/query.includeDeleted"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlaces"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/geo/locations/{locationId}/nearbyPlaces": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Find places near location",
+        "description": "Find places near the given location, filtering by optional criteria. If no criteria are set, you will get back\nall places within the default radius.\n",
+        "operationId": "findPlacesNearLocationUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.location.id"
+          },
+          {
+            "$ref": "#/parameters/query.place.location.radiusOf"
+          },
+          {
+            "$ref": "#/parameters/query.distanceUnit"
+          },
+          {
+            "$ref": "#/parameters/query.place.countryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.excludedCountryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.minPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.place.maxPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
+            "$ref": "#/parameters/query.timeZoneIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.types"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.hateoasMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          },
+          {
+            "$ref": "#/parameters/query.limit"
+          },
+          {
+            "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.place.sort"
+          },
+          {
+            "$ref": "#/parameters/query.includeDeleted"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlaces"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/geo/places": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Find places",
+        "description": "Find places, filtering by optional criteria. If no criteria are set, you will get back all known places.\n",
+        "operationId": "findPlacesUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/query.place.location.id"
+          },
+          {
+            "$ref": "#/parameters/query.place.location.radiusOf"
+          },
+          {
+            "$ref": "#/parameters/query.distanceUnit"
+          },
+          {
+            "$ref": "#/parameters/query.place.countryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.excludedCountryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.minPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.place.maxPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
+            "$ref": "#/parameters/query.timeZoneIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.types"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.hateoasMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          },
+          {
+            "$ref": "#/parameters/query.limit"
+          },
+          {
+            "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.place.sort"
+          },
+          {
+            "$ref": "#/parameters/query.includeDeleted"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlaces"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/geo/places/{placeId}/nearbyPlaces": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Find places near place",
+        "description": "Find places near the given place, filtering by optional criteria. If no criteria are set, you will get\nback all places within the default radius.\n",
+        "operationId": "findPlacesNearPlaceUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.placeId"
+          },
+          {
+            "$ref": "#/parameters/query.place.location.radiusOf"
+          },
+          {
+            "$ref": "#/parameters/query.distanceUnit"
+          },
+          {
+            "$ref": "#/parameters/query.place.countryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.excludedCountryIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.minPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.place.maxPopulation"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefix"
+          },
+          {
+            "$ref": "#/parameters/query.entity.namePrefixDefaultLangResults"
+          },
+          {
+            "$ref": "#/parameters/query.timeZoneIds"
+          },
+          {
+            "$ref": "#/parameters/query.place.types"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.hateoasMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          },
+          {
+            "$ref": "#/parameters/query.limit"
+          },
+          {
+            "$ref": "#/parameters/query.offset"
+          },
+          {
+            "$ref": "#/parameters/query.place.sort"
+          },
+          {
+            "$ref": "#/parameters/query.includeDeleted"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlaces"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/geo/places/{placeId}": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Get place details",
+        "description": "Get place details such as location coordinates, population, and elevation above sea-level\n(if available).\n",
+        "operationId": "getPlaceUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.placeId"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlace"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/geo/places/{placeId}/distance": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Get place distance",
+        "description": "Get distance from the given place",
+        "operationId": "getPlaceDistanceUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.placeId"
+          },
+          {
+            "$ref": "#/parameters/query.toPlaceId"
+          },
+          {
+            "$ref": "#/parameters/query.distanceUnit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Distance"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/geo/places/{placeId}/dateTime": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Get place date-time",
+        "description": "Get place date-time",
+        "operationId": "getPlaceDateTimeUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.placeId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/DateTime"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/geo/places/{placeId}/locatedIn": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Get place containing region",
+        "description": "Get the details for the containing populated place (e.g., its county or other administrative division), including location coordinates, population, and elevation above sea-level\n(if available).\n",
+        "operationId": "getPlaceLocatedInUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.placeId"
+          },
+          {
+            "$ref": "#/parameters/query.asciiMode"
+          },
+          {
+            "$ref": "#/parameters/query.languageCode"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PopulatedPlace"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/geo/places/{placeId}/time": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Get place time",
+        "description": "Get place time",
+        "operationId": "getPlaceTimeUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.placeId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Time"
           },
           "400": {
             "$ref": "#/responses/BadRequest"
@@ -1391,6 +2320,44 @@
         }
       }
     },
+    "/locale/timezones/{zoneId}": {
+      "get": {
+        "tags": [
+          "Locale"
+        ],
+        "summary": "Get time-zone",
+        "description": "Get time-zone",
+        "operationId": "getTimeZoneUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/path.zoneId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/TimeZone"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
     "/locale/timezones/{zoneId}/dateTime": {
       "get": {
         "tags": [
@@ -1483,10 +2450,52 @@
       "required": true,
       "type": "string"
     },
+    "path.divisionId": {
+      "name": "divisionId",
+      "in": "path",
+      "description": "An admin-division id (either native 'id' or 'wikiDataId')",
+      "required": true,
+      "type": "string"
+    },
+    "path.location.id": {
+      "name": "locationId",
+      "in": "path",
+      "description": "A latitude/longitude in ISO-6709 format: ±DD.DDDD±DDD.DDDD",
+      "required": true,
+      "type": "string"
+    },
+    "path.placeId": {
+      "name": "placeId",
+      "in": "path",
+      "description": "A place id (either native 'id' or 'wikiDataId')",
+      "required": true,
+      "type": "string"
+    },
+    "path.zoneId": {
+      "name": "zoneId",
+      "in": "path",
+      "description": "A time-zone id",
+      "required": true,
+      "type": "string"
+    },
+    "query.city.types": {
+      "name": "types",
+      "in": "query",
+      "description": "Only cities for these types (comma-delimited): ADM2 | CITY",
+      "required": false,
+      "type": "string"
+    },
     "query.country.currencyCode": {
       "name": "currencyCode",
       "in": "query",
       "description": "Only countries supporting this currency",
+      "required": false,
+      "type": "string"
+    },
+    "query.country.sort": {
+      "name": "sort",
+      "in": "query",
+      "description": "How to sort countries. \nFormat: ±SORT_FIELD \nwhere SORT_FIELD = code | name",
       "required": false,
       "type": "string"
     },
@@ -1497,13 +2506,6 @@
       "required": true,
       "type": "string"
     },
-    "path.divisionId": {
-      "name": "divisionId",
-      "in": "path",
-      "description": "An admin-division id (either native 'id' or 'wikiDataId')",
-      "required": true,
-      "type": "string"
-    },
     "query.entity.namePrefix": {
       "name": "namePrefix",
       "in": "query",
@@ -1511,12 +2513,13 @@
       "required": false,
       "type": "string"
     },
-    "path.location.id": {
-      "name": "locationId",
-      "in": "path",
-      "description": "A latitude/longitude in ISO-6709 format: ±DD.DDDD±DDD.DDDD",
-      "required": true,
-      "type": "string"
+    "query.entity.namePrefixDefaultLangResults": {
+      "name": "namePrefixDefaultLangResults",
+      "in": "query",
+      "description": "When name-prefix matching, whether or not to match on names in the default language if a non-default languageCode is set.\n",
+      "required": false,
+      "type": "boolean",
+      "default": true
     },
     "query.distanceUnit": {
       "name": "distanceUnit",
@@ -1525,13 +2528,6 @@
       "required": false,
       "type": "string",
       "default": "MI"
-    },
-    "query.toCityId": {
-      "name": "toCityId",
-      "in": "query",
-      "description": "Distance to this city",
-      "required": true,
-      "type": "string"
     },
     "query.place.countryIds": {
       "name": "countryIds",
@@ -1581,14 +2577,14 @@
     "query.place.types": {
       "name": "types",
       "in": "query",
-      "description": "Only places for these types (comma-delimited): CITY | ADM2",
+      "description": "Only places for these types (comma-delimited): ADM2 | CITY | ISLAND",
       "required": false,
       "type": "string"
     },
     "query.place.sort": {
       "name": "sort",
       "in": "query",
-      "description": "How to sort place results. \n'Format: ±SORT_FIELD,±SORT_FIELD' \nwhere SORT_FIELD = countryCode | elevation | name | population\n",
+      "description": "How to sort places. \nFormat: ±SORT_FIELD,±SORT_FIELD \nwhere SORT_FIELD = countryCode | elevation | name | population\n",
       "required": false,
       "type": "string"
     },
@@ -1599,17 +2595,17 @@
       "required": false,
       "type": "string"
     },
+    "query.region.sort": {
+      "name": "sort",
+      "in": "query",
+      "description": "How to sort regions. \nFormat: ±SORT_FIELD \nwhere SORT_FIELD = fipsCode | isoCode | name",
+      "required": false,
+      "type": "string"
+    },
     "path.regionCode": {
       "name": "regionCode",
       "in": "path",
       "description": "An ISO-3166 or FIPS region code",
-      "required": true,
-      "type": "string"
-    },
-    "path.zoneId": {
-      "name": "zoneId",
-      "in": "path",
-      "description": "A time-zone id",
       "required": true,
       "type": "string"
     },
@@ -1618,6 +2614,20 @@
       "in": "query",
       "description": "Only places in these time-zones (comma-delimited)",
       "required": false,
+      "type": "string"
+    },
+    "query.toCityId": {
+      "name": "toCityId",
+      "in": "query",
+      "description": "Distance to this city",
+      "required": true,
+      "type": "string"
+    },
+    "query.toPlaceId": {
+      "name": "toPlaceId",
+      "in": "query",
+      "description": "Distance to this place",
+      "required": true,
       "type": "string"
     },
     "query.asciiMode": {
@@ -1748,6 +2758,12 @@
       "description": "An ISO-8601 time response",
       "schema": {
         "$ref": "#/definitions/TimeResponse"
+      }
+    },
+    "TimeZone": {
+      "description": "A time-zone",
+      "schema": {
+        "$ref": "#/definitions/TimeZoneResponse"
       }
     },
     "TimeZones": {
@@ -2167,15 +3183,10 @@
         "code": {
           "description": "The locale code",
           "type": "string"
-        },
-        "name": {
-          "description": "The locale name",
-          "type": "string"
         }
       },
       "example": {
-        "code": "en_US",
-        "name": "English (US)"
+        "code": "en_US"
       }
     },
     "Metadata": {
@@ -2204,6 +3215,11 @@
       "title": "Populated-Place Details",
       "description": "Full populated-place details",
       "properties": {
+        "city": {
+            "description": "The city name (legacy)",
+            "type": "string",
+            "nullable": "true"
+        },
         "country": {
           "description": "The country name (varies by languageCode)",
           "type": "string"
@@ -2253,6 +3269,10 @@
           "description": "The ISO or FIPS region code",
           "type": "string"
         },
+        "regionWdId": {
+          "description": "The region Wikidata id",
+          "type": "string"
+        },
         "timezone": {
           "description": "The place timezone id",
           "type": "string"
@@ -2287,6 +3307,11 @@
       "type": "object",
       "description": "Minimal populated-place info",
       "properties": {
+        "city": {
+            "description": "The city name (legacy)",
+            "type": "string",
+            "nullable": "true"
+        },
         "country": {
           "description": "The country name (varies by languageCode)",
           "type": "string"
@@ -2332,6 +3357,10 @@
           "description": "The ISO or FIPS region code",
           "type": "string"
         },
+        "regionWdId": {
+          "description": "The region Wikidata id",
+          "type": "string"
+        },
         "type": {
           "description": "The place type",
           "$ref": "#/definitions/PopulatedPlaceType"
@@ -2359,7 +3388,8 @@
       "description": "One of a set of enumerated populated-place types known by the service (currently only level-2 admin divisions and\ncities)\n",
       "enum": [
         "ADM2",
-        "CITY"
+        "CITY",
+        "ISLAND"
       ],
       "example": "CITY"
     },
@@ -3159,6 +4189,40 @@
       ],
       "example": {
         "data": "19:21:38.796217"
+      }
+    },
+    "TimeZoneResponse": {
+      "type": "object",
+      "title": "Time-Zone Response",
+      "description": "A time-zone",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "id": {
+              "description": "The time-zone id",
+              "type": "string"
+            },
+            "name": {
+              "description": "The time-zone name",
+              "type": "string"
+            },
+            "rawUtcOffsetHours": {
+              "description": "The number of hours this time-zone is offset from UTC",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ],
+      "example": {
+        "data": {
+          "id": "America__Marigot",
+          "name": "Atlantic Standard Time",
+          "rawUtcOffsetHours": -4
+        }
       }
     },
     "TimeZonesResponse": {

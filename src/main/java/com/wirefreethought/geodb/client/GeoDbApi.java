@@ -83,11 +83,16 @@ public class GeoDbApi
         if (sort != null)
         {
             sortString = sort.getFields().stream()
-                .map(f -> String.format("%s%s", f.isReverse() ? "-" : "+", f.getName()))
+                .map(f -> toString(f))
                 .collect(Collectors.joining(","));
         }
 
         return sortString;
+    }
+
+    private static String toString(GeoDbSort.SortField field)
+    {
+        return String.format("%s%s", field.isReverse() ? "-" : "+", field.getName());
     }
 
     private static String toString(IncludeDeletedMode mode)
@@ -147,6 +152,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             request.getAsciiMode(),
             false,
@@ -168,6 +174,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             toString(PlaceRequestType.ADMIN_DIVISION_2),
             request.getAsciiMode(),
@@ -179,9 +186,9 @@ public class GeoDbApi
             toString(request.getIncludeDeleted()));
     }
 
-    public CountriesResponse findAllCountries(boolean asciiMode, String languageCode, Integer limit, Integer offset)
+    public CountriesResponse findAllCountries(boolean asciiMode, String languageCode, Integer limit, Integer offset, GeoDbSort.SortField sort)
     {
-        return geoApi.getCountriesUsingGET(null, null, asciiMode, false, languageCode, limit, offset);
+        return geoApi.getCountriesUsingGET(null, null, null, asciiMode, false, languageCode, limit, offset, toString(sort));
     }
 
     public CurrenciesResponse findAllCurrencies(Integer limit, Integer offset)
@@ -209,11 +216,15 @@ public class GeoDbApi
         return geoApi.getCountriesUsingGET(
             request.getCurrencyCode(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             request.getAsciiMode(),
             false,
             request.getLanguageCode(),
             request.getLimit(),
-            request.getOffset());
+            request.getOffset(),
+            request.getSort() != null
+                ? toString(request.getSort())
+                : null);
     }
 
     public CountryResponse findCountry(FindCountryRequest request)
@@ -235,7 +246,7 @@ public class GeoDbApi
 
     public PopulatedPlacesResponse findPlaces(FindPlacesNearLocationRequest request)
     {
-        return geoApi.findCitiesNearLocationUsingGET(
+        return geoApi.findPlacesNearLocationUsingGET(
             toLocationId(request.getNearLocation()),
             request.getNearLocation().getRadius(),
             toString(request.getNearLocation().getDistanceUnit()),
@@ -244,6 +255,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             toStringFromEnumSet(request.getTypes()),
             request.getAsciiMode(),
@@ -257,7 +269,7 @@ public class GeoDbApi
 
     public PopulatedPlacesResponse findPlaces(FindPlacesNearPlaceRequest request)
     {
-        return geoApi.findCitiesNearCityUsingGET(
+        return geoApi.findPlacesNearPlaceUsingGET(
             request.getPlaceId(),
             request.getRadius(),
             toString(request.getDistanceUnit()),
@@ -266,6 +278,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             toStringFromEnumSet(request.getTypes()),
             request.getAsciiMode(),
@@ -292,7 +305,7 @@ public class GeoDbApi
             distanceUnit = toString(nearLocation.getDistanceUnit());
         }
 
-        return geoApi.findCitiesUsingGET(
+        return geoApi.findPlacesUsingGET(
             location,
             locationRadius,
             distanceUnit,
@@ -301,6 +314,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             toStringFromEnumSet(request.getTypes()),
             request.getAsciiMode(),
@@ -329,6 +343,7 @@ public class GeoDbApi
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             request.getAsciiMode(),
             false,
@@ -341,12 +356,13 @@ public class GeoDbApi
 
     public PopulatedPlacesResponse findRegionPlaces(FindRegionPlacesRequest request)
     {
-        return geoApi.findRegionCitiesUsingGET(
+        return geoApi.findRegionPlacesUsingGET(
             request.getCountryId(),
             request.getRegionCode(),
             request.getMinPopulation(),
             request.getMaxPopulation(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             toStringFromStringSet(request.getTimeZoneIds()),
             toStringFromEnumSet(request.getTypes()),
             request.getAsciiMode(),
@@ -363,16 +379,20 @@ public class GeoDbApi
         return geoApi.getRegionsUsingGET(
             request.getCountryId(),
             request.getNamePrefix(),
+            request.getNamePrefixDefaultLangResults(),
             request.getAsciiMode(),
             false,
             request.getLanguageCode(),
             request.getLimit(),
-            request.getOffset());
+            request.getOffset(),
+            request.getSort() != null
+                ? toString(request.getSort())
+                : null);
     }
 
     public PopulatedPlaceResponse getPlace(GetPlaceRequest request)
     {
-        return this.geoApi.getCityUsingGET(
+        return this.geoApi.getPlaceUsingGET(
             request.getPlaceId(),
             request.getAsciiMode(),
             request.getLanguageCode());
@@ -380,7 +400,7 @@ public class GeoDbApi
 
     public PopulatedPlaceResponse getPlaceAdminRegion(GetPlaceRequest request)
     {
-        return this.geoApi.getCityLocatedInUsingGET(
+        return this.geoApi.getPlaceLocatedInUsingGET(
             request.getPlaceId(),
             request.getAsciiMode(),
             request.getLanguageCode());
@@ -388,12 +408,12 @@ public class GeoDbApi
 
     public DateTimeResponse getPlaceDateTime(String cityId)
     {
-        return this.geoApi.getCityDateTimeUsingGET(cityId);
+        return this.geoApi.getPlaceDateTimeUsingGET(cityId);
     }
 
     public DistanceResponse getPlaceDistance(GetPlaceDistanceRequest request)
     {
-        return this.geoApi.getCityDistanceUsingGET(
+        return this.geoApi.getPlaceDistanceUsingGET(
             request.getToPlaceId(),
             request.getFromPlaceId(),
             request.getDistanceUnit().getTag());
@@ -401,7 +421,7 @@ public class GeoDbApi
 
     public TimeResponse getPlaceTime(String cityId)
     {
-        return this.geoApi.getCityTimeUsingGET(cityId);
+        return this.geoApi.getPlaceTimeUsingGET(cityId);
     }
 
     public DateTimeResponse getTimeZoneDateTime(String zoneId)

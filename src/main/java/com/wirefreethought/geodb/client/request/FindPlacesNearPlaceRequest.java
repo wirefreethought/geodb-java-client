@@ -23,6 +23,7 @@ public class FindPlacesNearPlaceRequest
     private Integer minPopulation;
     private Integer maxPopulation;
     private String namePrefix;
+    private Boolean namePrefixDefaultLangResults;
     private Integer offset;
     private String placeId;
     private int radius;

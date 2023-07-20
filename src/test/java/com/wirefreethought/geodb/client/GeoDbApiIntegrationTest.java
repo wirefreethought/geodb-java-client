@@ -2,7 +2,6 @@ package com.wirefreethought.geodb.client;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -53,7 +52,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RunWith(JUnit4.class)
 @Slf4j
-public class GeoDbApiIntegrationTest
+class GeoDbApiIntegrationTest
 {
     private GeoDbApi api;
     private ApiClient apiClient;
@@ -73,7 +72,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindAdminDivisions_namePrefix()
+    void findAdminDivisions_namePrefix()
     {
         try
         {
@@ -95,7 +94,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindAdminDivisions_nearLocation()
+    void findAdminDivisions_nearLocation()
     {
         try
         {
@@ -123,7 +122,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindAdminDivisions_nearPlace()
+    void findAdminDivisions_nearPlace()
     {
         try
         {
@@ -147,7 +146,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindAdminDivisions_timeZoneIds()
+    void findAdminDivisions_timeZoneIds()
     {
         try
         {
@@ -169,7 +168,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindCities_namePrefix()
+    void findCities_namePrefix()
     {
         try
         {
@@ -192,7 +191,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindCities_nearLocation()
+    void findCities_nearLocation()
     {
         try
         {
@@ -221,7 +220,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindCities_nearPlace()
+    void findCities_nearPlace()
     {
         try
         {
@@ -246,7 +245,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindCities_timeZoneIds()
+    void findCities_timeZoneIds()
     {
         try
         {
@@ -269,7 +268,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindCountries_currencyCode()
+    void findCountries_currencyCode()
     {
         try
         {
@@ -284,7 +283,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindCurrencies_countryId()
+    void findCurrencies_countryId()
     {
         try
         {
@@ -299,7 +298,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindRegionDivisions()
+    void findRegionDivisions()
     {
         try
         {
@@ -322,7 +321,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindRegionPlaces()
+    void findRegionPlaces()
     {
         try
         {
@@ -345,7 +344,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testFindRegions()
+    void findRegions()
     {
         try
         {
@@ -360,7 +359,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testGetPlaceAdminRegion()
+    void getPlaceAdminRegion()
     {
         try
         {
@@ -372,7 +371,7 @@ public class GeoDbApiIntegrationTest
 
             assertNotNull(response);
             assertNotNull(response.getData());
-            assertNull(response.getErrors());
+            assertTrue(response.getErrors().isEmpty());
 
             log(response);
         } catch (ApiException e)
@@ -382,7 +381,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testGetPlaceDistance()
+    void getPlaceDistance()
     {
         try
         {
@@ -396,7 +395,7 @@ public class GeoDbApiIntegrationTest
 
             assertNotNull(response);
             assertNotNull(response.getData());
-            assertNull(response.getErrors());
+            assertTrue(response.getErrors().isEmpty());
 
             log(response);
         } catch (ApiException e)
@@ -406,7 +405,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testGetTimeZoneDateTime()
+    void getTimeZoneDateTime()
     {
         try
         {
@@ -414,7 +413,7 @@ public class GeoDbApiIntegrationTest
 
             assertNotNull(response);
             assertNotNull(response.getData());
-            assertNull(response.getErrors());
+            assertTrue(response.getErrors().isEmpty());
 
             log(response);
         } catch (ApiException e)
@@ -424,7 +423,7 @@ public class GeoDbApiIntegrationTest
     }
 
     @Test
-    public void testGetTimeZoneTime()
+    void getTimeZoneTime()
     {
         try
         {
@@ -432,7 +431,7 @@ public class GeoDbApiIntegrationTest
 
             assertNotNull(response);
             assertNotNull(response.getData());
-            assertNull(response.getErrors());
+            assertTrue(response.getErrors().isEmpty());
 
             log(response);
         } catch (ApiException e)
@@ -445,7 +444,7 @@ public class GeoDbApiIntegrationTest
     {
         assertNotNull(response);
         assertNotNull(response.getData());
-        assertNull(response.getErrors());
+        assertTrue(response.getErrors().isEmpty());
         assertFalse(response.getData().isEmpty());
 
         response.getData().forEach(c -> {
@@ -464,7 +463,7 @@ public class GeoDbApiIntegrationTest
     {
         assertNotNull(response);
         assertNotNull(response.getData());
-        assertNull(response.getErrors());
+        assertTrue(response.getErrors().isEmpty());
         assertFalse(response.getData().isEmpty());
 
         response.getData().forEach(c -> {
@@ -483,7 +482,7 @@ public class GeoDbApiIntegrationTest
     {
         assertNotNull(response);
         assertNotNull(response.getData());
-        assertNull(response.getErrors());
+        assertTrue(response.getErrors().isEmpty());
         assertFalse(response.getData().isEmpty());
 
         response.getData().forEach(c -> {
@@ -501,7 +500,7 @@ public class GeoDbApiIntegrationTest
     {
         assertNotNull(response);
         assertNotNull(response.getData());
-        assertNull(response.getErrors());
+        assertTrue(response.getErrors().isEmpty());
         assertFalse(response.getData().isEmpty());
 
         response.getData().forEach(r -> {

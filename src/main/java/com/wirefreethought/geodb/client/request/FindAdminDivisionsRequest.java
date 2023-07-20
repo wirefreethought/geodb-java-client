@@ -22,6 +22,7 @@ public class FindAdminDivisionsRequest
     private Integer minPopulation;
     private Integer maxPopulation;
     private String namePrefix;
+    private Boolean namePrefixDefaultLangResults;
     private GeoDbLocationConstraint nearLocation;
     private Integer offset;
     private GeoDbSort sort;
