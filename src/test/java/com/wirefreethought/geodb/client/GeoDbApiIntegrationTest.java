@@ -1,18 +1,16 @@
 package com.wirefreethought.geodb.client;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.wirefreethought.geodb.client.model.CountriesResponse;
 import com.wirefreethought.geodb.client.model.CountrySummary;
@@ -50,7 +48,6 @@ import com.wirefreethought.geodb.client.request.PlaceRequestType;
 
 import lombok.extern.slf4j.Slf4j;
 
-@RunWith(JUnit4.class)
 @Slf4j
 class GeoDbApiIntegrationTest
 {
@@ -65,7 +62,7 @@ class GeoDbApiIntegrationTest
         this.apiClient = client;
     }
 
-    @Before
+    @BeforeEach
     public void setup()
     {
         api = new GeoDbApi(apiClient);
