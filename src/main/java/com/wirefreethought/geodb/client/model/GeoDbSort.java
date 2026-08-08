@@ -1,7 +1,5 @@
 package com.wirefreethought.geodb.client.model;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +19,7 @@ public class GeoDbSort
     @Builder
     public GeoDbSort(SortField... fields)
     {
-        this.fields = Collections.unmodifiableList(Arrays.asList(fields));
+        this.fields = List.of(fields);
     }
 
     @Getter
